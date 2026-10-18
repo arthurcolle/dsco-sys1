@@ -42,7 +42,7 @@ ARCHETYPES = {
               ["UNC.UNSURE", "UNC.ABSTAIN"]),
     "verify": ("Verdict{pass, evidence}", ["the claim or target is stated precisely"],
                ["the verdict cites the evidence it rests on", "a failed check is reported, not hidden"], "pure",
-               ["VERIF.TESTS_FAIL", "VERIF.FLAKY", "ACT.RESULT_TIMEOUT"]),
+               ["ACT.RESULT_TIMEOUT", "VERIF.FLAKY", "UNC.UNSURE"]),
     "execute": ("Result", ["the arguments are bound and valid", "the capability gate admits the call"],
                 ["the result is recorded with its success flag", "side effects are logged"], "compensable",
                 ["ACT.RESULT_ERR", "ACT.RESULT_TIMEOUT", "ACT.ARGS_INVALID", "GOV.NO_AUTHORITY"]),
@@ -56,6 +56,9 @@ ARCHETYPES = {
     "store": ("Key", ["the content is safe to persist (no unredacted secrets in shared stores)"],
               ["the content is durable and retrievable by the returned key"], "reversible",
               ["ERR.DETECT.DATA_CORRUPTION", "BUD.OVER_BUDGET"]),
+    "signal": ("Signal", ["the triggering condition was actually observed, not assumed"],
+               ["no state is changed", "later steps may branch on this signal"], "pure", []),
+    "directive": ("Ack", [], ["subsequent choices in this episode follow the rule until it is lifted"], "reversible", []),
     "retrieve": ("Items[]", ["the store is reachable"],
                  ["no state is changed", "every item carries its key and source"], "pure",
                  ["PERC.EMPTY_RESULT", "MEM.MEMORY_CONFLICT"]),
@@ -133,6 +136,44 @@ WHEN = {
     "egress": "Emit only when the step requires reaching outside the machine ({o}); confirm outward-facing effects.",
     "store": "Emit when {o} should outlive the current context window.",
     "retrieve": "Emit when a decision needs information held in {o}.",
+}
+
+# Verb-specific cues where the archetype's generic cue would mislead.
+VERB_WHEN = {
+    "mask": "Emit under context pressure for {o} outside the recency window; the key keeps it recoverable.",
+    "unmask": "Emit when a step needs the exact content behind a masked placeholder for {o}.",
+    "evict": "Emit when {o} is not needed for the next steps and context is under pressure.",
+    "pin": "Emit when {o} must survive eviction because later steps depend on it.",
+    "fold": "Emit when {o} is finished and only its outcome matters from now on.",
+    "compress": "Emit when {o} is too large but its decision-relevant content must stay.",
+    "stabilize": "Emit to keep {o} byte-identical so the provider's prompt cache stays warm.",
+    "retry": "Emit after a transient failure of {o}, with corrected input if the cause is known.",
+    "cancel": "Emit when {o} is no longer useful or is exceeding its budget.",
+    "rollback": "Emit when {o} left the system worse than before.",
+    "defer": "Emit when confidence about {o} is below threshold and a stronger model or a human should decide.",
+    "escalate": "Emit when {o} failed or is too hard for the current option.",
+    "downgrade": "Emit when a cheaper option is good enough for {o}.",
+    "spawn": "Emit when work is independent enough to run as {o} without shared context.",
+    "delegate": "Emit when another agent is better placed to do the task; give it full context.",
+    "ask": "Emit only when the decision is genuinely the user's and no safe default exists ({o}).",
+    "confirm": "Emit before irreversible or outward-facing actions involving {o}.",
+    "lock": "Emit before mutating {o} that other agents may also touch.",
+    "snapshot": "Emit before a risky change to {o} so it can be restored.",
+    "restore": "Emit when {o} must return to a known good state.",
+    "decompose": "Emit when {o} is too large to act on in one step.",
+    "select": "Emit to commit to one {o} from the candidates.",
+    "quantify": "Emit when acting on {o} depends on how likely it is.",
+    "calibrate": "Emit after enough labeled outcomes exist to correct {o}.",
+    "throttle": "Emit when {o} is hitting rate limits or burning budget.",
+    "summarize": "Emit when {o} must be carried forward in fewer tokens.",
+    "store": "Emit when an item should outlive the current context window in {o}.",
+    "recall": "Emit when a decision needs a known item from {o}.",
+    "search": "Emit when a decision needs information from {o} but the exact key is unknown.",
+    "test": "Emit after changing {o} and before claiming it works.",
+    "verify": "Emit before relying on or reporting {o}.",
+    "invoke": "Emit to run {o} once its arguments are bound and the gate allows it.",
+    "promote": "Emit only after {o} passes a frozen evaluation.",
+    "terminate": "Emit when {o} has finished, is stuck, or exceeds its budget.",
 }
 
 EFFECT_ARCHETYPE = {"pure": "judge", "observe": "observe", "local": "mutate", "egress": "egress", "control": "control"}
@@ -213,22 +254,58 @@ SINGLE_SPEC = {
 }
 
 
+DIRECTIVE_PREFIXES = ("Prefer", "Never", "Do not", "Keep", "Respect", "Treat", "Write code", "Put new", "Ask the user only",
+                      "Give one", "Explain in", "Claim only", "Use a purpose", "Read a file before", "Only reduce",
+                      "Set how many", "Accept duplicate", "Ensure an effect", "Record financial", "Act on an app",
+                      "Locate elements", "Give coordinates", "Back up work", "Request only", "Limit how many",
+                      "Take scope", "Assume a value", "Order options", "Reason ", "Rebuild the answer", "State what must")
+SIGNAL_PREFIXES = ("The ", "A ", "An ", "Some ", "All ", "Spending", "Context use", "Confidence is", "Nothing to do",
+                   "No cached", "Reused a", "Record that", "Note that", "Mark ", "Flag ", "Declare", "Recognize",
+                   "Detect", "Label ", "Identify who", "Classify a failure", "Action ")
+
+
+VERIFY_PREFIXES = ("Check", "Verify", "Block egress", "Decide whether", "Compare against", "Measure calibration",
+                   "Score a probability")
+
+
+def single_kind(op: dict) -> str:
+    desc = op["desc"]
+    if desc.startswith(VERIFY_PREFIXES):
+        return "verify"
+    if desc.startswith(DIRECTIVE_PREFIXES):
+        return "directive"
+    if desc.startswith(SIGNAL_PREFIXES) or op["effect"] == "observe" and not op["operands"]:
+        return "signal"
+    return EFFECT_ARCHETYPE[op["effect"]]
+
+
+def object_phrase(odesc: str) -> str:
+    import re
+    return re.sub(r"^(a|an|the)\s+", "", odesc)
+
+
+def tidy(text: str) -> str:
+    """Collapse doubled determiners and fix a/an after templating."""
+    import re
+    text = re.sub(r"\b(a|an|one|the) (?:the|a|an) ", lambda m: ("a" if m.group(1) == "an" else m.group(1)) + " ", text)
+    return re.sub(r"\b([Aa]) ([aeiou]|HTTP|MCP|API|SQL|URL|LLM)", lambda m: ("an " if m.group(1) == "a" else "An ") + m.group(2), text)
+
+
 def define(op: dict) -> dict:
     parts = op["mnemonic"].split(".")
     if len(parts) == 3:
         family, verb, obj = parts[0], parts[1].lower(), parts[2]
         archetype = VERB_ARCHETYPE[verb]
         objects = opcodes.FAMILIES[family][1]
-        odesc = objects[obj.lower()][0]
-        o = odesc if odesc.startswith(("a ", "an ", "the ")) else "the " + odesc
+        o = object_phrase(objects[obj.lower()][0])
         returns, pre, post, rev, fail = ARCHETYPES[archetype]
         returns = VERB_RETURNS.get(verb, returns)
         inv = INVERSE_VERBS.get(verb)
         inverse = f"{family}.{inv.upper()}.{obj}" if inv else None
-        when = WHEN[archetype].format(o=o)
+        when = (VERB_WHEN.get(verb) or WHEN[archetype]).format(o="the " + o)
         level = "verb"
     else:
-        archetype = EFFECT_ARCHETYPE[op["effect"]]
+        archetype = single_kind(op)
         returns, pre, post, rev, fail = ARCHETYPES[archetype]
         o = "this condition"
         inverse = None
@@ -237,9 +314,12 @@ def define(op: dict) -> dict:
             returns, when = spec
             level = "single"
         else:
-            when = "Emit when: " + op["desc"][0].lower() + op["desc"][1:]
+            lowered = op["desc"][0].lower() + op["desc"][1:]
+            when = {"directive": "Apply as a standing rule: " + lowered,
+                    "signal": "Emit when this is observed: " + lowered}.get(archetype, "Emit to " + lowered)
             level = "default"
-    fill = lambda xs: [x.format(o=o) for x in xs]
+    fill = lambda xs: [tidy(x.format(o=o)) for x in xs]
+    when = tidy(when)
     op = dict(op)
     op.update({
         "archetype": archetype,

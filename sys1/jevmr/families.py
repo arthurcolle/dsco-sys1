@@ -429,5 +429,326 @@ class Delegation(ComposedFamily):
                                  s["n"] >= 3 and not s["dependent"])}
 
 
+# ---------------------------------------------------------------------------
+# Routine-engineering families over the newer op domains (codes >= 1500).
+# They stay out of the fractal composition (its cross-family priority covers
+# only the agent-mechanics families above): standalone = True.
+# ---------------------------------------------------------------------------
+
+
+class DbIncident(ComposedFamily):
+    name = "db_incident"
+    standalone = True
+    options = ["DB.ROLLBACK.TRANSACTION", "DB.CREATE.SQL_QUERY", "DB.READ.QUERY_PLAN", "DB.CREATE.DB_INDEX"]
+    slots = {"deadlock": [False, True], "nplus1": [False, True], "slow": [False, True],
+             "plan": ["unread", "full_scan"], "table": ["orders", "invoices", "sessions", "audit_events"]}
+    phrasings = [
+        "The agent is investigating the {table} service database. {deadlock} {nplus1} {slow} {plan}",
+        "Database incident notes for the {table} service: {slow} {deadlock} {plan} {nplus1}",
+        "On-call review of the {table} database. {nplus1} {plan} {slow} {deadlock}",
+    ]
+    policy = ("Policy, applied in this order: (1) if the agent's own transaction was chosen as a deadlock victim "
+              "and is still open, roll back that transaction; (2) otherwise, if a code loop issues one query per "
+              "item, write one new batched SQL query to replace the loop; (3) otherwise, if a query exceeds its "
+              "latency budget and its query plan has not been read yet, read the query plan; (4) otherwise, if the "
+              "query plan has been read and shows a full table scan on the filtered column, create an index on "
+              "that column.")
+
+    def fmt(self, s):
+        t = s["table"]
+        dl = (f"The agent's own transaction on {t} was chosen as a deadlock victim and is still open."
+              if s["deadlock"] else "No deadlock has been reported.")
+        n1 = (f"The request handler loops over 300 {t} rows and issues one separate query per row."
+              if s["nplus1"] else "Each request issues its queries in a single batch, with no per-row loop.")
+        sl = (f"A report query on {t} takes 4.2 s against a 200 ms latency budget."
+              if s["slow"] else "Every query is within its latency budget.")
+        if not s["slow"]:
+            pl = "No query plan needs reading."
+        elif s["plan"] == "unread":
+            pl = "The query plan for the slow query has not been read yet."
+        else:
+            pl = "The query plan for the slow query has been read: it shows a full table scan on the filtered column."
+        return {"table": t, "deadlock": dl, "nplus1": n1, "slow": sl, "plan": pl}
+
+    def valid(self, s):
+        if not (s["deadlock"] or s["nplus1"] or s["slow"]):
+            return False  # nothing to act on
+        return s["slow"] or s["plan"] == "unread"  # a plan only exists for a slow query
+
+    def oracle(self, s):
+        if s["deadlock"]:
+            return "DB.ROLLBACK.TRANSACTION"
+        if s["nplus1"]:
+            return "DB.CREATE.SQL_QUERY"
+        return "DB.READ.QUERY_PLAN" if s["plan"] == "unread" else "DB.CREATE.DB_INDEX"
+
+    def probes(self, s):
+        return {"slow": ("Does a query exceed its latency budget?", s["slow"]),
+                "deadlock": ("Is the agent's transaction an open deadlock victim?", s["deadlock"])}
+
+
+class CiGate(ComposedFamily):
+    name = "ci_gate"
+    standalone = True
+    options = ["CI.FREEZE", "CI.INSPECT.CI_JOB", "CI.ROLLBACK.ROLLOUT", "CI.PROMOTE.RELEASE", "CI.CANARY"]
+    slots = {"freeze": [False, True], "build": ["green", "red"], "canary": ["none", "bad", "good"],
+             "service": ["checkout-api", "search-indexer", "billing-worker", "auth-gateway"]}
+    phrasings = [
+        "The agent manages deploys for {service}. {build} {canary} {freeze}",
+        "Deploy status for {service}: {freeze} {build} {canary}",
+        "Release check on {service}. {canary} {freeze} {build}",
+    ]
+    policy = ("Policy, applied in this order: (1) if a deploy freeze is in effect, hold all deploys until it "
+              "clears; (2) otherwise, if the main branch build is failing, inspect the failing CI job; "
+              "(3) otherwise, if a canary is running and its error rate is above the baseline, roll back the "
+              "staged rollout; (4) otherwise, if the canary finished its full watch window with an error rate at "
+              "or below the baseline, promote the release; (5) otherwise, with a passing build and no canary "
+              "started, ship to a canary first.")
+
+    def fmt(self, s):
+        fr = ("A deploy freeze is in effect until the quarterly audit finishes." if s["freeze"]
+              else "No deploy freeze is in effect.")
+        bd = ("The main branch build is failing: the integration-test job is red." if s["build"] == "red"
+              else "The main branch build is passing.")
+        cn = {"none": "No canary has been started for the new release yet.",
+              "bad": "A canary of the new release is running on 5% of traffic, and its error rate is 3.1% "
+                     "against a 0.4% baseline.",
+              "good": "A canary of the new release finished its full 2-hour watch window on 5% of traffic with a "
+                      "0.3% error rate against a 0.4% baseline."}[s["canary"]]
+        return {"service": s["service"], "freeze": fr, "build": bd, "canary": cn}
+
+    def valid(self, s):
+        if s["build"] == "red" and s["canary"] != "none":
+            return False  # a release only reaches canary from a passing build
+        if s["freeze"] and s["canary"] == "bad":
+            return False  # a live failing canary during a freeze puts two rules in tension
+        return True
+
+    def oracle(self, s):
+        if s["freeze"]:
+            return "CI.FREEZE"
+        if s["build"] == "red":
+            return "CI.INSPECT.CI_JOB"
+        return {"bad": "CI.ROLLBACK.ROLLOUT", "good": "CI.PROMOTE.RELEASE", "none": "CI.CANARY"}[s["canary"]]
+
+    def probes(self, s):
+        return {"freeze": ("Is a deploy freeze in effect?", s["freeze"]),
+                "red": ("Is the main branch build failing?", s["build"] == "red")}
+
+
+class ApiPaging(ComposedFamily):
+    name = "api_paging"
+    standalone = True
+    options = ["API.DIFF.API_SCHEMA", "API.THROTTLE.API_ENDPOINT", "API.IDEMPOTENCY_KEY", "API.PAGINATE_ALL",
+               "API.INVOKE.API_ENDPOINT", "CTRL.FINAL"]
+    slots = {"breaking": [False, True], "quota": [4, 9, 45, 80], "kind": ["list", "create"],
+             "cursor": [False, True], "key": [False, True], "api": ["the payments API", "the CRM API",
+                                                                   "the ticketing API"]}
+    phrasings = [
+        "The agent is working with {api}. {task} {breaking} {quota} {state}",
+        "Integration log for {api}: {task} {quota} {state} {breaking}",
+        "While calling {api}, the agent reviews the situation. {state} {breaking} {task} {quota}",
+    ]
+    policy = ("Policy, applied in this order: (1) if responses now fail schema validation after the provider "
+              "announced an incompatible contract change, compute the difference between the old and new API "
+              "schema; (2) otherwise, if less than 10% of the API quota remains, throttle calls to the endpoint; "
+              "(3) otherwise, for a request that creates something: if it has no idempotency key, attach one, and "
+              "if it already has one, send the request; (4) otherwise, for a listing: if the last response "
+              "included a next-page cursor, follow cursors until every page is fetched, and if it had no cursor, "
+              "every page is in hand, so emit the final answer.")
+
+    def fmt(self, s):
+        task = ("The task is to list every open record, page by page." if s["kind"] == "list"
+                else "The task is to create one new record with a POST request.")
+        br = ("The provider announced an incompatible contract change, and responses now fail schema validation."
+              if s["breaking"] else "Responses pass schema validation and the contract is unchanged.")
+        q = f"{s['quota']}% of the API quota remains for this window."
+        if s["kind"] == "list":
+            st = ("The last page returned included a next-page cursor." if s["cursor"]
+                  else "The last page returned had no next-page cursor, so all pages have been fetched.")
+        else:
+            st = ("The POST request already carries a unique idempotency key." if s["key"]
+                  else "The POST request has no idempotency key yet.")
+        return {"api": s["api"], "task": task, "breaking": br, "quota": q, "state": st}
+
+    def valid(self, s):
+        if s["kind"] == "list" and s["key"]:
+            return False  # the key slot only renders for creates
+        if s["kind"] == "create" and s["cursor"]:
+            return False  # the cursor slot only renders for listings
+        if s["kind"] == "list" and not s["cursor"] and s["quota"] < 10 and not s["breaking"]:
+            return False  # a finished listing makes no further calls, so there is nothing left to throttle
+        return True
+
+    def oracle(self, s):
+        if s["breaking"]:
+            return "API.DIFF.API_SCHEMA"
+        if s["quota"] < 10:
+            return "API.THROTTLE.API_ENDPOINT"
+        if s["kind"] == "create":
+            return "API.INVOKE.API_ENDPOINT" if s["key"] else "API.IDEMPOTENCY_KEY"
+        return "API.PAGINATE_ALL" if s["cursor"] else "CTRL.FINAL"
+
+    def probes(self, s):
+        return {"low_quota": ("Does less than 10% of the API quota remain?", s["quota"] < 10)}
+
+
+class QueueHealth(ComposedFamily):
+    name = "queue_health"
+    standalone = True
+    options = ["QUEUE.TAG.MESSAGE", "QUEUE.ORDERING_REQUIRED", "QUEUE.BACKPRESSURE",
+               "QUEUE.REPLAY.DEAD_LETTER_QUEUE", "QUEUE.MONITOR.CONSUMER"]
+    slots = {"poison": [False, True], "order": [False, True], "lag": ["stable", "growing"],
+             "dlq": ["empty", "fixed", "unfixed"], "topic": ["order-events", "email-jobs", "ledger-updates",
+                                                             "thumbnail-requests"]}
+    phrasings = [
+        "The agent watches the {topic} queue. {poison} {order} {lag} {dlq}",
+        "Queue health report for {topic}: {lag} {dlq} {poison} {order}",
+        "Checking the {topic} consumers, the agent finds: {order} {poison} {dlq} {lag}",
+    ]
+    policy = ("Policy, applied in this order: (1) if one message has failed on every one of several processing "
+              "attempts and is blocking the consumer, tag it as a poison message so it is skipped; (2) otherwise, "
+              "if the events must be processed strictly in order but the consumer is handling them out of order, "
+              "enforce strict ordering; (3) otherwise, if producers outpace consumers and the backlog keeps "
+              "growing, slow intake; (4) otherwise, if the dead-letter queue holds messages and the bug that sent "
+              "them there has been fixed and deployed, replay the dead-letter queue; (5) otherwise, keep "
+              "monitoring the consumer.")
+
+    def fmt(self, s):
+        po = ("One message has failed on each of its 5 processing attempts and is blocking the consumer."
+              if s["poison"] else "No message is failing repeatedly.")
+        od = ("Events for the same account must be processed strictly in order, but the consumer is currently "
+              "handling them out of order on parallel workers." if s["order"]
+              else "Events are processed in the order the topic requires.")
+        lg = ("Producers are publishing faster than consumers can process, and the backlog has grown for 20 "
+              "minutes." if s["lag"] == "growing" else "The backlog is stable and consumers keep up with producers.")
+        dq = {"empty": "The dead-letter queue is empty.",
+              "fixed": "The dead-letter queue holds 140 messages, and the bug that sent them there has been fixed "
+                       "and deployed.",
+              "unfixed": "The dead-letter queue holds 140 messages, and the bug that sent them there is not fixed "
+                         "yet."}[s["dlq"]]
+        return {"topic": s["topic"], "poison": po, "order": od, "lag": lg, "dlq": dq}
+
+    def oracle(self, s):
+        if s["poison"]:
+            return "QUEUE.TAG.MESSAGE"
+        if s["order"]:
+            return "QUEUE.ORDERING_REQUIRED"
+        if s["lag"] == "growing":
+            return "QUEUE.BACKPRESSURE"
+        if s["dlq"] == "fixed":
+            return "QUEUE.REPLAY.DEAD_LETTER_QUEUE"
+        return "QUEUE.MONITOR.CONSUMER"
+
+    def probes(self, s):
+        return {"growing": ("Is the backlog growing?", s["lag"] == "growing")}
+
+
+class PerfTriage(ComposedFamily):
+    name = "perf_triage"
+    standalone = True
+    options = ["PERF.BENCHMARK.HOT_PATH", "PERF.COMPARE.LATENCY_PROFILE", "PERF.PROFILE.HOT_PATH",
+               "PERF.UPDATE.CACHE_LAYER"]
+    slots = {"optimized": [False, True], "regression": [False, True], "profile": ["none", "captured", "recompute"],
+             "path": ["the image upload handler", "the search endpoint", "the nightly report job",
+                      "the login flow"]}
+    phrasings = [
+        "Users say {path} feels slow. {regression} {profile} {optimized}",
+        "Performance ticket for {path}: {profile} {optimized} {regression}",
+        "The agent is looking at the speed of {path}. {optimized} {regression} {profile}",
+    ]
+    policy = ("Policy, applied in this order: (1) if an optimization was just applied and has not been benchmarked "
+              "yet, benchmark the hot path; (2) otherwise, if a specific change made the path slower and latency "
+              "profiles from before and after that change are both available, compare the two latency profiles; "
+              "(3) otherwise, if no profile has been captured, profile the hot path before changing any code; "
+              "(4) otherwise, if the profile shows most time spent recomputing identical results, update the "
+              "cache layer to reuse them.")
+
+    def fmt(self, s):
+        rg = ("Response time doubled right after a specific commit was merged." if s["regression"]
+              else "No single change is linked to the slowness; it has always been this way.")
+        if s["profile"] == "none":
+            pf = "No profile of the path has been captured yet."
+        elif s["profile"] == "captured":
+            pf = "Latency profiles from before and after that commit have both been captured."
+        else:
+            pf = ("A latency profile has been captured, and it shows 70% of the time spent recomputing the same "
+                  "results for identical inputs." + (" Profiles from before and after the commit are both "
+                                                     "available." if s["regression"] else ""))
+        op = ("A caching change was just applied to the path and has not been benchmarked yet." if s["optimized"]
+              else "No optimization has been applied yet.")
+        return {"path": s["path"], "regression": rg, "profile": pf, "optimized": op}
+
+    def valid(self, s):
+        if s["profile"] == "captured" and not s["regression"]:
+            return False  # before/after profiles only exist for a regression
+        if s["optimized"] and s["profile"] == "none":
+            return False  # an optimization without any profile contradicts measure-first
+        return True
+
+    def oracle(self, s):
+        if s["optimized"]:
+            return "PERF.BENCHMARK.HOT_PATH"
+        if s["regression"] and s["profile"] != "none":
+            return "PERF.COMPARE.LATENCY_PROFILE"
+        if s["profile"] == "none":
+            return "PERF.PROFILE.HOT_PATH"
+        return "PERF.UPDATE.CACHE_LAYER"
+
+    def probes(self, s):
+        return {"profiled": ("Has a latency profile been captured?", s["profile"] != "none")}
+
+
+class PkgConflict(ComposedFamily):
+    name = "pkg_conflict"
+    standalone = True
+    options = ["PKG.INSPECT.PACKAGE_VERSION", "PKG.PIN_VERSION.PACKAGE_VERSION", "PKG.UPDATE.LOCKFILE",
+               "PKG.REPRODUCIBLE_INSTALL"]
+    slots = {"conflict": ["none", "uninspected", "overlap"], "lock": ["current", "stale"], "mismatch": [False, True],
+             "project": ["a Python web service", "a Node.js CLI", "a Rust parser crate", "a Ruby admin app"]}
+    phrasings = [
+        "The agent maintains {project}. {conflict} {lock} {mismatch}",
+        "Dependency report for {project}: {lock} {mismatch} {conflict}",
+        "While setting up {project}, the agent notes: {mismatch} {conflict} {lock}",
+    ]
+    policy = ("Policy, applied in this order: (1) if two dependencies require incompatible versions of a shared "
+              "package and their allowed version ranges have not been inspected yet, inspect the package "
+              "versions; (2) otherwise, if inspection found one exact version that satisfies both, pin the shared "
+              "package to that exact version; (3) otherwise, if the manifest was edited after the lockfile was "
+              "generated, update the lockfile; (4) otherwise, if a CI or teammate environment resolved different "
+              "versions than the lockfile lists, install from the lockfile so environments match.")
+
+    def fmt(self, s):
+        cf = {"none": "No two dependencies conflict.",
+              "uninspected": "Two dependencies require incompatible versions of a shared HTTP library, and their "
+                             "allowed version ranges have not been inspected yet.",
+              "overlap": "Two dependencies required incompatible versions of a shared HTTP library; inspecting "
+                         "their allowed ranges found exactly one version, 2.31.0, that satisfies both."}[s["conflict"]]
+        lk = ("The manifest was edited after the lockfile was generated, so the lockfile is out of date."
+              if s["lock"] == "stale" else "The lockfile was generated from the current manifest.")
+        mm = ("The CI runner resolved different package versions than the lockfile lists, and tests fail there "
+              "but pass locally." if s["mismatch"] else "CI and local environments use the same versions.")
+        return {"project": s["project"], "conflict": cf, "lock": lk, "mismatch": mm}
+
+    def valid(self, s):
+        return not (s["conflict"] == "none" and s["lock"] == "current" and not s["mismatch"])  # nothing to do
+
+    def oracle(self, s):
+        if s["conflict"] == "uninspected":
+            return "PKG.INSPECT.PACKAGE_VERSION"
+        if s["conflict"] == "overlap":
+            return "PKG.PIN_VERSION.PACKAGE_VERSION"
+        if s["lock"] == "stale":
+            return "PKG.UPDATE.LOCKFILE"
+        return "PKG.REPRODUCIBLE_INSTALL"
+
+    def probes(self, s):
+        return {"stale": ("Is the lockfile out of date with the manifest?", s["lock"] == "stale")}
+
+
+NEW_DOMAIN_FAMILIES = (DbIncident(), CiGate(), ApiPaging(), QueueHealth(), PerfTriage(), PkgConflict())
+for _f in NEW_DOMAIN_FAMILIES:
+    assert all(o in OPS for o in _f.options), _f.name
+
 FAMILIES = {f.name: f for f in (ContextPressure(), ToolFailure(), DoneCheck(), LoopBreak(), BudgetGuard(),
-                                Clarify(), RetrievalNeed(), Delegation())}
+                                Clarify(), RetrievalNeed(), Delegation(), *NEW_DOMAIN_FAMILIES)}

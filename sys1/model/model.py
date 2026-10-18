@@ -44,6 +44,32 @@ PRESETS = {
     # 983.2M, under the 999M cap: MobileLLM-1B depth and width (54 x 1280,
     # 20 query / 5 key-value heads, arXiv:2402.14905) with a 3,456 SwiGLU.
     "sys1-999m": Sys1Config(d_model=1280, n_layers=54, n_heads=20, n_kv_heads=5, ffn_dim=3456),
+    # 100,352-token vocab (sys1/tokenizer/spec.py), tied: the table alone is
+    # 100,352 x d, so the 32K presets above would overshoot their caps.
+    # Embedding share is printed by `python -m sys1.model.model`.
+    #
+    # 998,562,562 params (cap 999M, 437,438 spare). Width and GQA are kept from
+    # sys1-999m (1280, 20 query / 5 key-value heads, head_dim 64); the extra
+    # 87.6M of embedding is paid for by cutting depth 54 -> 46 rather than
+    # width. MobileLLM (arXiv:2402.14905) finds that at sub-1B scale a deep,
+    # thin stack beats a wide, shallow one at equal params, so d_model stays
+    # at 1280 and 46 layers is the floor. LayerNorm Scaling (arXiv:2502.05795,
+    # applied in Block) damps the depth-wise variance growth that otherwise
+    # leaves deep pre-norm layers underused. Of the configs with >= 46 layers,
+    # 46 x 3840 (SwiGLU 3.0 x d, multiple of 128) lands closest to the cap;
+    # deeper options are 52 x 3264 (996.6M) and 56 x 2944 (994.3M).
+    # Per layer: attn 4,096,000 + SwiGLU 3*1280*3840 = 14,745,600 + norms
+    # 2,560 = 18,844,160; x46 = 866,831,360. Embed 128,450,560, decision
+    # heads 3,279,362, final norm 1,280.
+    "sys1-999m-v100k": Sys1Config(vocab_size=100352, d_model=1280, n_layers=46, n_heads=20,
+                                  n_kv_heads=5, ffn_dim=3840),
+    # 669,340,802 params (cap 670M, 659,198 spare). Width and GQA from
+    # sys1-666m (1152, 18 query / 6 key-value heads, head_dim 64), depth
+    # 44 -> 47 with a 2,368 SwiGLU (multiple of 64). Per layer: attn
+    # 3,538,944 + SwiGLU 8,183,808 + norms 2,304 = 11,725,056; x47 =
+    # 551,077,632. Embed 115,605,504, heads 2,656,514, final norm 1,152.
+    "sys1-666m-v100k": Sys1Config(vocab_size=100352, d_model=1152, n_layers=47, n_heads=18,
+                                  n_kv_heads=6, ffn_dim=2368),
     # Pipeline smoke test on a laptop GPU.
     "sys1-tiny": Sys1Config(d_model=384, n_layers=12, n_heads=6, n_kv_heads=2, ffn_dim=1024, max_seq=2048),
 }
@@ -196,4 +222,7 @@ if __name__ == "__main__":
             model = Sys1Model(cfg)
         actual = sum(p.numel() for p in model.parameters())
         assert actual == counts["total"], (name, actual, counts["total"])
-        print(name, json.dumps({**{k: f"{v/1e6:.1f}M" for k, v in counts.items()}, "config": asdict(cfg)}))
+        share = counts["embedding"] / counts["total"]
+        print(name, json.dumps({**{k: f"{v/1e6:.1f}M" for k, v in counts.items()},
+                                "total_exact": counts["total"], "embedding_share": round(share, 4),
+                                "config": asdict(cfg)}))

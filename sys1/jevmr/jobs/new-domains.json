@@ -1,0 +1,2 @@
+{"families": ["db_incident", "ci_gate", "api_paging", "queue_health", "perf_triage", "pkg_conflict"],
+ "out": "runs/jev/standing/new-domains", "model": "jev-1.13.0", "max_requests": 4000, "concurrency": 12, "seed": 7}

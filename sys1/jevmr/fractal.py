@@ -23,7 +23,7 @@ import random
 
 from sys1.jevmr.families import FAMILIES, OPS, Family
 
-BASE = [f for f in FAMILIES.values()]
+BASE = [f for f in FAMILIES.values() if not getattr(f, "standalone", False)]
 
 # Cross-family priority, highest first. Stated verbatim in composed situations.
 PRIORITY = ["budget_guard", "tool_failure", "clarify", "loop_break", "done_check",

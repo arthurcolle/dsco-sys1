@@ -24,6 +24,10 @@ from pathlib import Path
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers, trainers
 
 SPECIAL = ["[PAD]", "[EOS]", "[GOAL]", "[STEP]", "[OPTS]", "[OPT]", "[DECIDE]"]
+# Op-codes for agent mechanics (opcodes.py) are reserved as single tokens.
+_OPCODES = Path(__file__).with_name("opcodes.json")
+if _OPCODES.exists():
+    SPECIAL += [op["token"] for op in json.loads(_OPCODES.read_text())["ops"]]
 FINAL = "FINAL"
 HISTORY, OPTIONS = 6, 16
 GOAL_CHARS, ARG_CHARS, RESULT_CHARS = 800, 160, 160

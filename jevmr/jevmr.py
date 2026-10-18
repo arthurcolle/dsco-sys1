@@ -31,6 +31,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from jevmr.families import FAMILIES
+from jevmr import fractal  # registers fractal variants into FAMILIES
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 USD_PER_MTOK = 0.042  # input tokens only; output is free (docs.typesafe.ai/models)
@@ -241,7 +242,8 @@ def loop(jobs_dir: Path) -> None:
     items and the budget is cumulative. Meant for cron/launchd scheduling."""
     for spec_path in sorted(jobs_dir.glob("*.json")):
         spec = json.loads(spec_path.read_text())
-        out = Path(spec["out"])
+        # "{date}" in out gives one fresh run per day, so model drift shows up as a dated series.
+        out = Path(spec["out"].format(date=time.strftime("%Y-%m-%d")))
         stats = run(spec["families"], out, spec.get("limit", 0), spec.get("max_requests", 1000),
                     spec.get("concurrency", 16), spec.get("model", "jev-1.13.0"), spec.get("seed", 7))
         rep = reduce(out)

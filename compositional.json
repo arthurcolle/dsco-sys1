@@ -1,0 +1,6428 @@
+{
+ "version": 1,
+ "families": 34,
+ "verbs": 207,
+ "objects": 217,
+ "tokens": [
+  "<|fam:act|>",
+  "<|fam:bud|>",
+  "<|fam:code|>",
+  "<|fam:comm|>",
+  "<|fam:compute|>",
+  "<|fam:ctrl|>",
+  "<|fam:ctx|>",
+  "<|fam:data|>",
+  "<|fam:dial|>",
+  "<|fam:dur|>",
+  "<|fam:econ|>",
+  "<|fam:env|>",
+  "<|fam:err|>",
+  "<|fam:eval|>",
+  "<|fam:goal|>",
+  "<|fam:gov|>",
+  "<|fam:know|>",
+  "<|fam:learn|>",
+  "<|fam:mem|>",
+  "<|fam:meta|>",
+  "<|fam:obs|>",
+  "<|fam:perc|>",
+  "<|fam:plan|>",
+  "<|fam:reason|>",
+  "<|fam:route|>",
+  "<|fam:sec|>",
+  "<|fam:skill|>",
+  "<|fam:state|>",
+  "<|fam:swarm|>",
+  "<|fam:time|>",
+  "<|fam:ui|>",
+  "<|fam:unc|>",
+  "<|fam:verif|>",
+  "<|fam:web|>",
+  "<|verb:abandon|>",
+  "<|verb:abduce|>",
+  "<|verb:account|>",
+  "<|verb:acknowledge|>",
+  "<|verb:aggregate|>",
+  "<|verb:alert|>",
+  "<|verb:allocate|>",
+  "<|verb:analogize|>",
+  "<|verb:arbitrate|>",
+  "<|verb:archive|>",
+  "<|verb:ask|>",
+  "<|verb:assert|>",
+  "<|verb:attest|>",
+  "<|verb:audit|>",
+  "<|verb:await|>",
+  "<|verb:batch|>",
+  "<|verb:benchmark|>",
+  "<|verb:bid|>",
+  "<|verb:bind|>",
+  "<|verb:bisect|>",
+  "<|verb:bound|>",
+  "<|verb:broadcast|>",
+  "<|verb:budget|>",
+  "<|verb:cache|>",
+  "<|verb:calibrate|>",
+  "<|verb:cancel|>",
+  "<|verb:cap|>",
+  "<|verb:capture|>",
+  "<|verb:check|>",
+  "<|verb:cite|>",
+  "<|verb:classify|>",
+  "<|verb:clear|>",
+  "<|verb:click|>",
+  "<|verb:close|>",
+  "<|verb:collect|>",
+  "<|verb:commit|>",
+  "<|verb:compare|>",
+  "<|verb:complete|>",
+  "<|verb:compress|>",
+  "<|verb:confirm|>",
+  "<|verb:consolidate|>",
+  "<|verb:copy|>",
+  "<|verb:create|>",
+  "<|verb:critique|>",
+  "<|verb:deadline|>",
+  "<|verb:decompose|>",
+  "<|verb:decrypt|>",
+  "<|verb:deduce|>",
+  "<|verb:defer|>",
+  "<|verb:delegate|>",
+  "<|verb:delete|>",
+  "<|verb:demote|>",
+  "<|verb:deny|>",
+  "<|verb:describe|>",
+  "<|verb:detect|>",
+  "<|verb:diagnose|>",
+  "<|verb:diff|>",
+  "<|verb:discover|>",
+  "<|verb:distill|>",
+  "<|verb:document|>",
+  "<|verb:downgrade|>",
+  "<|verb:drag|>",
+  "<|verb:dry_run|>",
+  "<|verb:emit|>",
+  "<|verb:encrypt|>",
+  "<|verb:enforce|>",
+  "<|verb:enumerate|>",
+  "<|verb:escalate|>",
+  "<|verb:estimate|>",
+  "<|verb:evict|>",
+  "<|verb:expire|>",
+  "<|verb:explain|>",
+  "<|verb:extract|>",
+  "<|verb:fallback|>",
+  "<|verb:fetch|>",
+  "<|verb:fill|>",
+  "<|verb:filter|>",
+  "<|verb:find_references|>",
+  "<|verb:fix|>",
+  "<|verb:focus|>",
+  "<|verb:fold|>",
+  "<|verb:forecast|>",
+  "<|verb:forget|>",
+  "<|verb:format|>",
+  "<|verb:grant|>",
+  "<|verb:handoff|>",
+  "<|verb:heartbeat|>",
+  "<|verb:hedge|>",
+  "<|verb:index|>",
+  "<|verb:induce|>",
+  "<|verb:inspect|>",
+  "<|verb:invoke|>",
+  "<|verb:join_with|>",
+  "<|verb:kill|>",
+  "<|verb:learn_from|>",
+  "<|verb:lint|>",
+  "<|verb:list|>",
+  "<|verb:load|>",
+  "<|verb:locate|>",
+  "<|verb:lock|>",
+  "<|verb:mask|>",
+  "<|verb:measure|>",
+  "<|verb:merge|>",
+  "<|verb:mitigate|>",
+  "<|verb:monitor|>",
+  "<|verb:move|>",
+  "<|verb:navigate|>",
+  "<|verb:normalize|>",
+  "<|verb:notify|>",
+  "<|verb:open|>",
+  "<|verb:page|>",
+  "<|verb:parallelize|>",
+  "<|verb:parse|>",
+  "<|verb:pause|>",
+  "<|verb:penalize|>",
+  "<|verb:pin|>",
+  "<|verb:press|>",
+  "<|verb:price|>",
+  "<|verb:prioritize|>",
+  "<|verb:probe|>",
+  "<|verb:profile|>",
+  "<|verb:promote|>",
+  "<|verb:provision|>",
+  "<|verb:quantify|>",
+  "<|verb:question|>",
+  "<|verb:quote|>",
+  "<|verb:rank|>",
+  "<|verb:read|>",
+  "<|verb:recall|>",
+  "<|verb:reclaim|>",
+  "<|verb:reconcile|>",
+  "<|verb:recover|>",
+  "<|verb:refactor|>",
+  "<|verb:refine|>",
+  "<|verb:reflect|>",
+  "<|verb:register|>",
+  "<|verb:reinforce|>",
+  "<|verb:relate|>",
+  "<|verb:rename|>",
+  "<|verb:replay|>",
+  "<|verb:report|>",
+  "<|verb:reproduce|>",
+  "<|verb:request|>",
+  "<|verb:resolve|>",
+  "<|verb:restore|>",
+  "<|verb:resume|>",
+  "<|verb:retry|>",
+  "<|verb:review|>",
+  "<|verb:revise|>",
+  "<|verb:revoke|>",
+  "<|verb:rollback|>",
+  "<|verb:rotate|>",
+  "<|verb:route|>",
+  "<|verb:scan|>",
+  "<|verb:schedule|>",
+  "<|verb:score|>",
+  "<|verb:scrape|>",
+  "<|verb:scroll|>",
+  "<|verb:search|>",
+  "<|verb:select|>",
+  "<|verb:send|>",
+  "<|verb:sequence|>",
+  "<|verb:serialize|>",
+  "<|verb:set|>",
+  "<|verb:settle|>",
+  "<|verb:sign|>",
+  "<|verb:simulate|>",
+  "<|verb:sleep|>",
+  "<|verb:snapshot|>",
+  "<|verb:spawn|>",
+  "<|verb:spend|>",
+  "<|verb:split|>",
+  "<|verb:stabilize|>",
+  "<|verb:stat|>",
+  "<|verb:store|>",
+  "<|verb:submit|>",
+  "<|verb:submit_job|>",
+  "<|verb:summarize|>",
+  "<|verb:summarize_for|>",
+  "<|verb:suppress|>",
+  "<|verb:tag|>",
+  "<|verb:taint|>",
+  "<|verb:teardown|>",
+  "<|verb:terminate|>",
+  "<|verb:test|>",
+  "<|verb:threshold|>",
+  "<|verb:throttle|>",
+  "<|verb:timeout|>",
+  "<|verb:trace|>",
+  "<|verb:track|>",
+  "<|verb:transform|>",
+  "<|verb:type_into|>",
+  "<|verb:typecheck|>",
+  "<|verb:unlock|>",
+  "<|verb:unmask|>",
+  "<|verb:unpin|>",
+  "<|verb:unregister|>",
+  "<|verb:untaint|>",
+  "<|verb:unwatch|>",
+  "<|verb:update|>",
+  "<|verb:validate|>",
+  "<|verb:verify|>",
+  "<|verb:vote|>",
+  "<|verb:wake|>",
+  "<|verb:watch|>",
+  "<|verb:write|>",
+  "<|verb:zoom|>",
+  "<|obj:acceptance|>",
+  "<|obj:adapter|>",
+  "<|obj:agent_group|>",
+  "<|obj:agent_process|>",
+  "<|obj:agent_state|>",
+  "<|obj:ambiguity|>",
+  "<|obj:anomaly_case|>",
+  "<|obj:api_contract|>",
+  "<|obj:application|>",
+  "<|obj:approval|>",
+  "<|obj:archive_page|>",
+  "<|obj:argument|>",
+  "<|obj:artifact|>",
+  "<|obj:assumption|>",
+  "<|obj:attack_surface|>",
+  "<|obj:belief|>",
+  "<|obj:belief_state|>",
+  "<|obj:benchmark_suite|>",
+  "<|obj:blob_store|>",
+  "<|obj:branch|>",
+  "<|obj:browser_tab|>",
+  "<|obj:bug|>",
+  "<|obj:build|>",
+  "<|obj:build_config|>",
+  "<|obj:button|>",
+  "<|obj:capability|>",
+  "<|obj:change|>",
+  "<|obj:checkbox|>",
+  "<|obj:checkpoint|>",
+  "<|obj:checkpoint_file|>",
+  "<|obj:claim|>",
+  "<|obj:claim_ledger|>",
+  "<|obj:claim_of_done|>",
+  "<|obj:cluster|>",
+  "<|obj:codebase|>",
+  "<|obj:compute_budget|>",
+  "<|obj:compute_market|>",
+  "<|obj:condition|>",
+  "<|obj:confidence|>",
+  "<|obj:constraint|>",
+  "<|obj:context|>",
+  "<|obj:contract|>",
+  "<|obj:cost_ledger|>",
+  "<|obj:crash|>",
+  "<|obj:credential|>",
+  "<|obj:cron_rule|>",
+  "<|obj:data_corruption|>",
+  "<|obj:dataset|>",
+  "<|obj:decision|>",
+  "<|obj:dependency|>",
+  "<|obj:deployment|>",
+  "<|obj:directory|>",
+  "<|obj:document|>",
+  "<|obj:documentation|>",
+  "<|obj:dollar_budget|>",
+  "<|obj:dom_element|>",
+  "<|obj:egress_channel|>",
+  "<|obj:entity|>",
+  "<|obj:environment_state|>",
+  "<|obj:environment_variable|>",
+  "<|obj:episode|>",
+  "<|obj:episodic_memory|>",
+  "<|obj:error|>",
+  "<|obj:experiment|>",
+  "<|obj:fact|>",
+  "<|obj:file|>",
+  "<|obj:form|>",
+  "<|obj:frontier|>",
+  "<|obj:function|>",
+  "<|obj:goal|>",
+  "<|obj:goal_queue|>",
+  "<|obj:gpu_instance|>",
+  "<|obj:health_check|>",
+  "<|obj:heuristic|>",
+  "<|obj:http_endpoint|>",
+  "<|obj:hypothesis|>",
+  "<|obj:image_block|>",
+  "<|obj:incident|>",
+  "<|obj:inference_server|>",
+  "<|obj:instruction|>",
+  "<|obj:invariant|>",
+  "<|obj:iteration|>",
+  "<|obj:job|>",
+  "<|obj:journal|>",
+  "<|obj:json_document|>",
+  "<|obj:judge|>",
+  "<|obj:kill_switch|>",
+  "<|obj:knowledge_base|>",
+  "<|obj:lease|>",
+  "<|obj:lesson|>",
+  "<|obj:lexical_index|>",
+  "<|obj:link|>",
+  "<|obj:log|>",
+  "<|obj:loop|>",
+  "<|obj:mcp_server|>",
+  "<|obj:menu_item|>",
+  "<|obj:message|>",
+  "<|obj:message_bus|>",
+  "<|obj:metric|>",
+  "<|obj:metric_series|>",
+  "<|obj:metric_target|>",
+  "<|obj:migration|>",
+  "<|obj:milestone|>",
+  "<|obj:model|>",
+  "<|obj:module|>",
+  "<|obj:objective_function|>",
+  "<|obj:observation|>",
+  "<|obj:observation_block|>",
+  "<|obj:offer|>",
+  "<|obj:operator|>",
+  "<|obj:option|>",
+  "<|obj:page|>",
+  "<|obj:patch|>",
+  "<|obj:pattern|>",
+  "<|obj:payload|>",
+  "<|obj:peer_agent|>",
+  "<|obj:performance_hotspot|>",
+  "<|obj:permission_denial|>",
+  "<|obj:plan|>",
+  "<|obj:policy|>",
+  "<|obj:policy_model|>",
+  "<|obj:prefix_cache|>",
+  "<|obj:premise|>",
+  "<|obj:probability|>",
+  "<|obj:problem|>",
+  "<|obj:procedural_memory|>",
+  "<|obj:process|>",
+  "<|obj:project_memory|>",
+  "<|obj:provider|>",
+  "<|obj:pull_request|>",
+  "<|obj:quantity|>",
+  "<|obj:rate_limit|>",
+  "<|obj:record_set|>",
+  "<|obj:reference|>",
+  "<|obj:regression|>",
+  "<|obj:relation|>",
+  "<|obj:reminder|>",
+  "<|obj:report|>",
+  "<|obj:repository|>",
+  "<|obj:request|>",
+  "<|obj:result|>",
+  "<|obj:revenue_event|>",
+  "<|obj:reward_signal|>",
+  "<|obj:risk|>",
+  "<|obj:rubric|>",
+  "<|obj:sandbox|>",
+  "<|obj:schema|>",
+  "<|obj:scratchpad|>",
+  "<|obj:screen|>",
+  "<|obj:screen_region|>",
+  "<|obj:search_tree|>",
+  "<|obj:secret|>",
+  "<|obj:self_model|>",
+  "<|obj:semantic_memory|>",
+  "<|obj:session|>",
+  "<|obj:shared_blackboard|>",
+  "<|obj:shell_command|>",
+  "<|obj:side_effect|>",
+  "<|obj:signal|>",
+  "<|obj:skill|>",
+  "<|obj:skill_candidate|>",
+  "<|obj:skill_invocation|>",
+  "<|obj:skill_library|>",
+  "<|obj:skill_precondition|>",
+  "<|obj:source|>",
+  "<|obj:span|>",
+  "<|obj:status_update|>",
+  "<|obj:step|>",
+  "<|obj:strategy|>",
+  "<|obj:subagent|>",
+  "<|obj:subgoal|>",
+  "<|obj:subroutine|>",
+  "<|obj:subtask_span|>",
+  "<|obj:supervisor|>",
+  "<|obj:symbol|>",
+  "<|obj:system_one|>",
+  "<|obj:system_prompt|>",
+  "<|obj:system_two|>",
+  "<|obj:table|>",
+  "<|obj:task|>",
+  "<|obj:telemetry_event|>",
+  "<|obj:test_suite|>",
+  "<|obj:text_corpus|>",
+  "<|obj:text_field|>",
+  "<|obj:time_budget|>",
+  "<|obj:time_series|>",
+  "<|obj:timeout_event|>",
+  "<|obj:token_budget|>",
+  "<|obj:tool|>",
+  "<|obj:tool_call|>",
+  "<|obj:tool_call_budget|>",
+  "<|obj:tool_definitions|>",
+  "<|obj:tool_input_block|>",
+  "<|obj:tool_result|>",
+  "<|obj:toolset|>",
+  "<|obj:topic|>",
+  "<|obj:trace_record|>",
+  "<|obj:training_example|>",
+  "<|obj:training_job|>",
+  "<|obj:trajectory|>",
+  "<|obj:turn|>",
+  "<|obj:type|>",
+  "<|obj:ui_element|>",
+  "<|obj:uncertainty|>",
+  "<|obj:untrusted_content|>",
+  "<|obj:user|>",
+  "<|obj:user_memory|>",
+  "<|obj:user_preference|>",
+  "<|obj:vector_index|>",
+  "<|obj:vulnerability|>",
+  "<|obj:web|>",
+  "<|obj:web_table|>",
+  "<|obj:window|>",
+  "<|obj:worker|>",
+  "<|obj:workflow|>",
+  "<|obj:working_memory|>",
+  "<|obj:world_model|>"
+ ],
+ "decomposition": {
+  "<|op:ctrl.pause.loop|>": [
+   "<|fam:ctrl|>",
+   "<|verb:pause|>",
+   "<|obj:loop|>"
+  ],
+  "<|op:ctrl.resume.loop|>": [
+   "<|fam:ctrl|>",
+   "<|verb:resume|>",
+   "<|obj:loop|>"
+  ],
+  "<|op:ctrl.inspect.loop|>": [
+   "<|fam:ctrl|>",
+   "<|verb:inspect|>",
+   "<|obj:loop|>"
+  ],
+  "<|op:ctrl.timeout.loop|>": [
+   "<|fam:ctrl|>",
+   "<|verb:timeout|>",
+   "<|obj:loop|>"
+  ],
+  "<|op:ctrl.throttle.loop|>": [
+   "<|fam:ctrl|>",
+   "<|verb:throttle|>",
+   "<|obj:loop|>"
+  ],
+  "<|op:ctrl.simulate.step|>": [
+   "<|fam:ctrl|>",
+   "<|verb:simulate|>",
+   "<|obj:step|>"
+  ],
+  "<|op:ctrl.critique.step|>": [
+   "<|fam:ctrl|>",
+   "<|verb:critique|>",
+   "<|obj:step|>"
+  ],
+  "<|op:ctrl.retry.step|>": [
+   "<|fam:ctrl|>",
+   "<|verb:retry|>",
+   "<|obj:step|>"
+  ],
+  "<|op:ctrl.estimate.step|>": [
+   "<|fam:ctrl|>",
+   "<|verb:estimate|>",
+   "<|obj:step|>"
+  ],
+  "<|op:ctrl.explain.step|>": [
+   "<|fam:ctrl|>",
+   "<|verb:explain|>",
+   "<|obj:step|>"
+  ],
+  "<|op:ctrl.create.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:create|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.fold.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:fold|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.abandon.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:abandon|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.compare.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:compare|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.merge.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:merge|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.score.branch|>": [
+   "<|fam:ctrl|>",
+   "<|verb:score|>",
+   "<|obj:branch|>"
+  ],
+  "<|op:ctrl.create.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:create|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.restore.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:restore|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.list.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:list|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.validate.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:validate|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.diff.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:diff|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.expire.checkpoint|>": [
+   "<|fam:ctrl|>",
+   "<|verb:expire|>",
+   "<|obj:checkpoint|>"
+  ],
+  "<|op:ctrl.create.subroutine|>": [
+   "<|fam:ctrl|>",
+   "<|verb:create|>",
+   "<|obj:subroutine|>"
+  ],
+  "<|op:ctrl.invoke.subroutine|>": [
+   "<|fam:ctrl|>",
+   "<|verb:invoke|>",
+   "<|obj:subroutine|>"
+  ],
+  "<|op:ctrl.validate.subroutine|>": [
+   "<|fam:ctrl|>",
+   "<|verb:validate|>",
+   "<|obj:subroutine|>"
+  ],
+  "<|op:ctrl.update.subroutine|>": [
+   "<|fam:ctrl|>",
+   "<|verb:update|>",
+   "<|obj:subroutine|>"
+  ],
+  "<|op:ctrl.delete.subroutine|>": [
+   "<|fam:ctrl|>",
+   "<|verb:delete|>",
+   "<|obj:subroutine|>"
+  ],
+  "<|op:ctrl.create.condition|>": [
+   "<|fam:ctrl|>",
+   "<|verb:create|>",
+   "<|obj:condition|>"
+  ],
+  "<|op:ctrl.check.condition|>": [
+   "<|fam:ctrl|>",
+   "<|verb:check|>",
+   "<|obj:condition|>"
+  ],
+  "<|op:ctrl.update.condition|>": [
+   "<|fam:ctrl|>",
+   "<|verb:update|>",
+   "<|obj:condition|>"
+  ],
+  "<|op:ctrl.delete.condition|>": [
+   "<|fam:ctrl|>",
+   "<|verb:delete|>",
+   "<|obj:condition|>"
+  ],
+  "<|op:ctrl.explain.condition|>": [
+   "<|fam:ctrl|>",
+   "<|verb:explain|>",
+   "<|obj:condition|>"
+  ],
+  "<|op:ctrl.estimate.iteration|>": [
+   "<|fam:ctrl|>",
+   "<|verb:estimate|>",
+   "<|obj:iteration|>"
+  ],
+  "<|op:ctrl.check.iteration|>": [
+   "<|fam:ctrl|>",
+   "<|verb:check|>",
+   "<|obj:iteration|>"
+  ],
+  "<|op:ctrl.abandon.iteration|>": [
+   "<|fam:ctrl|>",
+   "<|verb:abandon|>",
+   "<|obj:iteration|>"
+  ],
+  "<|op:ctrl.score.iteration|>": [
+   "<|fam:ctrl|>",
+   "<|verb:score|>",
+   "<|obj:iteration|>"
+  ],
+  "<|op:ctrl.critique.iteration|>": [
+   "<|fam:ctrl|>",
+   "<|verb:critique|>",
+   "<|obj:iteration|>"
+  ],
+  "<|op:ctrl.snapshot.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:snapshot|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.summarize.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:summarize|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.fold.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:fold|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.score.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:score|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.reflect.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:reflect|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.trace.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:trace|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:ctrl.replay.trajectory|>": [
+   "<|fam:ctrl|>",
+   "<|verb:replay|>",
+   "<|obj:trajectory|>"
+  ],
+  "<|op:goal.set.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:set|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.refine.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:refine|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.decompose.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:decompose|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.pause.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:pause|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.resume.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:resume|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.complete.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:complete|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.abandon.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:abandon|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.estimate.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:estimate|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.revise.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:revise|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.inspect.goal|>": [
+   "<|fam:goal|>",
+   "<|verb:inspect|>",
+   "<|obj:goal|>"
+  ],
+  "<|op:goal.create.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:create|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.refine.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:refine|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.prioritize.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:prioritize|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.complete.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:complete|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.abandon.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:abandon|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.estimate.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:estimate|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.merge.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:merge|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.split.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:split|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.score.subgoal|>": [
+   "<|fam:goal|>",
+   "<|verb:score|>",
+   "<|obj:subgoal|>"
+  ],
+  "<|op:goal.create.task|>": [
+   "<|fam:goal|>",
+   "<|verb:create|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.update.task|>": [
+   "<|fam:goal|>",
+   "<|verb:update|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.prioritize.task|>": [
+   "<|fam:goal|>",
+   "<|verb:prioritize|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.pause.task|>": [
+   "<|fam:goal|>",
+   "<|verb:pause|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.resume.task|>": [
+   "<|fam:goal|>",
+   "<|verb:resume|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.complete.task|>": [
+   "<|fam:goal|>",
+   "<|verb:complete|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.abandon.task|>": [
+   "<|fam:goal|>",
+   "<|verb:abandon|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.estimate.task|>": [
+   "<|fam:goal|>",
+   "<|verb:estimate|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.lock.task|>": [
+   "<|fam:goal|>",
+   "<|verb:lock|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.unlock.task|>": [
+   "<|fam:goal|>",
+   "<|verb:unlock|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.list.task|>": [
+   "<|fam:goal|>",
+   "<|verb:list|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.archive.task|>": [
+   "<|fam:goal|>",
+   "<|verb:archive|>",
+   "<|obj:task|>"
+  ],
+  "<|op:goal.set.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:set|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.refine.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:refine|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.validate.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:validate|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.check.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:check|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.revise.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:revise|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.explain.acceptance|>": [
+   "<|fam:goal|>",
+   "<|verb:explain|>",
+   "<|obj:acceptance|>"
+  ],
+  "<|op:goal.set.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:set|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.check.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:check|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.revise.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:revise|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.explain.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:explain|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.list.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:list|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.delete.constraint|>": [
+   "<|fam:goal|>",
+   "<|verb:delete|>",
+   "<|obj:constraint|>"
+  ],
+  "<|op:goal.create.milestone|>": [
+   "<|fam:goal|>",
+   "<|verb:create|>",
+   "<|obj:milestone|>"
+  ],
+  "<|op:goal.complete.milestone|>": [
+   "<|fam:goal|>",
+   "<|verb:complete|>",
+   "<|obj:milestone|>"
+  ],
+  "<|op:goal.estimate.milestone|>": [
+   "<|fam:goal|>",
+   "<|verb:estimate|>",
+   "<|obj:milestone|>"
+  ],
+  "<|op:goal.list.milestone|>": [
+   "<|fam:goal|>",
+   "<|verb:list|>",
+   "<|obj:milestone|>"
+  ],
+  "<|op:goal.revise.milestone|>": [
+   "<|fam:goal|>",
+   "<|verb:revise|>",
+   "<|obj:milestone|>"
+  ],
+  "<|op:goal.set.objective_function|>": [
+   "<|fam:goal|>",
+   "<|verb:set|>",
+   "<|obj:objective_function|>"
+  ],
+  "<|op:goal.score.objective_function|>": [
+   "<|fam:goal|>",
+   "<|verb:score|>",
+   "<|obj:objective_function|>"
+  ],
+  "<|op:goal.compare.objective_function|>": [
+   "<|fam:goal|>",
+   "<|verb:compare|>",
+   "<|obj:objective_function|>"
+  ],
+  "<|op:goal.revise.objective_function|>": [
+   "<|fam:goal|>",
+   "<|verb:revise|>",
+   "<|obj:objective_function|>"
+  ],
+  "<|op:goal.explain.objective_function|>": [
+   "<|fam:goal|>",
+   "<|verb:explain|>",
+   "<|obj:objective_function|>"
+  ],
+  "<|op:goal.inspect.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:inspect|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:goal.prioritize.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:prioritize|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:goal.list.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:list|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:goal.snapshot.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:snapshot|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:goal.restore.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:restore|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:goal.validate.goal_queue|>": [
+   "<|fam:goal|>",
+   "<|verb:validate|>",
+   "<|obj:goal_queue|>"
+  ],
+  "<|op:plan.create.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:create|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.refine.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:refine|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.decompose.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:decompose|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.commit.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:commit|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.revise.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:revise|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.simulate.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:simulate|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.critique.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:critique|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.score.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:score|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.validate.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:validate|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.diff.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:diff|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.snapshot.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:snapshot|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.restore.plan|>": [
+   "<|fam:plan|>",
+   "<|verb:restore|>",
+   "<|obj:plan|>"
+  ],
+  "<|op:plan.create.option|>": [
+   "<|fam:plan|>",
+   "<|verb:create|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.rank.option|>": [
+   "<|fam:plan|>",
+   "<|verb:rank|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.compare.option|>": [
+   "<|fam:plan|>",
+   "<|verb:compare|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.simulate.option|>": [
+   "<|fam:plan|>",
+   "<|verb:simulate|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.score.option|>": [
+   "<|fam:plan|>",
+   "<|verb:score|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.select.option|>": [
+   "<|fam:plan|>",
+   "<|verb:select|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.critique.option|>": [
+   "<|fam:plan|>",
+   "<|verb:critique|>",
+   "<|obj:option|>"
+  ],
+  "<|op:plan.create.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:create|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.rank.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:rank|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.verify.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:verify|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.revise.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:revise|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.abandon.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:abandon|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.score.hypothesis|>": [
+   "<|fam:plan|>",
+   "<|verb:score|>",
+   "<|obj:hypothesis|>"
+  ],
+  "<|op:plan.create.search_tree|>": [
+   "<|fam:plan|>",
+   "<|verb:create|>",
+   "<|obj:search_tree|>"
+  ],
+  "<|op:plan.inspect.search_tree|>": [
+   "<|fam:plan|>",
+   "<|verb:inspect|>",
+   "<|obj:search_tree|>"
+  ],
+  "<|op:plan.fold.search_tree|>": [
+   "<|fam:plan|>",
+   "<|verb:fold|>",
+   "<|obj:search_tree|>"
+  ],
+  "<|op:plan.score.search_tree|>": [
+   "<|fam:plan|>",
+   "<|verb:score|>",
+   "<|obj:search_tree|>"
+  ],
+  "<|op:plan.summarize.search_tree|>": [
+   "<|fam:plan|>",
+   "<|verb:summarize|>",
+   "<|obj:search_tree|>"
+  ],
+  "<|op:plan.rank.frontier|>": [
+   "<|fam:plan|>",
+   "<|verb:rank|>",
+   "<|obj:frontier|>"
+  ],
+  "<|op:plan.list.frontier|>": [
+   "<|fam:plan|>",
+   "<|verb:list|>",
+   "<|obj:frontier|>"
+  ],
+  "<|op:plan.merge.frontier|>": [
+   "<|fam:plan|>",
+   "<|verb:merge|>",
+   "<|obj:frontier|>"
+  ],
+  "<|op:plan.measure.frontier|>": [
+   "<|fam:plan|>",
+   "<|verb:measure|>",
+   "<|obj:frontier|>"
+  ],
+  "<|op:plan.create.heuristic|>": [
+   "<|fam:plan|>",
+   "<|verb:create|>",
+   "<|obj:heuristic|>"
+  ],
+  "<|op:plan.score.heuristic|>": [
+   "<|fam:plan|>",
+   "<|verb:score|>",
+   "<|obj:heuristic|>"
+  ],
+  "<|op:plan.revise.heuristic|>": [
+   "<|fam:plan|>",
+   "<|verb:revise|>",
+   "<|obj:heuristic|>"
+  ],
+  "<|op:plan.explain.heuristic|>": [
+   "<|fam:plan|>",
+   "<|verb:explain|>",
+   "<|obj:heuristic|>"
+  ],
+  "<|op:plan.delete.heuristic|>": [
+   "<|fam:plan|>",
+   "<|verb:delete|>",
+   "<|obj:heuristic|>"
+  ],
+  "<|op:plan.update.world_model|>": [
+   "<|fam:plan|>",
+   "<|verb:update|>",
+   "<|obj:world_model|>"
+  ],
+  "<|op:plan.simulate.world_model|>": [
+   "<|fam:plan|>",
+   "<|verb:simulate|>",
+   "<|obj:world_model|>"
+  ],
+  "<|op:plan.validate.world_model|>": [
+   "<|fam:plan|>",
+   "<|verb:validate|>",
+   "<|obj:world_model|>"
+  ],
+  "<|op:plan.inspect.world_model|>": [
+   "<|fam:plan|>",
+   "<|verb:inspect|>",
+   "<|obj:world_model|>"
+  ],
+  "<|op:plan.revise.world_model|>": [
+   "<|fam:plan|>",
+   "<|verb:revise|>",
+   "<|obj:world_model|>"
+  ],
+  "<|op:perc.read.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:read|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.parse.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:parse|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.summarize.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:summarize|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.classify.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:classify|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.compress.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:compress|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.check.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:check|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.cite.observation|>": [
+   "<|fam:perc|>",
+   "<|verb:cite|>",
+   "<|obj:observation|>"
+  ],
+  "<|op:perc.watch.signal|>": [
+   "<|fam:perc|>",
+   "<|verb:watch|>",
+   "<|obj:signal|>"
+  ],
+  "<|op:perc.unwatch.signal|>": [
+   "<|fam:perc|>",
+   "<|verb:unwatch|>",
+   "<|obj:signal|>"
+  ],
+  "<|op:perc.classify.signal|>": [
+   "<|fam:perc|>",
+   "<|verb:classify|>",
+   "<|obj:signal|>"
+  ],
+  "<|op:perc.suppress.signal|>": [
+   "<|fam:perc|>",
+   "<|verb:suppress|>",
+   "<|obj:signal|>"
+  ],
+  "<|op:perc.rank.signal|>": [
+   "<|fam:perc|>",
+   "<|verb:rank|>",
+   "<|obj:signal|>"
+  ],
+  "<|op:perc.read.log|>": [
+   "<|fam:perc|>",
+   "<|verb:read|>",
+   "<|obj:log|>"
+  ],
+  "<|op:perc.search.log|>": [
+   "<|fam:perc|>",
+   "<|verb:search|>",
+   "<|obj:log|>"
+  ],
+  "<|op:perc.summarize.log|>": [
+   "<|fam:perc|>",
+   "<|verb:summarize|>",
+   "<|obj:log|>"
+  ],
+  "<|op:perc.watch.log|>": [
+   "<|fam:perc|>",
+   "<|verb:watch|>",
+   "<|obj:log|>"
+  ],
+  "<|op:perc.tag.log|>": [
+   "<|fam:perc|>",
+   "<|verb:tag|>",
+   "<|obj:log|>"
+  ],
+  "<|op:perc.read.metric|>": [
+   "<|fam:perc|>",
+   "<|verb:read|>",
+   "<|obj:metric|>"
+  ],
+  "<|op:perc.watch.metric|>": [
+   "<|fam:perc|>",
+   "<|verb:watch|>",
+   "<|obj:metric|>"
+  ],
+  "<|op:perc.compare.metric|>": [
+   "<|fam:perc|>",
+   "<|verb:compare|>",
+   "<|obj:metric|>"
+  ],
+  "<|op:perc.forecast.metric|>": [
+   "<|fam:perc|>",
+   "<|verb:forecast|>",
+   "<|obj:metric|>"
+  ],
+  "<|op:perc.threshold.metric|>": [
+   "<|fam:perc|>",
+   "<|verb:threshold|>",
+   "<|obj:metric|>"
+  ],
+  "<|op:perc.capture.screen|>": [
+   "<|fam:perc|>",
+   "<|verb:capture|>",
+   "<|obj:screen|>"
+  ],
+  "<|op:perc.zoom.screen|>": [
+   "<|fam:perc|>",
+   "<|verb:zoom|>",
+   "<|obj:screen|>"
+  ],
+  "<|op:perc.locate.screen|>": [
+   "<|fam:perc|>",
+   "<|verb:locate|>",
+   "<|obj:screen|>"
+  ],
+  "<|op:perc.summarize.screen|>": [
+   "<|fam:perc|>",
+   "<|verb:summarize|>",
+   "<|obj:screen|>"
+  ],
+  "<|op:perc.diff.screen|>": [
+   "<|fam:perc|>",
+   "<|verb:diff|>",
+   "<|obj:screen|>"
+  ],
+  "<|op:perc.read.document|>": [
+   "<|fam:perc|>",
+   "<|verb:read|>",
+   "<|obj:document|>"
+  ],
+  "<|op:perc.page.document|>": [
+   "<|fam:perc|>",
+   "<|verb:page|>",
+   "<|obj:document|>"
+  ],
+  "<|op:perc.search.document|>": [
+   "<|fam:perc|>",
+   "<|verb:search|>",
+   "<|obj:document|>"
+  ],
+  "<|op:perc.summarize.document|>": [
+   "<|fam:perc|>",
+   "<|verb:summarize|>",
+   "<|obj:document|>"
+  ],
+  "<|op:perc.cite.document|>": [
+   "<|fam:perc|>",
+   "<|verb:cite|>",
+   "<|obj:document|>"
+  ],
+  "<|op:perc.split.document|>": [
+   "<|fam:perc|>",
+   "<|verb:split|>",
+   "<|obj:document|>"
+  ],
+  "<|op:act.discover.tool|>": [
+   "<|fam:act|>",
+   "<|verb:discover|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.select.tool|>": [
+   "<|fam:act|>",
+   "<|verb:select|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.invoke.tool|>": [
+   "<|fam:act|>",
+   "<|verb:invoke|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.dry_run.tool|>": [
+   "<|fam:act|>",
+   "<|verb:dry_run|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.describe.tool|>": [
+   "<|fam:act|>",
+   "<|verb:describe|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.register.tool|>": [
+   "<|fam:act|>",
+   "<|verb:register|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.unregister.tool|>": [
+   "<|fam:act|>",
+   "<|verb:unregister|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.throttle.tool|>": [
+   "<|fam:act|>",
+   "<|verb:throttle|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.cache.tool|>": [
+   "<|fam:act|>",
+   "<|verb:cache|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.benchmark.tool|>": [
+   "<|fam:act|>",
+   "<|verb:benchmark|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.list.tool|>": [
+   "<|fam:act|>",
+   "<|verb:list|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.rank.tool|>": [
+   "<|fam:act|>",
+   "<|verb:rank|>",
+   "<|obj:tool|>"
+  ],
+  "<|op:act.bind.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:bind|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.invoke.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:invoke|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.cancel.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:cancel|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.await.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:await|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.retry.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:retry|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.parse.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:parse|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.check.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:check|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.rollback.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:rollback|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.batch.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:batch|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.parallelize.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:parallelize|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.sequence.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:sequence|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.explain.tool_call|>": [
+   "<|fam:act|>",
+   "<|verb:explain|>",
+   "<|obj:tool_call|>"
+  ],
+  "<|op:act.parse.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:parse|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.check.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:check|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.summarize.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:summarize|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.mask.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:mask|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.cite.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:cite|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.classify.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:classify|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.cache.tool_result|>": [
+   "<|fam:act|>",
+   "<|verb:cache|>",
+   "<|obj:tool_result|>"
+  ],
+  "<|op:act.bind.argument|>": [
+   "<|fam:act|>",
+   "<|verb:bind|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:act.validate.argument|>": [
+   "<|fam:act|>",
+   "<|verb:validate|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:act.update.argument|>": [
+   "<|fam:act|>",
+   "<|verb:update|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:act.explain.argument|>": [
+   "<|fam:act|>",
+   "<|verb:explain|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:act.dry_run.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:dry_run|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.check.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:check|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.rollback.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:rollback|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.audit.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:audit|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.explain.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:explain|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.attest.side_effect|>": [
+   "<|fam:act|>",
+   "<|verb:attest|>",
+   "<|obj:side_effect|>"
+  ],
+  "<|op:act.discover.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:discover|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.register.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:register|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.unregister.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:unregister|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.inspect.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:inspect|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.benchmark.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:benchmark|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.list.mcp_server|>": [
+   "<|fam:act|>",
+   "<|verb:list|>",
+   "<|obj:mcp_server|>"
+  ],
+  "<|op:act.load.toolset|>": [
+   "<|fam:act|>",
+   "<|verb:load|>",
+   "<|obj:toolset|>"
+  ],
+  "<|op:act.evict.toolset|>": [
+   "<|fam:act|>",
+   "<|verb:evict|>",
+   "<|obj:toolset|>"
+  ],
+  "<|op:act.list.toolset|>": [
+   "<|fam:act|>",
+   "<|verb:list|>",
+   "<|obj:toolset|>"
+  ],
+  "<|op:act.measure.toolset|>": [
+   "<|fam:act|>",
+   "<|verb:measure|>",
+   "<|obj:toolset|>"
+  ],
+  "<|op:act.stabilize.toolset|>": [
+   "<|fam:act|>",
+   "<|verb:stabilize|>",
+   "<|obj:toolset|>"
+  ],
+  "<|op:ctx.measure.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.budget.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:budget|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.inspect.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:inspect|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.snapshot.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:snapshot|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.compress.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:compress|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.stabilize.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:stabilize|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.summarize.context|>": [
+   "<|fam:ctx|>",
+   "<|verb:summarize|>",
+   "<|obj:context|>"
+  ],
+  "<|op:ctx.mask.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:mask|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.unmask.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:unmask|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.evict.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:evict|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.compress.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:compress|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.pin.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:pin|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.unpin.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:unpin|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.measure.observation_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:observation_block|>"
+  ],
+  "<|op:ctx.mask.tool_input_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:mask|>",
+   "<|obj:tool_input_block|>"
+  ],
+  "<|op:ctx.unmask.tool_input_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:unmask|>",
+   "<|obj:tool_input_block|>"
+  ],
+  "<|op:ctx.measure.tool_input_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:tool_input_block|>"
+  ],
+  "<|op:ctx.mask.image_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:mask|>",
+   "<|obj:image_block|>"
+  ],
+  "<|op:ctx.evict.image_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:evict|>",
+   "<|obj:image_block|>"
+  ],
+  "<|op:ctx.measure.image_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:image_block|>"
+  ],
+  "<|op:ctx.capture.image_block|>": [
+   "<|fam:ctx|>",
+   "<|verb:capture|>",
+   "<|obj:image_block|>"
+  ],
+  "<|op:ctx.load.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:load|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.evict.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:evict|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.pin.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:pin|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.unpin.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:unpin|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.measure.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.summarize.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:summarize|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.archive.message|>": [
+   "<|fam:ctx|>",
+   "<|verb:archive|>",
+   "<|obj:message|>"
+  ],
+  "<|op:ctx.fold.subtask_span|>": [
+   "<|fam:ctx|>",
+   "<|verb:fold|>",
+   "<|obj:subtask_span|>"
+  ],
+  "<|op:ctx.summarize.subtask_span|>": [
+   "<|fam:ctx|>",
+   "<|verb:summarize|>",
+   "<|obj:subtask_span|>"
+  ],
+  "<|op:ctx.evict.subtask_span|>": [
+   "<|fam:ctx|>",
+   "<|verb:evict|>",
+   "<|obj:subtask_span|>"
+  ],
+  "<|op:ctx.archive.subtask_span|>": [
+   "<|fam:ctx|>",
+   "<|verb:archive|>",
+   "<|obj:subtask_span|>"
+  ],
+  "<|op:ctx.inspect.system_prompt|>": [
+   "<|fam:ctx|>",
+   "<|verb:inspect|>",
+   "<|obj:system_prompt|>"
+  ],
+  "<|op:ctx.measure.system_prompt|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:system_prompt|>"
+  ],
+  "<|op:ctx.stabilize.system_prompt|>": [
+   "<|fam:ctx|>",
+   "<|verb:stabilize|>",
+   "<|obj:system_prompt|>"
+  ],
+  "<|op:ctx.update.system_prompt|>": [
+   "<|fam:ctx|>",
+   "<|verb:update|>",
+   "<|obj:system_prompt|>"
+  ],
+  "<|op:ctx.measure.tool_definitions|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:tool_definitions|>"
+  ],
+  "<|op:ctx.stabilize.tool_definitions|>": [
+   "<|fam:ctx|>",
+   "<|verb:stabilize|>",
+   "<|obj:tool_definitions|>"
+  ],
+  "<|op:ctx.load.tool_definitions|>": [
+   "<|fam:ctx|>",
+   "<|verb:load|>",
+   "<|obj:tool_definitions|>"
+  ],
+  "<|op:ctx.evict.tool_definitions|>": [
+   "<|fam:ctx|>",
+   "<|verb:evict|>",
+   "<|obj:tool_definitions|>"
+  ],
+  "<|op:ctx.inspect.prefix_cache|>": [
+   "<|fam:ctx|>",
+   "<|verb:inspect|>",
+   "<|obj:prefix_cache|>"
+  ],
+  "<|op:ctx.stabilize.prefix_cache|>": [
+   "<|fam:ctx|>",
+   "<|verb:stabilize|>",
+   "<|obj:prefix_cache|>"
+  ],
+  "<|op:ctx.measure.prefix_cache|>": [
+   "<|fam:ctx|>",
+   "<|verb:measure|>",
+   "<|obj:prefix_cache|>"
+  ],
+  "<|op:ctx.page.archive_page|>": [
+   "<|fam:ctx|>",
+   "<|verb:page|>",
+   "<|obj:archive_page|>"
+  ],
+  "<|op:ctx.search.archive_page|>": [
+   "<|fam:ctx|>",
+   "<|verb:search|>",
+   "<|obj:archive_page|>"
+  ],
+  "<|op:ctx.load.archive_page|>": [
+   "<|fam:ctx|>",
+   "<|verb:load|>",
+   "<|obj:archive_page|>"
+  ],
+  "<|op:ctx.cite.archive_page|>": [
+   "<|fam:ctx|>",
+   "<|verb:cite|>",
+   "<|obj:archive_page|>"
+  ],
+  "<|op:mem.store.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.recall.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.forget.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:forget|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.summarize.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:summarize|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.pin.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:pin|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.unpin.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:unpin|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.measure.working_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:measure|>",
+   "<|obj:working_memory|>"
+  ],
+  "<|op:mem.store.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.recall.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.search.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.forget.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:forget|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.consolidate.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:consolidate|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.summarize.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:summarize|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.index.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.reconcile.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:reconcile|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.replay.episodic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:replay|>",
+   "<|obj:episodic_memory|>"
+  ],
+  "<|op:mem.store.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.recall.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.search.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.forget.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:forget|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.consolidate.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:consolidate|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.index.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.reconcile.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:reconcile|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.cite.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:cite|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.expire.semantic_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:expire|>",
+   "<|obj:semantic_memory|>"
+  ],
+  "<|op:mem.store.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.recall.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.search.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.consolidate.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:consolidate|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.index.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.update.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:update|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.delete.procedural_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:delete|>",
+   "<|obj:procedural_memory|>"
+  ],
+  "<|op:mem.store.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.recall.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.search.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.forget.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:forget|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.update.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:update|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.reconcile.user_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:reconcile|>",
+   "<|obj:user_memory|>"
+  ],
+  "<|op:mem.store.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.recall.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.search.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.forget.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:forget|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.update.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:update|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.reconcile.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:reconcile|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.expire.project_memory|>": [
+   "<|fam:mem|>",
+   "<|verb:expire|>",
+   "<|obj:project_memory|>"
+  ],
+  "<|op:mem.write.scratchpad|>": [
+   "<|fam:mem|>",
+   "<|verb:write|>",
+   "<|obj:scratchpad|>"
+  ],
+  "<|op:mem.read.scratchpad|>": [
+   "<|fam:mem|>",
+   "<|verb:read|>",
+   "<|obj:scratchpad|>"
+  ],
+  "<|op:mem.clear.scratchpad|>": [
+   "<|fam:mem|>",
+   "<|verb:clear|>",
+   "<|obj:scratchpad|>"
+  ],
+  "<|op:mem.summarize.scratchpad|>": [
+   "<|fam:mem|>",
+   "<|verb:summarize|>",
+   "<|obj:scratchpad|>"
+  ],
+  "<|op:mem.store.blob_store|>": [
+   "<|fam:mem|>",
+   "<|verb:store|>",
+   "<|obj:blob_store|>"
+  ],
+  "<|op:mem.recall.blob_store|>": [
+   "<|fam:mem|>",
+   "<|verb:recall|>",
+   "<|obj:blob_store|>"
+  ],
+  "<|op:mem.stat.blob_store|>": [
+   "<|fam:mem|>",
+   "<|verb:stat|>",
+   "<|obj:blob_store|>"
+  ],
+  "<|op:mem.index.blob_store|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:blob_store|>"
+  ],
+  "<|op:mem.index.vector_index|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:vector_index|>"
+  ],
+  "<|op:mem.search.vector_index|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:vector_index|>"
+  ],
+  "<|op:mem.update.vector_index|>": [
+   "<|fam:mem|>",
+   "<|verb:update|>",
+   "<|obj:vector_index|>"
+  ],
+  "<|op:mem.measure.vector_index|>": [
+   "<|fam:mem|>",
+   "<|verb:measure|>",
+   "<|obj:vector_index|>"
+  ],
+  "<|op:mem.index.lexical_index|>": [
+   "<|fam:mem|>",
+   "<|verb:index|>",
+   "<|obj:lexical_index|>"
+  ],
+  "<|op:mem.search.lexical_index|>": [
+   "<|fam:mem|>",
+   "<|verb:search|>",
+   "<|obj:lexical_index|>"
+  ],
+  "<|op:mem.update.lexical_index|>": [
+   "<|fam:mem|>",
+   "<|verb:update|>",
+   "<|obj:lexical_index|>"
+  ],
+  "<|op:mem.measure.lexical_index|>": [
+   "<|fam:mem|>",
+   "<|verb:measure|>",
+   "<|obj:lexical_index|>"
+  ],
+  "<|op:know.search.web|>": [
+   "<|fam:know|>",
+   "<|verb:search|>",
+   "<|obj:web|>"
+  ],
+  "<|op:know.fetch.web|>": [
+   "<|fam:know|>",
+   "<|verb:fetch|>",
+   "<|obj:web|>"
+  ],
+  "<|op:know.summarize.web|>": [
+   "<|fam:know|>",
+   "<|verb:summarize|>",
+   "<|obj:web|>"
+  ],
+  "<|op:know.cite.web|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:web|>"
+  ],
+  "<|op:know.verify.web|>": [
+   "<|fam:know|>",
+   "<|verb:verify|>",
+   "<|obj:web|>"
+  ],
+  "<|op:know.search.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:search|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.index.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:index|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.summarize.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:summarize|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.trace.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:trace|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.cite.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.audit.codebase|>": [
+   "<|fam:know|>",
+   "<|verb:audit|>",
+   "<|obj:codebase|>"
+  ],
+  "<|op:know.search.documentation|>": [
+   "<|fam:know|>",
+   "<|verb:search|>",
+   "<|obj:documentation|>"
+  ],
+  "<|op:know.fetch.documentation|>": [
+   "<|fam:know|>",
+   "<|verb:fetch|>",
+   "<|obj:documentation|>"
+  ],
+  "<|op:know.page.documentation|>": [
+   "<|fam:know|>",
+   "<|verb:page|>",
+   "<|obj:documentation|>"
+  ],
+  "<|op:know.cite.documentation|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:documentation|>"
+  ],
+  "<|op:know.summarize.documentation|>": [
+   "<|fam:know|>",
+   "<|verb:summarize|>",
+   "<|obj:documentation|>"
+  ],
+  "<|op:know.search.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:search|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.store.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:store|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.update.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:update|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.cite.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.reconcile.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:reconcile|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.index.knowledge_base|>": [
+   "<|fam:know|>",
+   "<|verb:index|>",
+   "<|obj:knowledge_base|>"
+  ],
+  "<|op:know.load.dataset|>": [
+   "<|fam:know|>",
+   "<|verb:load|>",
+   "<|obj:dataset|>"
+  ],
+  "<|op:know.inspect.dataset|>": [
+   "<|fam:know|>",
+   "<|verb:inspect|>",
+   "<|obj:dataset|>"
+  ],
+  "<|op:know.search.dataset|>": [
+   "<|fam:know|>",
+   "<|verb:search|>",
+   "<|obj:dataset|>"
+  ],
+  "<|op:know.summarize.dataset|>": [
+   "<|fam:know|>",
+   "<|verb:summarize|>",
+   "<|obj:dataset|>"
+  ],
+  "<|op:know.validate.dataset|>": [
+   "<|fam:know|>",
+   "<|verb:validate|>",
+   "<|obj:dataset|>"
+  ],
+  "<|op:know.rank.source|>": [
+   "<|fam:know|>",
+   "<|verb:rank|>",
+   "<|obj:source|>"
+  ],
+  "<|op:know.verify.source|>": [
+   "<|fam:know|>",
+   "<|verb:verify|>",
+   "<|obj:source|>"
+  ],
+  "<|op:know.cite.source|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:source|>"
+  ],
+  "<|op:know.compare.source|>": [
+   "<|fam:know|>",
+   "<|verb:compare|>",
+   "<|obj:source|>"
+  ],
+  "<|op:know.tag.source|>": [
+   "<|fam:know|>",
+   "<|verb:tag|>",
+   "<|obj:source|>"
+  ],
+  "<|op:know.verify.claim|>": [
+   "<|fam:know|>",
+   "<|verb:verify|>",
+   "<|obj:claim|>"
+  ],
+  "<|op:know.cite.claim|>": [
+   "<|fam:know|>",
+   "<|verb:cite|>",
+   "<|obj:claim|>"
+  ],
+  "<|op:know.quantify.claim|>": [
+   "<|fam:know|>",
+   "<|verb:quantify|>",
+   "<|obj:claim|>"
+  ],
+  "<|op:know.question.claim|>": [
+   "<|fam:know|>",
+   "<|verb:question|>",
+   "<|obj:claim|>"
+  ],
+  "<|op:know.score.claim|>": [
+   "<|fam:know|>",
+   "<|verb:score|>",
+   "<|obj:claim|>"
+  ],
+  "<|op:verif.verify.result|>": [
+   "<|fam:verif|>",
+   "<|verb:verify|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.test.result|>": [
+   "<|fam:verif|>",
+   "<|verb:test|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.assert.result|>": [
+   "<|fam:verif|>",
+   "<|verb:assert|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.check.result|>": [
+   "<|fam:verif|>",
+   "<|verb:check|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.attest.result|>": [
+   "<|fam:verif|>",
+   "<|verb:attest|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.reproduce.result|>": [
+   "<|fam:verif|>",
+   "<|verb:reproduce|>",
+   "<|obj:result|>"
+  ],
+  "<|op:verif.test.change|>": [
+   "<|fam:verif|>",
+   "<|verb:test|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.audit.change|>": [
+   "<|fam:verif|>",
+   "<|verb:audit|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.diff.change|>": [
+   "<|fam:verif|>",
+   "<|verb:diff|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.verify.change|>": [
+   "<|fam:verif|>",
+   "<|verb:verify|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.rollback.change|>": [
+   "<|fam:verif|>",
+   "<|verb:rollback|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.attest.change|>": [
+   "<|fam:verif|>",
+   "<|verb:attest|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.bisect.change|>": [
+   "<|fam:verif|>",
+   "<|verb:bisect|>",
+   "<|obj:change|>"
+  ],
+  "<|op:verif.test.build|>": [
+   "<|fam:verif|>",
+   "<|verb:test|>",
+   "<|obj:build|>"
+  ],
+  "<|op:verif.verify.build|>": [
+   "<|fam:verif|>",
+   "<|verb:verify|>",
+   "<|obj:build|>"
+  ],
+  "<|op:verif.reproduce.build|>": [
+   "<|fam:verif|>",
+   "<|verb:reproduce|>",
+   "<|obj:build|>"
+  ],
+  "<|op:verif.bisect.build|>": [
+   "<|fam:verif|>",
+   "<|verb:bisect|>",
+   "<|obj:build|>"
+  ],
+  "<|op:verif.inspect.build|>": [
+   "<|fam:verif|>",
+   "<|verb:inspect|>",
+   "<|obj:build|>"
+  ],
+  "<|op:verif.test.test_suite|>": [
+   "<|fam:verif|>",
+   "<|verb:test|>",
+   "<|obj:test_suite|>"
+  ],
+  "<|op:verif.list.test_suite|>": [
+   "<|fam:verif|>",
+   "<|verb:list|>",
+   "<|obj:test_suite|>"
+  ],
+  "<|op:verif.create.test_suite|>": [
+   "<|fam:verif|>",
+   "<|verb:create|>",
+   "<|obj:test_suite|>"
+  ],
+  "<|op:verif.update.test_suite|>": [
+   "<|fam:verif|>",
+   "<|verb:update|>",
+   "<|obj:test_suite|>"
+  ],
+  "<|op:verif.measure.test_suite|>": [
+   "<|fam:verif|>",
+   "<|verb:measure|>",
+   "<|obj:test_suite|>"
+  ],
+  "<|op:verif.create.invariant|>": [
+   "<|fam:verif|>",
+   "<|verb:create|>",
+   "<|obj:invariant|>"
+  ],
+  "<|op:verif.assert.invariant|>": [
+   "<|fam:verif|>",
+   "<|verb:assert|>",
+   "<|obj:invariant|>"
+  ],
+  "<|op:verif.check.invariant|>": [
+   "<|fam:verif|>",
+   "<|verb:check|>",
+   "<|obj:invariant|>"
+  ],
+  "<|op:verif.explain.invariant|>": [
+   "<|fam:verif|>",
+   "<|verb:explain|>",
+   "<|obj:invariant|>"
+  ],
+  "<|op:verif.list.invariant|>": [
+   "<|fam:verif|>",
+   "<|verb:list|>",
+   "<|obj:invariant|>"
+  ],
+  "<|op:verif.detect.regression|>": [
+   "<|fam:verif|>",
+   "<|verb:detect|>",
+   "<|obj:regression|>"
+  ],
+  "<|op:verif.reproduce.regression|>": [
+   "<|fam:verif|>",
+   "<|verb:reproduce|>",
+   "<|obj:regression|>"
+  ],
+  "<|op:verif.bisect.regression|>": [
+   "<|fam:verif|>",
+   "<|verb:bisect|>",
+   "<|obj:regression|>"
+  ],
+  "<|op:verif.diagnose.regression|>": [
+   "<|fam:verif|>",
+   "<|verb:diagnose|>",
+   "<|obj:regression|>"
+  ],
+  "<|op:verif.report.regression|>": [
+   "<|fam:verif|>",
+   "<|verb:report|>",
+   "<|obj:regression|>"
+  ],
+  "<|op:verif.verify.claim_of_done|>": [
+   "<|fam:verif|>",
+   "<|verb:verify|>",
+   "<|obj:claim_of_done|>"
+  ],
+  "<|op:verif.question.claim_of_done|>": [
+   "<|fam:verif|>",
+   "<|verb:question|>",
+   "<|obj:claim_of_done|>"
+  ],
+  "<|op:verif.attest.claim_of_done|>": [
+   "<|fam:verif|>",
+   "<|verb:attest|>",
+   "<|obj:claim_of_done|>"
+  ],
+  "<|op:verif.critique.claim_of_done|>": [
+   "<|fam:verif|>",
+   "<|verb:critique|>",
+   "<|obj:claim_of_done|>"
+  ],
+  "<|op:err.detect.error|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.classify.error|>": [
+   "<|fam:err|>",
+   "<|verb:classify|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.diagnose.error|>": [
+   "<|fam:err|>",
+   "<|verb:diagnose|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.mitigate.error|>": [
+   "<|fam:err|>",
+   "<|verb:mitigate|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.recover.error|>": [
+   "<|fam:err|>",
+   "<|verb:recover|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.report.error|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.suppress.error|>": [
+   "<|fam:err|>",
+   "<|verb:suppress|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.learn_from.error|>": [
+   "<|fam:err|>",
+   "<|verb:learn_from|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.trace.error|>": [
+   "<|fam:err|>",
+   "<|verb:trace|>",
+   "<|obj:error|>"
+  ],
+  "<|op:err.detect.timeout_event|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:timeout_event|>"
+  ],
+  "<|op:err.classify.timeout_event|>": [
+   "<|fam:err|>",
+   "<|verb:classify|>",
+   "<|obj:timeout_event|>"
+  ],
+  "<|op:err.mitigate.timeout_event|>": [
+   "<|fam:err|>",
+   "<|verb:mitigate|>",
+   "<|obj:timeout_event|>"
+  ],
+  "<|op:err.recover.timeout_event|>": [
+   "<|fam:err|>",
+   "<|verb:recover|>",
+   "<|obj:timeout_event|>"
+  ],
+  "<|op:err.report.timeout_event|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:timeout_event|>"
+  ],
+  "<|op:err.detect.crash|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:crash|>"
+  ],
+  "<|op:err.diagnose.crash|>": [
+   "<|fam:err|>",
+   "<|verb:diagnose|>",
+   "<|obj:crash|>"
+  ],
+  "<|op:err.recover.crash|>": [
+   "<|fam:err|>",
+   "<|verb:recover|>",
+   "<|obj:crash|>"
+  ],
+  "<|op:err.report.crash|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:crash|>"
+  ],
+  "<|op:err.reproduce.crash|>": [
+   "<|fam:err|>",
+   "<|verb:reproduce|>",
+   "<|obj:crash|>"
+  ],
+  "<|op:err.detect.permission_denial|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:permission_denial|>"
+  ],
+  "<|op:err.classify.permission_denial|>": [
+   "<|fam:err|>",
+   "<|verb:classify|>",
+   "<|obj:permission_denial|>"
+  ],
+  "<|op:err.explain.permission_denial|>": [
+   "<|fam:err|>",
+   "<|verb:explain|>",
+   "<|obj:permission_denial|>"
+  ],
+  "<|op:err.report.permission_denial|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:permission_denial|>"
+  ],
+  "<|op:err.detect.rate_limit|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:rate_limit|>"
+  ],
+  "<|op:err.mitigate.rate_limit|>": [
+   "<|fam:err|>",
+   "<|verb:mitigate|>",
+   "<|obj:rate_limit|>"
+  ],
+  "<|op:err.recover.rate_limit|>": [
+   "<|fam:err|>",
+   "<|verb:recover|>",
+   "<|obj:rate_limit|>"
+  ],
+  "<|op:err.forecast.rate_limit|>": [
+   "<|fam:err|>",
+   "<|verb:forecast|>",
+   "<|obj:rate_limit|>"
+  ],
+  "<|op:err.detect.data_corruption|>": [
+   "<|fam:err|>",
+   "<|verb:detect|>",
+   "<|obj:data_corruption|>"
+  ],
+  "<|op:err.diagnose.data_corruption|>": [
+   "<|fam:err|>",
+   "<|verb:diagnose|>",
+   "<|obj:data_corruption|>"
+  ],
+  "<|op:err.recover.data_corruption|>": [
+   "<|fam:err|>",
+   "<|verb:recover|>",
+   "<|obj:data_corruption|>"
+  ],
+  "<|op:err.report.data_corruption|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:data_corruption|>"
+  ],
+  "<|op:err.reproduce.data_corruption|>": [
+   "<|fam:err|>",
+   "<|verb:reproduce|>",
+   "<|obj:data_corruption|>"
+  ],
+  "<|op:err.create.incident|>": [
+   "<|fam:err|>",
+   "<|verb:create|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:err.diagnose.incident|>": [
+   "<|fam:err|>",
+   "<|verb:diagnose|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:err.mitigate.incident|>": [
+   "<|fam:err|>",
+   "<|verb:mitigate|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:err.report.incident|>": [
+   "<|fam:err|>",
+   "<|verb:report|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:err.reflect.incident|>": [
+   "<|fam:err|>",
+   "<|verb:reflect|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:err.learn_from.incident|>": [
+   "<|fam:err|>",
+   "<|verb:learn_from|>",
+   "<|obj:incident|>"
+  ],
+  "<|op:unc.quantify.confidence|>": [
+   "<|fam:unc|>",
+   "<|verb:quantify|>",
+   "<|obj:confidence|>"
+  ],
+  "<|op:unc.calibrate.confidence|>": [
+   "<|fam:unc|>",
+   "<|verb:calibrate|>",
+   "<|obj:confidence|>"
+  ],
+  "<|op:unc.threshold.confidence|>": [
+   "<|fam:unc|>",
+   "<|verb:threshold|>",
+   "<|obj:confidence|>"
+  ],
+  "<|op:unc.explain.confidence|>": [
+   "<|fam:unc|>",
+   "<|verb:explain|>",
+   "<|obj:confidence|>"
+  ],
+  "<|op:unc.quantify.uncertainty|>": [
+   "<|fam:unc|>",
+   "<|verb:quantify|>",
+   "<|obj:uncertainty|>"
+  ],
+  "<|op:unc.probe.uncertainty|>": [
+   "<|fam:unc|>",
+   "<|verb:probe|>",
+   "<|obj:uncertainty|>"
+  ],
+  "<|op:unc.hedge.uncertainty|>": [
+   "<|fam:unc|>",
+   "<|verb:hedge|>",
+   "<|obj:uncertainty|>"
+  ],
+  "<|op:unc.explain.uncertainty|>": [
+   "<|fam:unc|>",
+   "<|verb:explain|>",
+   "<|obj:uncertainty|>"
+  ],
+  "<|op:unc.defer.uncertainty|>": [
+   "<|fam:unc|>",
+   "<|verb:defer|>",
+   "<|obj:uncertainty|>"
+  ],
+  "<|op:unc.quantify.probability|>": [
+   "<|fam:unc|>",
+   "<|verb:quantify|>",
+   "<|obj:probability|>"
+  ],
+  "<|op:unc.calibrate.probability|>": [
+   "<|fam:unc|>",
+   "<|verb:calibrate|>",
+   "<|obj:probability|>"
+  ],
+  "<|op:unc.compare.probability|>": [
+   "<|fam:unc|>",
+   "<|verb:compare|>",
+   "<|obj:probability|>"
+  ],
+  "<|op:unc.update.probability|>": [
+   "<|fam:unc|>",
+   "<|verb:update|>",
+   "<|obj:probability|>"
+  ],
+  "<|op:unc.detect.ambiguity|>": [
+   "<|fam:unc|>",
+   "<|verb:detect|>",
+   "<|obj:ambiguity|>"
+  ],
+  "<|op:unc.probe.ambiguity|>": [
+   "<|fam:unc|>",
+   "<|verb:probe|>",
+   "<|obj:ambiguity|>"
+  ],
+  "<|op:unc.explain.ambiguity|>": [
+   "<|fam:unc|>",
+   "<|verb:explain|>",
+   "<|obj:ambiguity|>"
+  ],
+  "<|op:unc.defer.ambiguity|>": [
+   "<|fam:unc|>",
+   "<|verb:defer|>",
+   "<|obj:ambiguity|>"
+  ],
+  "<|op:unc.quantify.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:quantify|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:unc.estimate.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:estimate|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:unc.hedge.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:hedge|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:unc.compare.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:compare|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:unc.threshold.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:threshold|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:unc.explain.risk|>": [
+   "<|fam:unc|>",
+   "<|verb:explain|>",
+   "<|obj:risk|>"
+  ],
+  "<|op:gov.grant.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:grant|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.revoke.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:revoke|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.request.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:request|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.deny.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:deny|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.inspect.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:inspect|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.list.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:list|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.explain.capability|>": [
+   "<|fam:gov|>",
+   "<|verb:explain|>",
+   "<|obj:capability|>"
+  ],
+  "<|op:gov.enforce.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:enforce|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.audit.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:audit|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.explain.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:explain|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.inspect.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:inspect|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.update.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:update|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.validate.policy|>": [
+   "<|fam:gov|>",
+   "<|verb:validate|>",
+   "<|obj:policy|>"
+  ],
+  "<|op:gov.taint.secret|>": [
+   "<|fam:gov|>",
+   "<|verb:taint|>",
+   "<|obj:secret|>"
+  ],
+  "<|op:gov.untaint.secret|>": [
+   "<|fam:gov|>",
+   "<|verb:untaint|>",
+   "<|obj:secret|>"
+  ],
+  "<|op:gov.audit.secret|>": [
+   "<|fam:gov|>",
+   "<|verb:audit|>",
+   "<|obj:secret|>"
+  ],
+  "<|op:gov.request.secret|>": [
+   "<|fam:gov|>",
+   "<|verb:request|>",
+   "<|obj:secret|>"
+  ],
+  "<|op:gov.deny.secret|>": [
+   "<|fam:gov|>",
+   "<|verb:deny|>",
+   "<|obj:secret|>"
+  ],
+  "<|op:gov.taint.untrusted_content|>": [
+   "<|fam:gov|>",
+   "<|verb:taint|>",
+   "<|obj:untrusted_content|>"
+  ],
+  "<|op:gov.untaint.untrusted_content|>": [
+   "<|fam:gov|>",
+   "<|verb:untaint|>",
+   "<|obj:untrusted_content|>"
+  ],
+  "<|op:gov.audit.untrusted_content|>": [
+   "<|fam:gov|>",
+   "<|verb:audit|>",
+   "<|obj:untrusted_content|>"
+  ],
+  "<|op:gov.classify.untrusted_content|>": [
+   "<|fam:gov|>",
+   "<|verb:classify|>",
+   "<|obj:untrusted_content|>"
+  ],
+  "<|op:gov.audit.egress_channel|>": [
+   "<|fam:gov|>",
+   "<|verb:audit|>",
+   "<|obj:egress_channel|>"
+  ],
+  "<|op:gov.deny.egress_channel|>": [
+   "<|fam:gov|>",
+   "<|verb:deny|>",
+   "<|obj:egress_channel|>"
+  ],
+  "<|op:gov.request.egress_channel|>": [
+   "<|fam:gov|>",
+   "<|verb:request|>",
+   "<|obj:egress_channel|>"
+  ],
+  "<|op:gov.inspect.egress_channel|>": [
+   "<|fam:gov|>",
+   "<|verb:inspect|>",
+   "<|obj:egress_channel|>"
+  ],
+  "<|op:gov.throttle.egress_channel|>": [
+   "<|fam:gov|>",
+   "<|verb:throttle|>",
+   "<|obj:egress_channel|>"
+  ],
+  "<|op:gov.request.approval|>": [
+   "<|fam:gov|>",
+   "<|verb:request|>",
+   "<|obj:approval|>"
+  ],
+  "<|op:gov.check.approval|>": [
+   "<|fam:gov|>",
+   "<|verb:check|>",
+   "<|obj:approval|>"
+  ],
+  "<|op:gov.expire.approval|>": [
+   "<|fam:gov|>",
+   "<|verb:expire|>",
+   "<|obj:approval|>"
+  ],
+  "<|op:gov.explain.approval|>": [
+   "<|fam:gov|>",
+   "<|verb:explain|>",
+   "<|obj:approval|>"
+  ],
+  "<|op:gov.inspect.kill_switch|>": [
+   "<|fam:gov|>",
+   "<|verb:inspect|>",
+   "<|obj:kill_switch|>"
+  ],
+  "<|op:gov.explain.kill_switch|>": [
+   "<|fam:gov|>",
+   "<|verb:explain|>",
+   "<|obj:kill_switch|>"
+  ],
+  "<|op:gov.inspect.sandbox|>": [
+   "<|fam:gov|>",
+   "<|verb:inspect|>",
+   "<|obj:sandbox|>"
+  ],
+  "<|op:gov.enforce.sandbox|>": [
+   "<|fam:gov|>",
+   "<|verb:enforce|>",
+   "<|obj:sandbox|>"
+  ],
+  "<|op:gov.audit.sandbox|>": [
+   "<|fam:gov|>",
+   "<|verb:audit|>",
+   "<|obj:sandbox|>"
+  ],
+  "<|op:gov.explain.sandbox|>": [
+   "<|fam:gov|>",
+   "<|verb:explain|>",
+   "<|obj:sandbox|>"
+  ],
+  "<|op:bud.allocate.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:allocate|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.spend.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:spend|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.forecast.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:forecast|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.cap.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:cap|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.reclaim.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:reclaim|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.account.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:account|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.measure.dollar_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:measure|>",
+   "<|obj:dollar_budget|>"
+  ],
+  "<|op:bud.allocate.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:allocate|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.spend.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:spend|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.forecast.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:forecast|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.cap.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:cap|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.reclaim.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:reclaim|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.measure.token_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:measure|>",
+   "<|obj:token_budget|>"
+  ],
+  "<|op:bud.allocate.time_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:allocate|>",
+   "<|obj:time_budget|>"
+  ],
+  "<|op:bud.spend.time_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:spend|>",
+   "<|obj:time_budget|>"
+  ],
+  "<|op:bud.forecast.time_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:forecast|>",
+   "<|obj:time_budget|>"
+  ],
+  "<|op:bud.cap.time_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:cap|>",
+   "<|obj:time_budget|>"
+  ],
+  "<|op:bud.measure.time_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:measure|>",
+   "<|obj:time_budget|>"
+  ],
+  "<|op:bud.allocate.compute_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:allocate|>",
+   "<|obj:compute_budget|>"
+  ],
+  "<|op:bud.spend.compute_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:spend|>",
+   "<|obj:compute_budget|>"
+  ],
+  "<|op:bud.forecast.compute_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:forecast|>",
+   "<|obj:compute_budget|>"
+  ],
+  "<|op:bud.cap.compute_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:cap|>",
+   "<|obj:compute_budget|>"
+  ],
+  "<|op:bud.account.compute_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:account|>",
+   "<|obj:compute_budget|>"
+  ],
+  "<|op:bud.allocate.tool_call_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:allocate|>",
+   "<|obj:tool_call_budget|>"
+  ],
+  "<|op:bud.spend.tool_call_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:spend|>",
+   "<|obj:tool_call_budget|>"
+  ],
+  "<|op:bud.cap.tool_call_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:cap|>",
+   "<|obj:tool_call_budget|>"
+  ],
+  "<|op:bud.measure.tool_call_budget|>": [
+   "<|fam:bud|>",
+   "<|verb:measure|>",
+   "<|obj:tool_call_budget|>"
+  ],
+  "<|op:bud.read.cost_ledger|>": [
+   "<|fam:bud|>",
+   "<|verb:read|>",
+   "<|obj:cost_ledger|>"
+  ],
+  "<|op:bud.account.cost_ledger|>": [
+   "<|fam:bud|>",
+   "<|verb:account|>",
+   "<|obj:cost_ledger|>"
+  ],
+  "<|op:bud.audit.cost_ledger|>": [
+   "<|fam:bud|>",
+   "<|verb:audit|>",
+   "<|obj:cost_ledger|>"
+  ],
+  "<|op:bud.summarize.cost_ledger|>": [
+   "<|fam:bud|>",
+   "<|verb:summarize|>",
+   "<|obj:cost_ledger|>"
+  ],
+  "<|op:time.schedule.job|>": [
+   "<|fam:time|>",
+   "<|verb:schedule|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.cancel.job|>": [
+   "<|fam:time|>",
+   "<|verb:cancel|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.inspect.job|>": [
+   "<|fam:time|>",
+   "<|verb:inspect|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.list.job|>": [
+   "<|fam:time|>",
+   "<|verb:list|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.deadline.job|>": [
+   "<|fam:time|>",
+   "<|verb:deadline|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.timeout.job|>": [
+   "<|fam:time|>",
+   "<|verb:timeout|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.heartbeat.job|>": [
+   "<|fam:time|>",
+   "<|verb:heartbeat|>",
+   "<|obj:job|>"
+  ],
+  "<|op:time.heartbeat.agent_process|>": [
+   "<|fam:time|>",
+   "<|verb:heartbeat|>",
+   "<|obj:agent_process|>"
+  ],
+  "<|op:time.sleep.agent_process|>": [
+   "<|fam:time|>",
+   "<|verb:sleep|>",
+   "<|obj:agent_process|>"
+  ],
+  "<|op:time.wake.agent_process|>": [
+   "<|fam:time|>",
+   "<|verb:wake|>",
+   "<|obj:agent_process|>"
+  ],
+  "<|op:time.inspect.agent_process|>": [
+   "<|fam:time|>",
+   "<|verb:inspect|>",
+   "<|obj:agent_process|>"
+  ],
+  "<|op:time.timeout.agent_process|>": [
+   "<|fam:time|>",
+   "<|verb:timeout|>",
+   "<|obj:agent_process|>"
+  ],
+  "<|op:time.schedule.reminder|>": [
+   "<|fam:time|>",
+   "<|verb:schedule|>",
+   "<|obj:reminder|>"
+  ],
+  "<|op:time.cancel.reminder|>": [
+   "<|fam:time|>",
+   "<|verb:cancel|>",
+   "<|obj:reminder|>"
+  ],
+  "<|op:time.list.reminder|>": [
+   "<|fam:time|>",
+   "<|verb:list|>",
+   "<|obj:reminder|>"
+  ],
+  "<|op:time.update.reminder|>": [
+   "<|fam:time|>",
+   "<|verb:update|>",
+   "<|obj:reminder|>"
+  ],
+  "<|op:time.create.cron_rule|>": [
+   "<|fam:time|>",
+   "<|verb:create|>",
+   "<|obj:cron_rule|>"
+  ],
+  "<|op:time.update.cron_rule|>": [
+   "<|fam:time|>",
+   "<|verb:update|>",
+   "<|obj:cron_rule|>"
+  ],
+  "<|op:time.delete.cron_rule|>": [
+   "<|fam:time|>",
+   "<|verb:delete|>",
+   "<|obj:cron_rule|>"
+  ],
+  "<|op:time.list.cron_rule|>": [
+   "<|fam:time|>",
+   "<|verb:list|>",
+   "<|obj:cron_rule|>"
+  ],
+  "<|op:time.validate.cron_rule|>": [
+   "<|fam:time|>",
+   "<|verb:validate|>",
+   "<|obj:cron_rule|>"
+  ],
+  "<|op:swarm.spawn.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:spawn|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.delegate.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:delegate|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.collect.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:collect|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.terminate.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:terminate|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.handoff.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:handoff|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.inspect.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:inspect|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.await.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:await|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.budget.subagent|>": [
+   "<|fam:swarm|>",
+   "<|verb:budget|>",
+   "<|obj:subagent|>"
+  ],
+  "<|op:swarm.spawn.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:spawn|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.collect.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:collect|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.vote.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:vote|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.arbitrate.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:arbitrate|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.broadcast.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:broadcast|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.terminate.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:terminate|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.measure.agent_group|>": [
+   "<|fam:swarm|>",
+   "<|verb:measure|>",
+   "<|obj:agent_group|>"
+  ],
+  "<|op:swarm.spawn.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:spawn|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.delegate.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:delegate|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.collect.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:collect|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.terminate.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:terminate|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.heartbeat.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:heartbeat|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.inspect.worker|>": [
+   "<|fam:swarm|>",
+   "<|verb:inspect|>",
+   "<|obj:worker|>"
+  ],
+  "<|op:swarm.discover.peer_agent|>": [
+   "<|fam:swarm|>",
+   "<|verb:discover|>",
+   "<|obj:peer_agent|>"
+  ],
+  "<|op:swarm.delegate.peer_agent|>": [
+   "<|fam:swarm|>",
+   "<|verb:delegate|>",
+   "<|obj:peer_agent|>"
+  ],
+  "<|op:swarm.collect.peer_agent|>": [
+   "<|fam:swarm|>",
+   "<|verb:collect|>",
+   "<|obj:peer_agent|>"
+  ],
+  "<|op:swarm.handoff.peer_agent|>": [
+   "<|fam:swarm|>",
+   "<|verb:handoff|>",
+   "<|obj:peer_agent|>"
+  ],
+  "<|op:swarm.inspect.peer_agent|>": [
+   "<|fam:swarm|>",
+   "<|verb:inspect|>",
+   "<|obj:peer_agent|>"
+  ],
+  "<|op:swarm.send.message_bus|>": [
+   "<|fam:swarm|>",
+   "<|verb:send|>",
+   "<|obj:message_bus|>"
+  ],
+  "<|op:swarm.read.message_bus|>": [
+   "<|fam:swarm|>",
+   "<|verb:read|>",
+   "<|obj:message_bus|>"
+  ],
+  "<|op:swarm.watch.message_bus|>": [
+   "<|fam:swarm|>",
+   "<|verb:watch|>",
+   "<|obj:message_bus|>"
+  ],
+  "<|op:swarm.inspect.message_bus|>": [
+   "<|fam:swarm|>",
+   "<|verb:inspect|>",
+   "<|obj:message_bus|>"
+  ],
+  "<|op:swarm.read.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:read|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.write.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:write|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.lock.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:lock|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.unlock.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:unlock|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.watch.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:watch|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.reconcile.shared_blackboard|>": [
+   "<|fam:swarm|>",
+   "<|verb:reconcile|>",
+   "<|obj:shared_blackboard|>"
+  ],
+  "<|op:swarm.create.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:create|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:swarm.read.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:read|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:swarm.update.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:update|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:swarm.reconcile.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:reconcile|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:swarm.lock.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:lock|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:swarm.unlock.claim_ledger|>": [
+   "<|fam:swarm|>",
+   "<|verb:unlock|>",
+   "<|obj:claim_ledger|>"
+  ],
+  "<|op:comm.ask.user|>": [
+   "<|fam:comm|>",
+   "<|verb:ask|>",
+   "<|obj:user|>"
+  ],
+  "<|op:comm.notify.user|>": [
+   "<|fam:comm|>",
+   "<|verb:notify|>",
+   "<|obj:user|>"
+  ],
+  "<|op:comm.confirm.user|>": [
+   "<|fam:comm|>",
+   "<|verb:confirm|>",
+   "<|obj:user|>"
+  ],
+  "<|op:comm.summarize_for.user|>": [
+   "<|fam:comm|>",
+   "<|verb:summarize_for|>",
+   "<|obj:user|>"
+  ],
+  "<|op:comm.acknowledge.user|>": [
+   "<|fam:comm|>",
+   "<|verb:acknowledge|>",
+   "<|obj:user|>"
+  ],
+  "<|op:comm.ask.operator|>": [
+   "<|fam:comm|>",
+   "<|verb:ask|>",
+   "<|obj:operator|>"
+  ],
+  "<|op:comm.notify.operator|>": [
+   "<|fam:comm|>",
+   "<|verb:notify|>",
+   "<|obj:operator|>"
+  ],
+  "<|op:comm.confirm.operator|>": [
+   "<|fam:comm|>",
+   "<|verb:confirm|>",
+   "<|obj:operator|>"
+  ],
+  "<|op:comm.summarize_for.operator|>": [
+   "<|fam:comm|>",
+   "<|verb:summarize_for|>",
+   "<|obj:operator|>"
+  ],
+  "<|op:comm.acknowledge.operator|>": [
+   "<|fam:comm|>",
+   "<|verb:acknowledge|>",
+   "<|obj:operator|>"
+  ],
+  "<|op:comm.create.status_update|>": [
+   "<|fam:comm|>",
+   "<|verb:create|>",
+   "<|obj:status_update|>"
+  ],
+  "<|op:comm.update.status_update|>": [
+   "<|fam:comm|>",
+   "<|verb:update|>",
+   "<|obj:status_update|>"
+  ],
+  "<|op:comm.summarize.status_update|>": [
+   "<|fam:comm|>",
+   "<|verb:summarize|>",
+   "<|obj:status_update|>"
+  ],
+  "<|op:comm.create.report|>": [
+   "<|fam:comm|>",
+   "<|verb:create|>",
+   "<|obj:report|>"
+  ],
+  "<|op:comm.validate.report|>": [
+   "<|fam:comm|>",
+   "<|verb:validate|>",
+   "<|obj:report|>"
+  ],
+  "<|op:comm.summarize.report|>": [
+   "<|fam:comm|>",
+   "<|verb:summarize|>",
+   "<|obj:report|>"
+  ],
+  "<|op:comm.cite.report|>": [
+   "<|fam:comm|>",
+   "<|verb:cite|>",
+   "<|obj:report|>"
+  ],
+  "<|op:learn.extract.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:extract|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.reinforce.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:reinforce|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.penalize.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:penalize|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.promote.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:promote|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.demote.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:demote|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.replay.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:replay|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.search.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:search|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.describe.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:describe|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.test.skill|>": [
+   "<|fam:learn|>",
+   "<|verb:test|>",
+   "<|obj:skill|>"
+  ],
+  "<|op:learn.extract.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:extract|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.store.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:store|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.recall.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:recall|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.reinforce.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:reinforce|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.expire.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:expire|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.reconcile.lesson|>": [
+   "<|fam:learn|>",
+   "<|verb:reconcile|>",
+   "<|obj:lesson|>"
+  ],
+  "<|op:learn.extract.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:extract|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.replay.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:replay|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.promote.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:promote|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.demote.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:demote|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.update.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:update|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.score.workflow|>": [
+   "<|fam:learn|>",
+   "<|verb:score|>",
+   "<|obj:workflow|>"
+  ],
+  "<|op:learn.distill.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:distill|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.calibrate.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:calibrate|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.benchmark.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:benchmark|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.promote.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:promote|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.demote.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:demote|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.snapshot.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:snapshot|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.restore.policy_model|>": [
+   "<|fam:learn|>",
+   "<|verb:restore|>",
+   "<|obj:policy_model|>"
+  ],
+  "<|op:learn.create.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:create|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.benchmark.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:benchmark|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.promote.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:promote|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.demote.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:demote|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.delete.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:delete|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.list.adapter|>": [
+   "<|fam:learn|>",
+   "<|verb:list|>",
+   "<|obj:adapter|>"
+  ],
+  "<|op:learn.extract.training_example|>": [
+   "<|fam:learn|>",
+   "<|verb:extract|>",
+   "<|obj:training_example|>"
+  ],
+  "<|op:learn.validate.training_example|>": [
+   "<|fam:learn|>",
+   "<|verb:validate|>",
+   "<|obj:training_example|>"
+  ],
+  "<|op:learn.tag.training_example|>": [
+   "<|fam:learn|>",
+   "<|verb:tag|>",
+   "<|obj:training_example|>"
+  ],
+  "<|op:learn.score.training_example|>": [
+   "<|fam:learn|>",
+   "<|verb:score|>",
+   "<|obj:training_example|>"
+  ],
+  "<|op:learn.delete.training_example|>": [
+   "<|fam:learn|>",
+   "<|verb:delete|>",
+   "<|obj:training_example|>"
+  ],
+  "<|op:learn.read.reward_signal|>": [
+   "<|fam:learn|>",
+   "<|verb:read|>",
+   "<|obj:reward_signal|>"
+  ],
+  "<|op:learn.validate.reward_signal|>": [
+   "<|fam:learn|>",
+   "<|verb:validate|>",
+   "<|obj:reward_signal|>"
+  ],
+  "<|op:learn.calibrate.reward_signal|>": [
+   "<|fam:learn|>",
+   "<|verb:calibrate|>",
+   "<|obj:reward_signal|>"
+  ],
+  "<|op:learn.explain.reward_signal|>": [
+   "<|fam:learn|>",
+   "<|verb:explain|>",
+   "<|obj:reward_signal|>"
+  ],
+  "<|op:learn.create.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:create|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:learn.inspect.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:inspect|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:learn.score.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:score|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:learn.compare.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:compare|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:learn.abandon.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:abandon|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:learn.complete.experiment|>": [
+   "<|fam:learn|>",
+   "<|verb:complete|>",
+   "<|obj:experiment|>"
+  ],
+  "<|op:dur.create.session|>": [
+   "<|fam:dur|>",
+   "<|verb:create|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.snapshot.session|>": [
+   "<|fam:dur|>",
+   "<|verb:snapshot|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.restore.session|>": [
+   "<|fam:dur|>",
+   "<|verb:restore|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.archive.session|>": [
+   "<|fam:dur|>",
+   "<|verb:archive|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.inspect.session|>": [
+   "<|fam:dur|>",
+   "<|verb:inspect|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.list.session|>": [
+   "<|fam:dur|>",
+   "<|verb:list|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.expire.session|>": [
+   "<|fam:dur|>",
+   "<|verb:expire|>",
+   "<|obj:session|>"
+  ],
+  "<|op:dur.read.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:read|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.write.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:write|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.snapshot.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:snapshot|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.validate.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:validate|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.replay.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:replay|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.trace.journal|>": [
+   "<|fam:dur|>",
+   "<|verb:trace|>",
+   "<|obj:journal|>"
+  ],
+  "<|op:dur.snapshot.agent_state|>": [
+   "<|fam:dur|>",
+   "<|verb:snapshot|>",
+   "<|obj:agent_state|>"
+  ],
+  "<|op:dur.restore.agent_state|>": [
+   "<|fam:dur|>",
+   "<|verb:restore|>",
+   "<|obj:agent_state|>"
+  ],
+  "<|op:dur.validate.agent_state|>": [
+   "<|fam:dur|>",
+   "<|verb:validate|>",
+   "<|obj:agent_state|>"
+  ],
+  "<|op:dur.diff.agent_state|>": [
+   "<|fam:dur|>",
+   "<|verb:diff|>",
+   "<|obj:agent_state|>"
+  ],
+  "<|op:dur.inspect.agent_state|>": [
+   "<|fam:dur|>",
+   "<|verb:inspect|>",
+   "<|obj:agent_state|>"
+  ],
+  "<|op:dur.create.lease|>": [
+   "<|fam:dur|>",
+   "<|verb:create|>",
+   "<|obj:lease|>"
+  ],
+  "<|op:dur.update.lease|>": [
+   "<|fam:dur|>",
+   "<|verb:update|>",
+   "<|obj:lease|>"
+  ],
+  "<|op:dur.expire.lease|>": [
+   "<|fam:dur|>",
+   "<|verb:expire|>",
+   "<|obj:lease|>"
+  ],
+  "<|op:dur.inspect.lease|>": [
+   "<|fam:dur|>",
+   "<|verb:inspect|>",
+   "<|obj:lease|>"
+  ],
+  "<|op:dur.validate.lease|>": [
+   "<|fam:dur|>",
+   "<|verb:validate|>",
+   "<|obj:lease|>"
+  ],
+  "<|op:dur.inspect.supervisor|>": [
+   "<|fam:dur|>",
+   "<|verb:inspect|>",
+   "<|obj:supervisor|>"
+  ],
+  "<|op:dur.heartbeat.supervisor|>": [
+   "<|fam:dur|>",
+   "<|verb:heartbeat|>",
+   "<|obj:supervisor|>"
+  ],
+  "<|op:dur.wake.supervisor|>": [
+   "<|fam:dur|>",
+   "<|verb:wake|>",
+   "<|obj:supervisor|>"
+  ],
+  "<|op:dur.explain.supervisor|>": [
+   "<|fam:dur|>",
+   "<|verb:explain|>",
+   "<|obj:supervisor|>"
+  ],
+  "<|op:dur.create.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:create|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:dur.inspect.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:inspect|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:dur.rollback.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:rollback|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:dur.benchmark.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:benchmark|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:dur.promote.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:promote|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:dur.demote.deployment|>": [
+   "<|fam:dur|>",
+   "<|verb:demote|>",
+   "<|obj:deployment|>"
+  ],
+  "<|op:env.open.file|>": [
+   "<|fam:env|>",
+   "<|verb:open|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.read.file|>": [
+   "<|fam:env|>",
+   "<|verb:read|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.write.file|>": [
+   "<|fam:env|>",
+   "<|verb:write|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.update.file|>": [
+   "<|fam:env|>",
+   "<|verb:update|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.move.file|>": [
+   "<|fam:env|>",
+   "<|verb:move|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.copy.file|>": [
+   "<|fam:env|>",
+   "<|verb:copy|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.delete.file|>": [
+   "<|fam:env|>",
+   "<|verb:delete|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.stat.file|>": [
+   "<|fam:env|>",
+   "<|verb:stat|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.diff.file|>": [
+   "<|fam:env|>",
+   "<|verb:diff|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.lock.file|>": [
+   "<|fam:env|>",
+   "<|verb:lock|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.unlock.file|>": [
+   "<|fam:env|>",
+   "<|verb:unlock|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.watch.file|>": [
+   "<|fam:env|>",
+   "<|verb:watch|>",
+   "<|obj:file|>"
+  ],
+  "<|op:env.create.directory|>": [
+   "<|fam:env|>",
+   "<|verb:create|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.list.directory|>": [
+   "<|fam:env|>",
+   "<|verb:list|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.move.directory|>": [
+   "<|fam:env|>",
+   "<|verb:move|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.copy.directory|>": [
+   "<|fam:env|>",
+   "<|verb:copy|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.delete.directory|>": [
+   "<|fam:env|>",
+   "<|verb:delete|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.stat.directory|>": [
+   "<|fam:env|>",
+   "<|verb:stat|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.watch.directory|>": [
+   "<|fam:env|>",
+   "<|verb:watch|>",
+   "<|obj:directory|>"
+  ],
+  "<|op:env.create.process|>": [
+   "<|fam:env|>",
+   "<|verb:create|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.inspect.process|>": [
+   "<|fam:env|>",
+   "<|verb:inspect|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.kill.process|>": [
+   "<|fam:env|>",
+   "<|verb:kill|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.await.process|>": [
+   "<|fam:env|>",
+   "<|verb:await|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.list.process|>": [
+   "<|fam:env|>",
+   "<|verb:list|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.timeout.process|>": [
+   "<|fam:env|>",
+   "<|verb:timeout|>",
+   "<|obj:process|>"
+  ],
+  "<|op:env.invoke.shell_command|>": [
+   "<|fam:env|>",
+   "<|verb:invoke|>",
+   "<|obj:shell_command|>"
+  ],
+  "<|op:env.dry_run.shell_command|>": [
+   "<|fam:env|>",
+   "<|verb:dry_run|>",
+   "<|obj:shell_command|>"
+  ],
+  "<|op:env.timeout.shell_command|>": [
+   "<|fam:env|>",
+   "<|verb:timeout|>",
+   "<|obj:shell_command|>"
+  ],
+  "<|op:env.parse.shell_command|>": [
+   "<|fam:env|>",
+   "<|verb:parse|>",
+   "<|obj:shell_command|>"
+  ],
+  "<|op:env.explain.shell_command|>": [
+   "<|fam:env|>",
+   "<|verb:explain|>",
+   "<|obj:shell_command|>"
+  ],
+  "<|op:env.inspect.repository|>": [
+   "<|fam:env|>",
+   "<|verb:inspect|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.diff.repository|>": [
+   "<|fam:env|>",
+   "<|verb:diff|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.commit.repository|>": [
+   "<|fam:env|>",
+   "<|verb:commit|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.snapshot.repository|>": [
+   "<|fam:env|>",
+   "<|verb:snapshot|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.restore.repository|>": [
+   "<|fam:env|>",
+   "<|verb:restore|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.bisect.repository|>": [
+   "<|fam:env|>",
+   "<|verb:bisect|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.audit.repository|>": [
+   "<|fam:env|>",
+   "<|verb:audit|>",
+   "<|obj:repository|>"
+  ],
+  "<|op:env.fetch.http_endpoint|>": [
+   "<|fam:env|>",
+   "<|verb:fetch|>",
+   "<|obj:http_endpoint|>"
+  ],
+  "<|op:env.send.http_endpoint|>": [
+   "<|fam:env|>",
+   "<|verb:send|>",
+   "<|obj:http_endpoint|>"
+  ],
+  "<|op:env.inspect.http_endpoint|>": [
+   "<|fam:env|>",
+   "<|verb:inspect|>",
+   "<|obj:http_endpoint|>"
+  ],
+  "<|op:env.benchmark.http_endpoint|>": [
+   "<|fam:env|>",
+   "<|verb:benchmark|>",
+   "<|obj:http_endpoint|>"
+  ],
+  "<|op:env.throttle.http_endpoint|>": [
+   "<|fam:env|>",
+   "<|verb:throttle|>",
+   "<|obj:http_endpoint|>"
+  ],
+  "<|op:env.read.environment_variable|>": [
+   "<|fam:env|>",
+   "<|verb:read|>",
+   "<|obj:environment_variable|>"
+  ],
+  "<|op:env.set.environment_variable|>": [
+   "<|fam:env|>",
+   "<|verb:set|>",
+   "<|obj:environment_variable|>"
+  ],
+  "<|op:env.delete.environment_variable|>": [
+   "<|fam:env|>",
+   "<|verb:delete|>",
+   "<|obj:environment_variable|>"
+  ],
+  "<|op:env.audit.environment_variable|>": [
+   "<|fam:env|>",
+   "<|verb:audit|>",
+   "<|obj:environment_variable|>"
+  ],
+  "<|op:ui.locate.button|>": [
+   "<|fam:ui|>",
+   "<|verb:locate|>",
+   "<|obj:button|>"
+  ],
+  "<|op:ui.press.button|>": [
+   "<|fam:ui|>",
+   "<|verb:press|>",
+   "<|obj:button|>"
+  ],
+  "<|op:ui.focus.button|>": [
+   "<|fam:ui|>",
+   "<|verb:focus|>",
+   "<|obj:button|>"
+  ],
+  "<|op:ui.capture.button|>": [
+   "<|fam:ui|>",
+   "<|verb:capture|>",
+   "<|obj:button|>"
+  ],
+  "<|op:ui.locate.text_field|>": [
+   "<|fam:ui|>",
+   "<|verb:locate|>",
+   "<|obj:text_field|>"
+  ],
+  "<|op:ui.focus.text_field|>": [
+   "<|fam:ui|>",
+   "<|verb:focus|>",
+   "<|obj:text_field|>"
+  ],
+  "<|op:ui.type_into.text_field|>": [
+   "<|fam:ui|>",
+   "<|verb:type_into|>",
+   "<|obj:text_field|>"
+  ],
+  "<|op:ui.read.text_field|>": [
+   "<|fam:ui|>",
+   "<|verb:read|>",
+   "<|obj:text_field|>"
+  ],
+  "<|op:ui.clear.text_field|>": [
+   "<|fam:ui|>",
+   "<|verb:clear|>",
+   "<|obj:text_field|>"
+  ],
+  "<|op:ui.locate.menu_item|>": [
+   "<|fam:ui|>",
+   "<|verb:locate|>",
+   "<|obj:menu_item|>"
+  ],
+  "<|op:ui.press.menu_item|>": [
+   "<|fam:ui|>",
+   "<|verb:press|>",
+   "<|obj:menu_item|>"
+  ],
+  "<|op:ui.list.menu_item|>": [
+   "<|fam:ui|>",
+   "<|verb:list|>",
+   "<|obj:menu_item|>"
+  ],
+  "<|op:ui.locate.checkbox|>": [
+   "<|fam:ui|>",
+   "<|verb:locate|>",
+   "<|obj:checkbox|>"
+  ],
+  "<|op:ui.press.checkbox|>": [
+   "<|fam:ui|>",
+   "<|verb:press|>",
+   "<|obj:checkbox|>"
+  ],
+  "<|op:ui.read.checkbox|>": [
+   "<|fam:ui|>",
+   "<|verb:read|>",
+   "<|obj:checkbox|>"
+  ],
+  "<|op:ui.list.window|>": [
+   "<|fam:ui|>",
+   "<|verb:list|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.focus.window|>": [
+   "<|fam:ui|>",
+   "<|verb:focus|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.capture.window|>": [
+   "<|fam:ui|>",
+   "<|verb:capture|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.move.window|>": [
+   "<|fam:ui|>",
+   "<|verb:move|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.close.window|>": [
+   "<|fam:ui|>",
+   "<|verb:close|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.inspect.window|>": [
+   "<|fam:ui|>",
+   "<|verb:inspect|>",
+   "<|obj:window|>"
+  ],
+  "<|op:ui.open.application|>": [
+   "<|fam:ui|>",
+   "<|verb:open|>",
+   "<|obj:application|>"
+  ],
+  "<|op:ui.close.application|>": [
+   "<|fam:ui|>",
+   "<|verb:close|>",
+   "<|obj:application|>"
+  ],
+  "<|op:ui.focus.application|>": [
+   "<|fam:ui|>",
+   "<|verb:focus|>",
+   "<|obj:application|>"
+  ],
+  "<|op:ui.inspect.application|>": [
+   "<|fam:ui|>",
+   "<|verb:inspect|>",
+   "<|obj:application|>"
+  ],
+  "<|op:ui.list.application|>": [
+   "<|fam:ui|>",
+   "<|verb:list|>",
+   "<|obj:application|>"
+  ],
+  "<|op:ui.locate.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:locate|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.press.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:press|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.focus.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:focus|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.capture.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:capture|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.inspect.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:inspect|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.scroll.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:scroll|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.drag.ui_element|>": [
+   "<|fam:ui|>",
+   "<|verb:drag|>",
+   "<|obj:ui_element|>"
+  ],
+  "<|op:ui.capture.screen_region|>": [
+   "<|fam:ui|>",
+   "<|verb:capture|>",
+   "<|obj:screen_region|>"
+  ],
+  "<|op:ui.zoom.screen_region|>": [
+   "<|fam:ui|>",
+   "<|verb:zoom|>",
+   "<|obj:screen_region|>"
+  ],
+  "<|op:ui.summarize.screen_region|>": [
+   "<|fam:ui|>",
+   "<|verb:summarize|>",
+   "<|obj:screen_region|>"
+  ],
+  "<|op:meta.explain.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:explain|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.reflect.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:reflect|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.question.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:question|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.critique.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:critique|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.trace.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:trace|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.score.decision|>": [
+   "<|fam:meta|>",
+   "<|verb:score|>",
+   "<|obj:decision|>"
+  ],
+  "<|op:meta.create.assumption|>": [
+   "<|fam:meta|>",
+   "<|verb:create|>",
+   "<|obj:assumption|>"
+  ],
+  "<|op:meta.question.assumption|>": [
+   "<|fam:meta|>",
+   "<|verb:question|>",
+   "<|obj:assumption|>"
+  ],
+  "<|op:meta.verify.assumption|>": [
+   "<|fam:meta|>",
+   "<|verb:verify|>",
+   "<|obj:assumption|>"
+  ],
+  "<|op:meta.list.assumption|>": [
+   "<|fam:meta|>",
+   "<|verb:list|>",
+   "<|obj:assumption|>"
+  ],
+  "<|op:meta.revise.assumption|>": [
+   "<|fam:meta|>",
+   "<|verb:revise|>",
+   "<|obj:assumption|>"
+  ],
+  "<|op:meta.create.belief|>": [
+   "<|fam:meta|>",
+   "<|verb:create|>",
+   "<|obj:belief|>"
+  ],
+  "<|op:meta.update.belief|>": [
+   "<|fam:meta|>",
+   "<|verb:update|>",
+   "<|obj:belief|>"
+  ],
+  "<|op:meta.question.belief|>": [
+   "<|fam:meta|>",
+   "<|verb:question|>",
+   "<|obj:belief|>"
+  ],
+  "<|op:meta.quantify.belief|>": [
+   "<|fam:meta|>",
+   "<|verb:quantify|>",
+   "<|obj:belief|>"
+  ],
+  "<|op:meta.trace.belief|>": [
+   "<|fam:meta|>",
+   "<|verb:trace|>",
+   "<|obj:belief|>"
+  ],
+  "<|op:meta.reflect.strategy|>": [
+   "<|fam:meta|>",
+   "<|verb:reflect|>",
+   "<|obj:strategy|>"
+  ],
+  "<|op:meta.critique.strategy|>": [
+   "<|fam:meta|>",
+   "<|verb:critique|>",
+   "<|obj:strategy|>"
+  ],
+  "<|op:meta.revise.strategy|>": [
+   "<|fam:meta|>",
+   "<|verb:revise|>",
+   "<|obj:strategy|>"
+  ],
+  "<|op:meta.compare.strategy|>": [
+   "<|fam:meta|>",
+   "<|verb:compare|>",
+   "<|obj:strategy|>"
+  ],
+  "<|op:meta.explain.strategy|>": [
+   "<|fam:meta|>",
+   "<|verb:explain|>",
+   "<|obj:strategy|>"
+  ],
+  "<|op:meta.inspect.self_model|>": [
+   "<|fam:meta|>",
+   "<|verb:inspect|>",
+   "<|obj:self_model|>"
+  ],
+  "<|op:meta.update.self_model|>": [
+   "<|fam:meta|>",
+   "<|verb:update|>",
+   "<|obj:self_model|>"
+  ],
+  "<|op:meta.calibrate.self_model|>": [
+   "<|fam:meta|>",
+   "<|verb:calibrate|>",
+   "<|obj:self_model|>"
+  ],
+  "<|op:meta.explain.self_model|>": [
+   "<|fam:meta|>",
+   "<|verb:explain|>",
+   "<|obj:self_model|>"
+  ],
+  "<|op:route.route.model|>": [
+   "<|fam:route|>",
+   "<|verb:route|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.fallback.model|>": [
+   "<|fam:route|>",
+   "<|verb:fallback|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.escalate.model|>": [
+   "<|fam:route|>",
+   "<|verb:escalate|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.downgrade.model|>": [
+   "<|fam:route|>",
+   "<|verb:downgrade|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.benchmark.model|>": [
+   "<|fam:route|>",
+   "<|verb:benchmark|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.select.model|>": [
+   "<|fam:route|>",
+   "<|verb:select|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.describe.model|>": [
+   "<|fam:route|>",
+   "<|verb:describe|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.list.model|>": [
+   "<|fam:route|>",
+   "<|verb:list|>",
+   "<|obj:model|>"
+  ],
+  "<|op:route.route.provider|>": [
+   "<|fam:route|>",
+   "<|verb:route|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.fallback.provider|>": [
+   "<|fam:route|>",
+   "<|verb:fallback|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.benchmark.provider|>": [
+   "<|fam:route|>",
+   "<|verb:benchmark|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.inspect.provider|>": [
+   "<|fam:route|>",
+   "<|verb:inspect|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.throttle.provider|>": [
+   "<|fam:route|>",
+   "<|verb:throttle|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.list.provider|>": [
+   "<|fam:route|>",
+   "<|verb:list|>",
+   "<|obj:provider|>"
+  ],
+  "<|op:route.route.request|>": [
+   "<|fam:route|>",
+   "<|verb:route|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.fallback.request|>": [
+   "<|fam:route|>",
+   "<|verb:fallback|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.escalate.request|>": [
+   "<|fam:route|>",
+   "<|verb:escalate|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.downgrade.request|>": [
+   "<|fam:route|>",
+   "<|verb:downgrade|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.cancel.request|>": [
+   "<|fam:route|>",
+   "<|verb:cancel|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.retry.request|>": [
+   "<|fam:route|>",
+   "<|verb:retry|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.measure.request|>": [
+   "<|fam:route|>",
+   "<|verb:measure|>",
+   "<|obj:request|>"
+  ],
+  "<|op:route.route.system_one|>": [
+   "<|fam:route|>",
+   "<|verb:route|>",
+   "<|obj:system_one|>"
+  ],
+  "<|op:route.calibrate.system_one|>": [
+   "<|fam:route|>",
+   "<|verb:calibrate|>",
+   "<|obj:system_one|>"
+  ],
+  "<|op:route.benchmark.system_one|>": [
+   "<|fam:route|>",
+   "<|verb:benchmark|>",
+   "<|obj:system_one|>"
+  ],
+  "<|op:route.threshold.system_one|>": [
+   "<|fam:route|>",
+   "<|verb:threshold|>",
+   "<|obj:system_one|>"
+  ],
+  "<|op:route.defer.system_one|>": [
+   "<|fam:route|>",
+   "<|verb:defer|>",
+   "<|obj:system_one|>"
+  ],
+  "<|op:route.route.system_two|>": [
+   "<|fam:route|>",
+   "<|verb:route|>",
+   "<|obj:system_two|>"
+  ],
+  "<|op:route.escalate.system_two|>": [
+   "<|fam:route|>",
+   "<|verb:escalate|>",
+   "<|obj:system_two|>"
+  ],
+  "<|op:route.benchmark.system_two|>": [
+   "<|fam:route|>",
+   "<|verb:benchmark|>",
+   "<|obj:system_two|>"
+  ],
+  "<|op:route.describe.system_two|>": [
+   "<|fam:route|>",
+   "<|verb:describe|>",
+   "<|obj:system_two|>"
+  ],
+  "<|op:eval.score.episode|>": [
+   "<|fam:eval|>",
+   "<|verb:score|>",
+   "<|obj:episode|>"
+  ],
+  "<|op:eval.replay.episode|>": [
+   "<|fam:eval|>",
+   "<|verb:replay|>",
+   "<|obj:episode|>"
+  ],
+  "<|op:eval.compare.episode|>": [
+   "<|fam:eval|>",
+   "<|verb:compare|>",
+   "<|obj:episode|>"
+  ],
+  "<|op:eval.summarize.episode|>": [
+   "<|fam:eval|>",
+   "<|verb:summarize|>",
+   "<|obj:episode|>"
+  ],
+  "<|op:eval.tag.episode|>": [
+   "<|fam:eval|>",
+   "<|verb:tag|>",
+   "<|obj:episode|>"
+  ],
+  "<|op:eval.create.benchmark_suite|>": [
+   "<|fam:eval|>",
+   "<|verb:create|>",
+   "<|obj:benchmark_suite|>"
+  ],
+  "<|op:eval.benchmark.benchmark_suite|>": [
+   "<|fam:eval|>",
+   "<|verb:benchmark|>",
+   "<|obj:benchmark_suite|>"
+  ],
+  "<|op:eval.list.benchmark_suite|>": [
+   "<|fam:eval|>",
+   "<|verb:list|>",
+   "<|obj:benchmark_suite|>"
+  ],
+  "<|op:eval.update.benchmark_suite|>": [
+   "<|fam:eval|>",
+   "<|verb:update|>",
+   "<|obj:benchmark_suite|>"
+  ],
+  "<|op:eval.validate.benchmark_suite|>": [
+   "<|fam:eval|>",
+   "<|verb:validate|>",
+   "<|obj:benchmark_suite|>"
+  ],
+  "<|op:eval.set.metric_target|>": [
+   "<|fam:eval|>",
+   "<|verb:set|>",
+   "<|obj:metric_target|>"
+  ],
+  "<|op:eval.check.metric_target|>": [
+   "<|fam:eval|>",
+   "<|verb:check|>",
+   "<|obj:metric_target|>"
+  ],
+  "<|op:eval.revise.metric_target|>": [
+   "<|fam:eval|>",
+   "<|verb:revise|>",
+   "<|obj:metric_target|>"
+  ],
+  "<|op:eval.explain.metric_target|>": [
+   "<|fam:eval|>",
+   "<|verb:explain|>",
+   "<|obj:metric_target|>"
+  ],
+  "<|op:eval.select.judge|>": [
+   "<|fam:eval|>",
+   "<|verb:select|>",
+   "<|obj:judge|>"
+  ],
+  "<|op:eval.calibrate.judge|>": [
+   "<|fam:eval|>",
+   "<|verb:calibrate|>",
+   "<|obj:judge|>"
+  ],
+  "<|op:eval.benchmark.judge|>": [
+   "<|fam:eval|>",
+   "<|verb:benchmark|>",
+   "<|obj:judge|>"
+  ],
+  "<|op:eval.explain.judge|>": [
+   "<|fam:eval|>",
+   "<|verb:explain|>",
+   "<|obj:judge|>"
+  ],
+  "<|op:eval.create.rubric|>": [
+   "<|fam:eval|>",
+   "<|verb:create|>",
+   "<|obj:rubric|>"
+  ],
+  "<|op:eval.refine.rubric|>": [
+   "<|fam:eval|>",
+   "<|verb:refine|>",
+   "<|obj:rubric|>"
+  ],
+  "<|op:eval.validate.rubric|>": [
+   "<|fam:eval|>",
+   "<|verb:validate|>",
+   "<|obj:rubric|>"
+  ],
+  "<|op:eval.explain.rubric|>": [
+   "<|fam:eval|>",
+   "<|verb:explain|>",
+   "<|obj:rubric|>"
+  ],
+  "<|op:skill.search.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:search|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.list.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:list|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.index.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:index|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.audit.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:audit|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.snapshot.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:snapshot|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.restore.skill_library|>": [
+   "<|fam:skill|>",
+   "<|verb:restore|>",
+   "<|obj:skill_library|>"
+  ],
+  "<|op:skill.create.skill_candidate|>": [
+   "<|fam:skill|>",
+   "<|verb:create|>",
+   "<|obj:skill_candidate|>"
+  ],
+  "<|op:skill.test.skill_candidate|>": [
+   "<|fam:skill|>",
+   "<|verb:test|>",
+   "<|obj:skill_candidate|>"
+  ],
+  "<|op:skill.score.skill_candidate|>": [
+   "<|fam:skill|>",
+   "<|verb:score|>",
+   "<|obj:skill_candidate|>"
+  ],
+  "<|op:skill.promote.skill_candidate|>": [
+   "<|fam:skill|>",
+   "<|verb:promote|>",
+   "<|obj:skill_candidate|>"
+  ],
+  "<|op:skill.delete.skill_candidate|>": [
+   "<|fam:skill|>",
+   "<|verb:delete|>",
+   "<|obj:skill_candidate|>"
+  ],
+  "<|op:skill.create.skill_precondition|>": [
+   "<|fam:skill|>",
+   "<|verb:create|>",
+   "<|obj:skill_precondition|>"
+  ],
+  "<|op:skill.check.skill_precondition|>": [
+   "<|fam:skill|>",
+   "<|verb:check|>",
+   "<|obj:skill_precondition|>"
+  ],
+  "<|op:skill.update.skill_precondition|>": [
+   "<|fam:skill|>",
+   "<|verb:update|>",
+   "<|obj:skill_precondition|>"
+  ],
+  "<|op:skill.explain.skill_precondition|>": [
+   "<|fam:skill|>",
+   "<|verb:explain|>",
+   "<|obj:skill_precondition|>"
+  ],
+  "<|op:skill.bind.skill_invocation|>": [
+   "<|fam:skill|>",
+   "<|verb:bind|>",
+   "<|obj:skill_invocation|>"
+  ],
+  "<|op:skill.invoke.skill_invocation|>": [
+   "<|fam:skill|>",
+   "<|verb:invoke|>",
+   "<|obj:skill_invocation|>"
+  ],
+  "<|op:skill.check.skill_invocation|>": [
+   "<|fam:skill|>",
+   "<|verb:check|>",
+   "<|obj:skill_invocation|>"
+  ],
+  "<|op:skill.rollback.skill_invocation|>": [
+   "<|fam:skill|>",
+   "<|verb:rollback|>",
+   "<|obj:skill_invocation|>"
+  ],
+  "<|op:code.read.function|>": [
+   "<|fam:code|>",
+   "<|verb:read|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.create.function|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.refactor.function|>": [
+   "<|fam:code|>",
+   "<|verb:refactor|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.rename.function|>": [
+   "<|fam:code|>",
+   "<|verb:rename|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.delete.function|>": [
+   "<|fam:code|>",
+   "<|verb:delete|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.test.function|>": [
+   "<|fam:code|>",
+   "<|verb:test|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.document.function|>": [
+   "<|fam:code|>",
+   "<|verb:document|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.review.function|>": [
+   "<|fam:code|>",
+   "<|verb:review|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.find_references.function|>": [
+   "<|fam:code|>",
+   "<|verb:find_references|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.profile.function|>": [
+   "<|fam:code|>",
+   "<|verb:profile|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.fix.function|>": [
+   "<|fam:code|>",
+   "<|verb:fix|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.explain.function|>": [
+   "<|fam:code|>",
+   "<|verb:explain|>",
+   "<|obj:function|>"
+  ],
+  "<|op:code.read.module|>": [
+   "<|fam:code|>",
+   "<|verb:read|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.create.module|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.refactor.module|>": [
+   "<|fam:code|>",
+   "<|verb:refactor|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.rename.module|>": [
+   "<|fam:code|>",
+   "<|verb:rename|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.lint.module|>": [
+   "<|fam:code|>",
+   "<|verb:lint|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.typecheck.module|>": [
+   "<|fam:code|>",
+   "<|verb:typecheck|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.format.module|>": [
+   "<|fam:code|>",
+   "<|verb:format|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.test.module|>": [
+   "<|fam:code|>",
+   "<|verb:test|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.document.module|>": [
+   "<|fam:code|>",
+   "<|verb:document|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.review.module|>": [
+   "<|fam:code|>",
+   "<|verb:review|>",
+   "<|obj:module|>"
+  ],
+  "<|op:code.read.type|>": [
+   "<|fam:code|>",
+   "<|verb:read|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.create.type|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.update.type|>": [
+   "<|fam:code|>",
+   "<|verb:update|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.rename.type|>": [
+   "<|fam:code|>",
+   "<|verb:rename|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.find_references.type|>": [
+   "<|fam:code|>",
+   "<|verb:find_references|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.validate.type|>": [
+   "<|fam:code|>",
+   "<|verb:validate|>",
+   "<|obj:type|>"
+  ],
+  "<|op:code.search.symbol|>": [
+   "<|fam:code|>",
+   "<|verb:search|>",
+   "<|obj:symbol|>"
+  ],
+  "<|op:code.find_references.symbol|>": [
+   "<|fam:code|>",
+   "<|verb:find_references|>",
+   "<|obj:symbol|>"
+  ],
+  "<|op:code.rename.symbol|>": [
+   "<|fam:code|>",
+   "<|verb:rename|>",
+   "<|obj:symbol|>"
+  ],
+  "<|op:code.explain.symbol|>": [
+   "<|fam:code|>",
+   "<|verb:explain|>",
+   "<|obj:symbol|>"
+  ],
+  "<|op:code.trace.symbol|>": [
+   "<|fam:code|>",
+   "<|verb:trace|>",
+   "<|obj:symbol|>"
+  ],
+  "<|op:code.reproduce.bug|>": [
+   "<|fam:code|>",
+   "<|verb:reproduce|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.diagnose.bug|>": [
+   "<|fam:code|>",
+   "<|verb:diagnose|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.fix.bug|>": [
+   "<|fam:code|>",
+   "<|verb:fix|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.bisect.bug|>": [
+   "<|fam:code|>",
+   "<|verb:bisect|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.test.bug|>": [
+   "<|fam:code|>",
+   "<|verb:test|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.report.bug|>": [
+   "<|fam:code|>",
+   "<|verb:report|>",
+   "<|obj:bug|>"
+  ],
+  "<|op:code.create.patch|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.review.patch|>": [
+   "<|fam:code|>",
+   "<|verb:review|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.test.patch|>": [
+   "<|fam:code|>",
+   "<|verb:test|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.diff.patch|>": [
+   "<|fam:code|>",
+   "<|verb:diff|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.rollback.patch|>": [
+   "<|fam:code|>",
+   "<|verb:rollback|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.validate.patch|>": [
+   "<|fam:code|>",
+   "<|verb:validate|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.explain.patch|>": [
+   "<|fam:code|>",
+   "<|verb:explain|>",
+   "<|obj:patch|>"
+  ],
+  "<|op:code.create.pull_request|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:pull_request|>"
+  ],
+  "<|op:code.review.pull_request|>": [
+   "<|fam:code|>",
+   "<|verb:review|>",
+   "<|obj:pull_request|>"
+  ],
+  "<|op:code.update.pull_request|>": [
+   "<|fam:code|>",
+   "<|verb:update|>",
+   "<|obj:pull_request|>"
+  ],
+  "<|op:code.inspect.pull_request|>": [
+   "<|fam:code|>",
+   "<|verb:inspect|>",
+   "<|obj:pull_request|>"
+  ],
+  "<|op:code.summarize.pull_request|>": [
+   "<|fam:code|>",
+   "<|verb:summarize|>",
+   "<|obj:pull_request|>"
+  ],
+  "<|op:code.inspect.dependency|>": [
+   "<|fam:code|>",
+   "<|verb:inspect|>",
+   "<|obj:dependency|>"
+  ],
+  "<|op:code.update.dependency|>": [
+   "<|fam:code|>",
+   "<|verb:update|>",
+   "<|obj:dependency|>"
+  ],
+  "<|op:code.audit.dependency|>": [
+   "<|fam:code|>",
+   "<|verb:audit|>",
+   "<|obj:dependency|>"
+  ],
+  "<|op:code.list.dependency|>": [
+   "<|fam:code|>",
+   "<|verb:list|>",
+   "<|obj:dependency|>"
+  ],
+  "<|op:code.delete.dependency|>": [
+   "<|fam:code|>",
+   "<|verb:delete|>",
+   "<|obj:dependency|>"
+  ],
+  "<|op:code.read.build_config|>": [
+   "<|fam:code|>",
+   "<|verb:read|>",
+   "<|obj:build_config|>"
+  ],
+  "<|op:code.update.build_config|>": [
+   "<|fam:code|>",
+   "<|verb:update|>",
+   "<|obj:build_config|>"
+  ],
+  "<|op:code.validate.build_config|>": [
+   "<|fam:code|>",
+   "<|verb:validate|>",
+   "<|obj:build_config|>"
+  ],
+  "<|op:code.diff.build_config|>": [
+   "<|fam:code|>",
+   "<|verb:diff|>",
+   "<|obj:build_config|>"
+  ],
+  "<|op:code.create.migration|>": [
+   "<|fam:code|>",
+   "<|verb:create|>",
+   "<|obj:migration|>"
+  ],
+  "<|op:code.dry_run.migration|>": [
+   "<|fam:code|>",
+   "<|verb:dry_run|>",
+   "<|obj:migration|>"
+  ],
+  "<|op:code.test.migration|>": [
+   "<|fam:code|>",
+   "<|verb:test|>",
+   "<|obj:migration|>"
+  ],
+  "<|op:code.rollback.migration|>": [
+   "<|fam:code|>",
+   "<|verb:rollback|>",
+   "<|obj:migration|>"
+  ],
+  "<|op:code.validate.migration|>": [
+   "<|fam:code|>",
+   "<|verb:validate|>",
+   "<|obj:migration|>"
+  ],
+  "<|op:code.read.api_contract|>": [
+   "<|fam:code|>",
+   "<|verb:read|>",
+   "<|obj:api_contract|>"
+  ],
+  "<|op:code.validate.api_contract|>": [
+   "<|fam:code|>",
+   "<|verb:validate|>",
+   "<|obj:api_contract|>"
+  ],
+  "<|op:code.diff.api_contract|>": [
+   "<|fam:code|>",
+   "<|verb:diff|>",
+   "<|obj:api_contract|>"
+  ],
+  "<|op:code.document.api_contract|>": [
+   "<|fam:code|>",
+   "<|verb:document|>",
+   "<|obj:api_contract|>"
+  ],
+  "<|op:code.check.api_contract|>": [
+   "<|fam:code|>",
+   "<|verb:check|>",
+   "<|obj:api_contract|>"
+  ],
+  "<|op:code.detect.performance_hotspot|>": [
+   "<|fam:code|>",
+   "<|verb:detect|>",
+   "<|obj:performance_hotspot|>"
+  ],
+  "<|op:code.profile.performance_hotspot|>": [
+   "<|fam:code|>",
+   "<|verb:profile|>",
+   "<|obj:performance_hotspot|>"
+  ],
+  "<|op:code.fix.performance_hotspot|>": [
+   "<|fam:code|>",
+   "<|verb:fix|>",
+   "<|obj:performance_hotspot|>"
+  ],
+  "<|op:code.benchmark.performance_hotspot|>": [
+   "<|fam:code|>",
+   "<|verb:benchmark|>",
+   "<|obj:performance_hotspot|>"
+  ],
+  "<|op:code.explain.performance_hotspot|>": [
+   "<|fam:code|>",
+   "<|verb:explain|>",
+   "<|obj:performance_hotspot|>"
+  ],
+  "<|op:web.navigate.page|>": [
+   "<|fam:web|>",
+   "<|verb:navigate|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.read.page|>": [
+   "<|fam:web|>",
+   "<|verb:read|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.capture.page|>": [
+   "<|fam:web|>",
+   "<|verb:capture|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.search.page|>": [
+   "<|fam:web|>",
+   "<|verb:search|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.summarize.page|>": [
+   "<|fam:web|>",
+   "<|verb:summarize|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.watch.page|>": [
+   "<|fam:web|>",
+   "<|verb:watch|>",
+   "<|obj:page|>"
+  ],
+  "<|op:web.locate.link|>": [
+   "<|fam:web|>",
+   "<|verb:locate|>",
+   "<|obj:link|>"
+  ],
+  "<|op:web.click.link|>": [
+   "<|fam:web|>",
+   "<|verb:click|>",
+   "<|obj:link|>"
+  ],
+  "<|op:web.fetch.link|>": [
+   "<|fam:web|>",
+   "<|verb:fetch|>",
+   "<|obj:link|>"
+  ],
+  "<|op:web.rank.link|>": [
+   "<|fam:web|>",
+   "<|verb:rank|>",
+   "<|obj:link|>"
+  ],
+  "<|op:web.locate.form|>": [
+   "<|fam:web|>",
+   "<|verb:locate|>",
+   "<|obj:form|>"
+  ],
+  "<|op:web.fill.form|>": [
+   "<|fam:web|>",
+   "<|verb:fill|>",
+   "<|obj:form|>"
+  ],
+  "<|op:web.submit.form|>": [
+   "<|fam:web|>",
+   "<|verb:submit|>",
+   "<|obj:form|>"
+  ],
+  "<|op:web.validate.form|>": [
+   "<|fam:web|>",
+   "<|verb:validate|>",
+   "<|obj:form|>"
+  ],
+  "<|op:web.inspect.form|>": [
+   "<|fam:web|>",
+   "<|verb:inspect|>",
+   "<|obj:form|>"
+  ],
+  "<|op:web.locate.dom_element|>": [
+   "<|fam:web|>",
+   "<|verb:locate|>",
+   "<|obj:dom_element|>"
+  ],
+  "<|op:web.click.dom_element|>": [
+   "<|fam:web|>",
+   "<|verb:click|>",
+   "<|obj:dom_element|>"
+  ],
+  "<|op:web.read.dom_element|>": [
+   "<|fam:web|>",
+   "<|verb:read|>",
+   "<|obj:dom_element|>"
+  ],
+  "<|op:web.inspect.dom_element|>": [
+   "<|fam:web|>",
+   "<|verb:inspect|>",
+   "<|obj:dom_element|>"
+  ],
+  "<|op:web.capture.dom_element|>": [
+   "<|fam:web|>",
+   "<|verb:capture|>",
+   "<|obj:dom_element|>"
+  ],
+  "<|op:web.open.browser_tab|>": [
+   "<|fam:web|>",
+   "<|verb:open|>",
+   "<|obj:browser_tab|>"
+  ],
+  "<|op:web.close.browser_tab|>": [
+   "<|fam:web|>",
+   "<|verb:close|>",
+   "<|obj:browser_tab|>"
+  ],
+  "<|op:web.focus.browser_tab|>": [
+   "<|fam:web|>",
+   "<|verb:focus|>",
+   "<|obj:browser_tab|>"
+  ],
+  "<|op:web.list.browser_tab|>": [
+   "<|fam:web|>",
+   "<|verb:list|>",
+   "<|obj:browser_tab|>"
+  ],
+  "<|op:web.capture.browser_tab|>": [
+   "<|fam:web|>",
+   "<|verb:capture|>",
+   "<|obj:browser_tab|>"
+  ],
+  "<|op:web.locate.web_table|>": [
+   "<|fam:web|>",
+   "<|verb:locate|>",
+   "<|obj:web_table|>"
+  ],
+  "<|op:web.scrape.web_table|>": [
+   "<|fam:web|>",
+   "<|verb:scrape|>",
+   "<|obj:web_table|>"
+  ],
+  "<|op:web.parse.web_table|>": [
+   "<|fam:web|>",
+   "<|verb:parse|>",
+   "<|obj:web_table|>"
+  ],
+  "<|op:web.summarize.web_table|>": [
+   "<|fam:web|>",
+   "<|verb:summarize|>",
+   "<|obj:web_table|>"
+  ],
+  "<|op:reason.deduce.premise|>": [
+   "<|fam:reason|>",
+   "<|verb:deduce|>",
+   "<|obj:premise|>"
+  ],
+  "<|op:reason.question.premise|>": [
+   "<|fam:reason|>",
+   "<|verb:question|>",
+   "<|obj:premise|>"
+  ],
+  "<|op:reason.verify.premise|>": [
+   "<|fam:reason|>",
+   "<|verb:verify|>",
+   "<|obj:premise|>"
+  ],
+  "<|op:reason.list.premise|>": [
+   "<|fam:reason|>",
+   "<|verb:list|>",
+   "<|obj:premise|>"
+  ],
+  "<|op:reason.induce.pattern|>": [
+   "<|fam:reason|>",
+   "<|verb:induce|>",
+   "<|obj:pattern|>"
+  ],
+  "<|op:reason.verify.pattern|>": [
+   "<|fam:reason|>",
+   "<|verb:verify|>",
+   "<|obj:pattern|>"
+  ],
+  "<|op:reason.explain.pattern|>": [
+   "<|fam:reason|>",
+   "<|verb:explain|>",
+   "<|obj:pattern|>"
+  ],
+  "<|op:reason.score.pattern|>": [
+   "<|fam:reason|>",
+   "<|verb:score|>",
+   "<|obj:pattern|>"
+  ],
+  "<|op:reason.abduce.anomaly_case|>": [
+   "<|fam:reason|>",
+   "<|verb:abduce|>",
+   "<|obj:anomaly_case|>"
+  ],
+  "<|op:reason.explain.anomaly_case|>": [
+   "<|fam:reason|>",
+   "<|verb:explain|>",
+   "<|obj:anomaly_case|>"
+  ],
+  "<|op:reason.diagnose.anomaly_case|>": [
+   "<|fam:reason|>",
+   "<|verb:diagnose|>",
+   "<|obj:anomaly_case|>"
+  ],
+  "<|op:reason.verify.anomaly_case|>": [
+   "<|fam:reason|>",
+   "<|verb:verify|>",
+   "<|obj:anomaly_case|>"
+  ],
+  "<|op:reason.decompose.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:decompose|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.analogize.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:analogize|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.enumerate.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:enumerate|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.bound.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:bound|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.simulate.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:simulate|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.explain.problem|>": [
+   "<|fam:reason|>",
+   "<|verb:explain|>",
+   "<|obj:problem|>"
+  ],
+  "<|op:reason.critique.argument|>": [
+   "<|fam:reason|>",
+   "<|verb:critique|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:reason.question.argument|>": [
+   "<|fam:reason|>",
+   "<|verb:question|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:reason.score.argument|>": [
+   "<|fam:reason|>",
+   "<|verb:score|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:reason.compare.argument|>": [
+   "<|fam:reason|>",
+   "<|verb:compare|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:reason.explain.argument|>": [
+   "<|fam:reason|>",
+   "<|verb:explain|>",
+   "<|obj:argument|>"
+  ],
+  "<|op:reason.estimate.quantity|>": [
+   "<|fam:reason|>",
+   "<|verb:estimate|>",
+   "<|obj:quantity|>"
+  ],
+  "<|op:reason.bound.quantity|>": [
+   "<|fam:reason|>",
+   "<|verb:bound|>",
+   "<|obj:quantity|>"
+  ],
+  "<|op:reason.compare.quantity|>": [
+   "<|fam:reason|>",
+   "<|verb:compare|>",
+   "<|obj:quantity|>"
+  ],
+  "<|op:reason.verify.quantity|>": [
+   "<|fam:reason|>",
+   "<|verb:verify|>",
+   "<|obj:quantity|>"
+  ],
+  "<|op:reason.explain.quantity|>": [
+   "<|fam:reason|>",
+   "<|verb:explain|>",
+   "<|obj:quantity|>"
+  ],
+  "<|op:obs.create.span|>": [
+   "<|fam:obs|>",
+   "<|verb:create|>",
+   "<|obj:span|>"
+  ],
+  "<|op:obs.update.span|>": [
+   "<|fam:obs|>",
+   "<|verb:update|>",
+   "<|obj:span|>"
+  ],
+  "<|op:obs.close.span|>": [
+   "<|fam:obs|>",
+   "<|verb:close|>",
+   "<|obj:span|>"
+  ],
+  "<|op:obs.inspect.span|>": [
+   "<|fam:obs|>",
+   "<|verb:inspect|>",
+   "<|obj:span|>"
+  ],
+  "<|op:obs.trace.span|>": [
+   "<|fam:obs|>",
+   "<|verb:trace|>",
+   "<|obj:span|>"
+  ],
+  "<|op:obs.read.trace_record|>": [
+   "<|fam:obs|>",
+   "<|verb:read|>",
+   "<|obj:trace_record|>"
+  ],
+  "<|op:obs.search.trace_record|>": [
+   "<|fam:obs|>",
+   "<|verb:search|>",
+   "<|obj:trace_record|>"
+  ],
+  "<|op:obs.summarize.trace_record|>": [
+   "<|fam:obs|>",
+   "<|verb:summarize|>",
+   "<|obj:trace_record|>"
+  ],
+  "<|op:obs.replay.trace_record|>": [
+   "<|fam:obs|>",
+   "<|verb:replay|>",
+   "<|obj:trace_record|>"
+  ],
+  "<|op:obs.trace.trace_record|>": [
+   "<|fam:obs|>",
+   "<|verb:trace|>",
+   "<|obj:trace_record|>"
+  ],
+  "<|op:obs.emit.metric_series|>": [
+   "<|fam:obs|>",
+   "<|verb:emit|>",
+   "<|obj:metric_series|>"
+  ],
+  "<|op:obs.read.metric_series|>": [
+   "<|fam:obs|>",
+   "<|verb:read|>",
+   "<|obj:metric_series|>"
+  ],
+  "<|op:obs.watch.metric_series|>": [
+   "<|fam:obs|>",
+   "<|verb:watch|>",
+   "<|obj:metric_series|>"
+  ],
+  "<|op:obs.alert.metric_series|>": [
+   "<|fam:obs|>",
+   "<|verb:alert|>",
+   "<|obj:metric_series|>"
+  ],
+  "<|op:obs.forecast.metric_series|>": [
+   "<|fam:obs|>",
+   "<|verb:forecast|>",
+   "<|obj:metric_series|>"
+  ],
+  "<|op:obs.create.health_check|>": [
+   "<|fam:obs|>",
+   "<|verb:create|>",
+   "<|obj:health_check|>"
+  ],
+  "<|op:obs.check.health_check|>": [
+   "<|fam:obs|>",
+   "<|verb:check|>",
+   "<|obj:health_check|>"
+  ],
+  "<|op:obs.list.health_check|>": [
+   "<|fam:obs|>",
+   "<|verb:list|>",
+   "<|obj:health_check|>"
+  ],
+  "<|op:obs.alert.health_check|>": [
+   "<|fam:obs|>",
+   "<|verb:alert|>",
+   "<|obj:health_check|>"
+  ],
+  "<|op:obs.emit.telemetry_event|>": [
+   "<|fam:obs|>",
+   "<|verb:emit|>",
+   "<|obj:telemetry_event|>"
+  ],
+  "<|op:obs.read.telemetry_event|>": [
+   "<|fam:obs|>",
+   "<|verb:read|>",
+   "<|obj:telemetry_event|>"
+  ],
+  "<|op:obs.filter.telemetry_event|>": [
+   "<|fam:obs|>",
+   "<|verb:filter|>",
+   "<|obj:telemetry_event|>"
+  ],
+  "<|op:obs.aggregate.telemetry_event|>": [
+   "<|fam:obs|>",
+   "<|verb:aggregate|>",
+   "<|obj:telemetry_event|>"
+  ],
+  "<|op:sec.rotate.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:rotate|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.audit.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:audit|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.scan.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:scan|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.revoke.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:revoke|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.expire.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:expire|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.inspect.credential|>": [
+   "<|fam:sec|>",
+   "<|verb:inspect|>",
+   "<|obj:credential|>"
+  ],
+  "<|op:sec.sign.artifact|>": [
+   "<|fam:sec|>",
+   "<|verb:sign|>",
+   "<|obj:artifact|>"
+  ],
+  "<|op:sec.verify.artifact|>": [
+   "<|fam:sec|>",
+   "<|verb:verify|>",
+   "<|obj:artifact|>"
+  ],
+  "<|op:sec.scan.artifact|>": [
+   "<|fam:sec|>",
+   "<|verb:scan|>",
+   "<|obj:artifact|>"
+  ],
+  "<|op:sec.audit.artifact|>": [
+   "<|fam:sec|>",
+   "<|verb:audit|>",
+   "<|obj:artifact|>"
+  ],
+  "<|op:sec.attest.artifact|>": [
+   "<|fam:sec|>",
+   "<|verb:attest|>",
+   "<|obj:artifact|>"
+  ],
+  "<|op:sec.encrypt.payload|>": [
+   "<|fam:sec|>",
+   "<|verb:encrypt|>",
+   "<|obj:payload|>"
+  ],
+  "<|op:sec.decrypt.payload|>": [
+   "<|fam:sec|>",
+   "<|verb:decrypt|>",
+   "<|obj:payload|>"
+  ],
+  "<|op:sec.scan.payload|>": [
+   "<|fam:sec|>",
+   "<|verb:scan|>",
+   "<|obj:payload|>"
+  ],
+  "<|op:sec.validate.payload|>": [
+   "<|fam:sec|>",
+   "<|verb:validate|>",
+   "<|obj:payload|>"
+  ],
+  "<|op:sec.sign.payload|>": [
+   "<|fam:sec|>",
+   "<|verb:sign|>",
+   "<|obj:payload|>"
+  ],
+  "<|op:sec.detect.vulnerability|>": [
+   "<|fam:sec|>",
+   "<|verb:detect|>",
+   "<|obj:vulnerability|>"
+  ],
+  "<|op:sec.classify.vulnerability|>": [
+   "<|fam:sec|>",
+   "<|verb:classify|>",
+   "<|obj:vulnerability|>"
+  ],
+  "<|op:sec.mitigate.vulnerability|>": [
+   "<|fam:sec|>",
+   "<|verb:mitigate|>",
+   "<|obj:vulnerability|>"
+  ],
+  "<|op:sec.report.vulnerability|>": [
+   "<|fam:sec|>",
+   "<|verb:report|>",
+   "<|obj:vulnerability|>"
+  ],
+  "<|op:sec.fix.vulnerability|>": [
+   "<|fam:sec|>",
+   "<|verb:fix|>",
+   "<|obj:vulnerability|>"
+  ],
+  "<|op:sec.inspect.attack_surface|>": [
+   "<|fam:sec|>",
+   "<|verb:inspect|>",
+   "<|obj:attack_surface|>"
+  ],
+  "<|op:sec.audit.attack_surface|>": [
+   "<|fam:sec|>",
+   "<|verb:audit|>",
+   "<|obj:attack_surface|>"
+  ],
+  "<|op:sec.measure.attack_surface|>": [
+   "<|fam:sec|>",
+   "<|verb:measure|>",
+   "<|obj:attack_surface|>"
+  ],
+  "<|op:sec.explain.attack_surface|>": [
+   "<|fam:sec|>",
+   "<|verb:explain|>",
+   "<|obj:attack_surface|>"
+  ],
+  "<|op:data.load.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:load|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.validate.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:validate|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.normalize.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:normalize|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.transform.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:transform|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.filter.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:filter|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.aggregate.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:aggregate|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.join_with.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:join_with|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.serialize.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:serialize|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.summarize.record_set|>": [
+   "<|fam:data|>",
+   "<|verb:summarize|>",
+   "<|obj:record_set|>"
+  ],
+  "<|op:data.parse.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:parse|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.validate.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:validate|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.transform.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:transform|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.serialize.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:serialize|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.diff.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:diff|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.normalize.json_document|>": [
+   "<|fam:data|>",
+   "<|verb:normalize|>",
+   "<|obj:json_document|>"
+  ],
+  "<|op:data.load.table|>": [
+   "<|fam:data|>",
+   "<|verb:load|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.filter.table|>": [
+   "<|fam:data|>",
+   "<|verb:filter|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.aggregate.table|>": [
+   "<|fam:data|>",
+   "<|verb:aggregate|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.join_with.table|>": [
+   "<|fam:data|>",
+   "<|verb:join_with|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.transform.table|>": [
+   "<|fam:data|>",
+   "<|verb:transform|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.summarize.table|>": [
+   "<|fam:data|>",
+   "<|verb:summarize|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.validate.table|>": [
+   "<|fam:data|>",
+   "<|verb:validate|>",
+   "<|obj:table|>"
+  ],
+  "<|op:data.create.schema|>": [
+   "<|fam:data|>",
+   "<|verb:create|>",
+   "<|obj:schema|>"
+  ],
+  "<|op:data.validate.schema|>": [
+   "<|fam:data|>",
+   "<|verb:validate|>",
+   "<|obj:schema|>"
+  ],
+  "<|op:data.diff.schema|>": [
+   "<|fam:data|>",
+   "<|verb:diff|>",
+   "<|obj:schema|>"
+  ],
+  "<|op:data.update.schema|>": [
+   "<|fam:data|>",
+   "<|verb:update|>",
+   "<|obj:schema|>"
+  ],
+  "<|op:data.explain.schema|>": [
+   "<|fam:data|>",
+   "<|verb:explain|>",
+   "<|obj:schema|>"
+  ],
+  "<|op:data.load.time_series|>": [
+   "<|fam:data|>",
+   "<|verb:load|>",
+   "<|obj:time_series|>"
+  ],
+  "<|op:data.aggregate.time_series|>": [
+   "<|fam:data|>",
+   "<|verb:aggregate|>",
+   "<|obj:time_series|>"
+  ],
+  "<|op:data.forecast.time_series|>": [
+   "<|fam:data|>",
+   "<|verb:forecast|>",
+   "<|obj:time_series|>"
+  ],
+  "<|op:data.filter.time_series|>": [
+   "<|fam:data|>",
+   "<|verb:filter|>",
+   "<|obj:time_series|>"
+  ],
+  "<|op:data.summarize.time_series|>": [
+   "<|fam:data|>",
+   "<|verb:summarize|>",
+   "<|obj:time_series|>"
+  ],
+  "<|op:data.load.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:load|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:data.search.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:search|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:data.filter.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:filter|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:data.summarize.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:summarize|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:data.index.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:index|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:data.normalize.text_corpus|>": [
+   "<|fam:data|>",
+   "<|verb:normalize|>",
+   "<|obj:text_corpus|>"
+  ],
+  "<|op:state.create.entity|>": [
+   "<|fam:state|>",
+   "<|verb:create|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.track.entity|>": [
+   "<|fam:state|>",
+   "<|verb:track|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.update.entity|>": [
+   "<|fam:state|>",
+   "<|verb:update|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.resolve.entity|>": [
+   "<|fam:state|>",
+   "<|verb:resolve|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.relate.entity|>": [
+   "<|fam:state|>",
+   "<|verb:relate|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.delete.entity|>": [
+   "<|fam:state|>",
+   "<|verb:delete|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.inspect.entity|>": [
+   "<|fam:state|>",
+   "<|verb:inspect|>",
+   "<|obj:entity|>"
+  ],
+  "<|op:state.create.relation|>": [
+   "<|fam:state|>",
+   "<|verb:create|>",
+   "<|obj:relation|>"
+  ],
+  "<|op:state.delete.relation|>": [
+   "<|fam:state|>",
+   "<|verb:delete|>",
+   "<|obj:relation|>"
+  ],
+  "<|op:state.verify.relation|>": [
+   "<|fam:state|>",
+   "<|verb:verify|>",
+   "<|obj:relation|>"
+  ],
+  "<|op:state.list.relation|>": [
+   "<|fam:state|>",
+   "<|verb:list|>",
+   "<|obj:relation|>"
+  ],
+  "<|op:state.create.fact|>": [
+   "<|fam:state|>",
+   "<|verb:create|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.verify.fact|>": [
+   "<|fam:state|>",
+   "<|verb:verify|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.expire.fact|>": [
+   "<|fam:state|>",
+   "<|verb:expire|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.cite.fact|>": [
+   "<|fam:state|>",
+   "<|verb:cite|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.reconcile.fact|>": [
+   "<|fam:state|>",
+   "<|verb:reconcile|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.quantify.fact|>": [
+   "<|fam:state|>",
+   "<|verb:quantify|>",
+   "<|obj:fact|>"
+  ],
+  "<|op:state.snapshot.environment_state|>": [
+   "<|fam:state|>",
+   "<|verb:snapshot|>",
+   "<|obj:environment_state|>"
+  ],
+  "<|op:state.diff.environment_state|>": [
+   "<|fam:state|>",
+   "<|verb:diff|>",
+   "<|obj:environment_state|>"
+  ],
+  "<|op:state.track.environment_state|>": [
+   "<|fam:state|>",
+   "<|verb:track|>",
+   "<|obj:environment_state|>"
+  ],
+  "<|op:state.inspect.environment_state|>": [
+   "<|fam:state|>",
+   "<|verb:inspect|>",
+   "<|obj:environment_state|>"
+  ],
+  "<|op:state.validate.environment_state|>": [
+   "<|fam:state|>",
+   "<|verb:validate|>",
+   "<|obj:environment_state|>"
+  ],
+  "<|op:state.update.belief_state|>": [
+   "<|fam:state|>",
+   "<|verb:update|>",
+   "<|obj:belief_state|>"
+  ],
+  "<|op:state.inspect.belief_state|>": [
+   "<|fam:state|>",
+   "<|verb:inspect|>",
+   "<|obj:belief_state|>"
+  ],
+  "<|op:state.snapshot.belief_state|>": [
+   "<|fam:state|>",
+   "<|verb:snapshot|>",
+   "<|obj:belief_state|>"
+  ],
+  "<|op:state.quantify.belief_state|>": [
+   "<|fam:state|>",
+   "<|verb:quantify|>",
+   "<|obj:belief_state|>"
+  ],
+  "<|op:state.reconcile.belief_state|>": [
+   "<|fam:state|>",
+   "<|verb:reconcile|>",
+   "<|obj:belief_state|>"
+  ],
+  "<|op:dial.read.turn|>": [
+   "<|fam:dial|>",
+   "<|verb:read|>",
+   "<|obj:turn|>"
+  ],
+  "<|op:dial.summarize.turn|>": [
+   "<|fam:dial|>",
+   "<|verb:summarize|>",
+   "<|obj:turn|>"
+  ],
+  "<|op:dial.classify.turn|>": [
+   "<|fam:dial|>",
+   "<|verb:classify|>",
+   "<|obj:turn|>"
+  ],
+  "<|op:dial.acknowledge.turn|>": [
+   "<|fam:dial|>",
+   "<|verb:acknowledge|>",
+   "<|obj:turn|>"
+  ],
+  "<|op:dial.classify.topic|>": [
+   "<|fam:dial|>",
+   "<|verb:classify|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:dial.track.topic|>": [
+   "<|fam:dial|>",
+   "<|verb:track|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:dial.summarize.topic|>": [
+   "<|fam:dial|>",
+   "<|verb:summarize|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:dial.list.topic|>": [
+   "<|fam:dial|>",
+   "<|verb:list|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:dial.resolve.reference|>": [
+   "<|fam:dial|>",
+   "<|verb:resolve|>",
+   "<|obj:reference|>"
+  ],
+  "<|op:dial.explain.reference|>": [
+   "<|fam:dial|>",
+   "<|verb:explain|>",
+   "<|obj:reference|>"
+  ],
+  "<|op:dial.store.user_preference|>": [
+   "<|fam:dial|>",
+   "<|verb:store|>",
+   "<|obj:user_preference|>"
+  ],
+  "<|op:dial.recall.user_preference|>": [
+   "<|fam:dial|>",
+   "<|verb:recall|>",
+   "<|obj:user_preference|>"
+  ],
+  "<|op:dial.update.user_preference|>": [
+   "<|fam:dial|>",
+   "<|verb:update|>",
+   "<|obj:user_preference|>"
+  ],
+  "<|op:dial.reconcile.user_preference|>": [
+   "<|fam:dial|>",
+   "<|verb:reconcile|>",
+   "<|obj:user_preference|>"
+  ],
+  "<|op:dial.parse.instruction|>": [
+   "<|fam:dial|>",
+   "<|verb:parse|>",
+   "<|obj:instruction|>"
+  ],
+  "<|op:dial.classify.instruction|>": [
+   "<|fam:dial|>",
+   "<|verb:classify|>",
+   "<|obj:instruction|>"
+  ],
+  "<|op:dial.validate.instruction|>": [
+   "<|fam:dial|>",
+   "<|verb:validate|>",
+   "<|obj:instruction|>"
+  ],
+  "<|op:dial.question.instruction|>": [
+   "<|fam:dial|>",
+   "<|verb:question|>",
+   "<|obj:instruction|>"
+  ],
+  "<|op:dial.explain.instruction|>": [
+   "<|fam:dial|>",
+   "<|verb:explain|>",
+   "<|obj:instruction|>"
+  ],
+  "<|op:compute.quote.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:quote|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.provision.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:provision|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.monitor.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:monitor|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.teardown.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:teardown|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.benchmark.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:benchmark|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.inspect.gpu_instance|>": [
+   "<|fam:compute|>",
+   "<|verb:inspect|>",
+   "<|obj:gpu_instance|>"
+  ],
+  "<|op:compute.submit_job.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:submit_job|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.monitor.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:monitor|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.cancel.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:cancel|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.inspect.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:inspect|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.estimate.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:estimate|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.benchmark.training_job|>": [
+   "<|fam:compute|>",
+   "<|verb:benchmark|>",
+   "<|obj:training_job|>"
+  ],
+  "<|op:compute.provision.inference_server|>": [
+   "<|fam:compute|>",
+   "<|verb:provision|>",
+   "<|obj:inference_server|>"
+  ],
+  "<|op:compute.monitor.inference_server|>": [
+   "<|fam:compute|>",
+   "<|verb:monitor|>",
+   "<|obj:inference_server|>"
+  ],
+  "<|op:compute.teardown.inference_server|>": [
+   "<|fam:compute|>",
+   "<|verb:teardown|>",
+   "<|obj:inference_server|>"
+  ],
+  "<|op:compute.benchmark.inference_server|>": [
+   "<|fam:compute|>",
+   "<|verb:benchmark|>",
+   "<|obj:inference_server|>"
+  ],
+  "<|op:compute.throttle.inference_server|>": [
+   "<|fam:compute|>",
+   "<|verb:throttle|>",
+   "<|obj:inference_server|>"
+  ],
+  "<|op:compute.provision.cluster|>": [
+   "<|fam:compute|>",
+   "<|verb:provision|>",
+   "<|obj:cluster|>"
+  ],
+  "<|op:compute.monitor.cluster|>": [
+   "<|fam:compute|>",
+   "<|verb:monitor|>",
+   "<|obj:cluster|>"
+  ],
+  "<|op:compute.teardown.cluster|>": [
+   "<|fam:compute|>",
+   "<|verb:teardown|>",
+   "<|obj:cluster|>"
+  ],
+  "<|op:compute.inspect.cluster|>": [
+   "<|fam:compute|>",
+   "<|verb:inspect|>",
+   "<|obj:cluster|>"
+  ],
+  "<|op:compute.measure.cluster|>": [
+   "<|fam:compute|>",
+   "<|verb:measure|>",
+   "<|obj:cluster|>"
+  ],
+  "<|op:compute.load.checkpoint_file|>": [
+   "<|fam:compute|>",
+   "<|verb:load|>",
+   "<|obj:checkpoint_file|>"
+  ],
+  "<|op:compute.validate.checkpoint_file|>": [
+   "<|fam:compute|>",
+   "<|verb:validate|>",
+   "<|obj:checkpoint_file|>"
+  ],
+  "<|op:compute.copy.checkpoint_file|>": [
+   "<|fam:compute|>",
+   "<|verb:copy|>",
+   "<|obj:checkpoint_file|>"
+  ],
+  "<|op:compute.delete.checkpoint_file|>": [
+   "<|fam:compute|>",
+   "<|verb:delete|>",
+   "<|obj:checkpoint_file|>"
+  ],
+  "<|op:compute.stat.checkpoint_file|>": [
+   "<|fam:compute|>",
+   "<|verb:stat|>",
+   "<|obj:checkpoint_file|>"
+  ],
+  "<|op:econ.create.offer|>": [
+   "<|fam:econ|>",
+   "<|verb:create|>",
+   "<|obj:offer|>"
+  ],
+  "<|op:econ.price.offer|>": [
+   "<|fam:econ|>",
+   "<|verb:price|>",
+   "<|obj:offer|>"
+  ],
+  "<|op:econ.compare.offer|>": [
+   "<|fam:econ|>",
+   "<|verb:compare|>",
+   "<|obj:offer|>"
+  ],
+  "<|op:econ.expire.offer|>": [
+   "<|fam:econ|>",
+   "<|verb:expire|>",
+   "<|obj:offer|>"
+  ],
+  "<|op:econ.abandon.offer|>": [
+   "<|fam:econ|>",
+   "<|verb:abandon|>",
+   "<|obj:offer|>"
+  ],
+  "<|op:econ.quote.compute_market|>": [
+   "<|fam:econ|>",
+   "<|verb:quote|>",
+   "<|obj:compute_market|>"
+  ],
+  "<|op:econ.bid.compute_market|>": [
+   "<|fam:econ|>",
+   "<|verb:bid|>",
+   "<|obj:compute_market|>"
+  ],
+  "<|op:econ.monitor.compute_market|>": [
+   "<|fam:econ|>",
+   "<|verb:monitor|>",
+   "<|obj:compute_market|>"
+  ],
+  "<|op:econ.inspect.compute_market|>": [
+   "<|fam:econ|>",
+   "<|verb:inspect|>",
+   "<|obj:compute_market|>"
+  ],
+  "<|op:econ.create.contract|>": [
+   "<|fam:econ|>",
+   "<|verb:create|>",
+   "<|obj:contract|>"
+  ],
+  "<|op:econ.inspect.contract|>": [
+   "<|fam:econ|>",
+   "<|verb:inspect|>",
+   "<|obj:contract|>"
+  ],
+  "<|op:econ.validate.contract|>": [
+   "<|fam:econ|>",
+   "<|verb:validate|>",
+   "<|obj:contract|>"
+  ],
+  "<|op:econ.settle.contract|>": [
+   "<|fam:econ|>",
+   "<|verb:settle|>",
+   "<|obj:contract|>"
+  ],
+  "<|op:econ.explain.contract|>": [
+   "<|fam:econ|>",
+   "<|verb:explain|>",
+   "<|obj:contract|>"
+  ],
+  "<|op:econ.read.revenue_event|>": [
+   "<|fam:econ|>",
+   "<|verb:read|>",
+   "<|obj:revenue_event|>"
+  ],
+  "<|op:econ.account.revenue_event|>": [
+   "<|fam:econ|>",
+   "<|verb:account|>",
+   "<|obj:revenue_event|>"
+  ],
+  "<|op:econ.audit.revenue_event|>": [
+   "<|fam:econ|>",
+   "<|verb:audit|>",
+   "<|obj:revenue_event|>"
+  ],
+  "<|op:econ.verify.revenue_event|>": [
+   "<|fam:econ|>",
+   "<|verb:verify|>",
+   "<|obj:revenue_event|>"
+  ]
+ }
+}

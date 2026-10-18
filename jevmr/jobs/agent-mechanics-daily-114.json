@@ -1,0 +1,2 @@
+{"families": ["ctx_pressure", "tool_failure"], "out": "runs/jev/daily/{date}/jev-1.14.0",
+ "model": "jev-1.14.0", "max_requests": 2000, "concurrency": 12, "seed": 7}

@@ -28,6 +28,10 @@ SPECIAL = ["[PAD]", "[EOS]", "[GOAL]", "[STEP]", "[OPTS]", "[OPT]", "[DECIDE]"]
 _OPCODES = Path(__file__).with_name("opcodes.json")
 if _OPCODES.exists():
     SPECIAL += [op["token"] for op in json.loads(_OPCODES.read_text())["ops"]]
+# Compositional family/verb/object tokens (compositional.py) for unseen pairs.
+_COMPOSITIONAL = Path(__file__).with_name("compositional.json")
+if _COMPOSITIONAL.exists():
+    SPECIAL += json.loads(_COMPOSITIONAL.read_text())["tokens"]
 FINAL = "FINAL"
 HISTORY, OPTIONS = 6, 16
 GOAL_CHARS, ARG_CHARS, RESULT_CHARS = 800, 160, 160

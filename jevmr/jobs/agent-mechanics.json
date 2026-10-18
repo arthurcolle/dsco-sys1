@@ -1,0 +1,2 @@
+{"families": ["ctx_pressure", "tool_failure"], "out": "runs/jev/standing/agent-mechanics",
+ "model": "jev-1.13.0", "max_requests": 2000, "concurrency": 12, "seed": 7}

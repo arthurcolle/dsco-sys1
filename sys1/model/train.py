@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Train the System One decision model on dsco decision data.
 
-    .venv/bin/python train.py --data data/decisions --preset sys1-tiny --steps 2000
+    python -m sys1.model.train --data data/decisions --preset sys1-tiny --steps 2000
 
 Losses: choice cross-entropy, noul / value binary cross-entropy (proper
 scoring rules, so probabilities stay calibrated), plus a small next-token LM
@@ -22,7 +22,7 @@ import torch
 import torch.nn.functional as F
 from tokenizers import Tokenizer
 
-from model import PRESETS, Sys1Model, param_count
+from sys1.model.model import PRESETS, Sys1Model, param_count
 
 
 def encode(tok: Tokenizer, ex: dict, max_len: int):

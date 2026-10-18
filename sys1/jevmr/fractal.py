@@ -21,7 +21,7 @@ import copy
 import itertools
 import random
 
-from jevmr.families import FAMILIES, OPS, Family
+from sys1.jevmr.families import FAMILIES, OPS, Family
 
 BASE = [f for f in FAMILIES.values()]
 

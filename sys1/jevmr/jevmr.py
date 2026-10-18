@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Map-reduce Jev decisions over generated prompt families.
 
-    python -m jevmr.jevmr run --families ctx_pressure,tool_failure --out runs/jev/pilot --max-requests 200
-    python -m jevmr.jevmr reduce --out runs/jev/pilot
-    python -m jevmr.jevmr loop jevmr/jobs        # run every job spec that is not finished
+    python -m sys1.jevmr.jevmr run --families ctx_pressure,tool_failure --out runs/jev/pilot --max-requests 200
+    python -m sys1.jevmr.jevmr reduce --out runs/jev/pilot
+    python -m sys1.jevmr.jevmr loop sys1/jevmr/jobs        # run every job spec that is not finished
 
 map:    one request per generated situation; the op-code Choice and the Noul
         probes share the request (TypeSafe's fan-out pattern).
@@ -30,8 +30,8 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from jevmr.families import FAMILIES
-from jevmr import fractal  # registers fractal variants into FAMILIES
+from sys1.jevmr.families import FAMILIES
+from sys1.jevmr import fractal  # registers fractal variants into FAMILIES
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 USD_PER_MTOK = 0.042  # input tokens only; output is free (docs.typesafe.ai/models)

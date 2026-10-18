@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Turn exported episodes into typed decision examples and train a tokenizer.
 
-    .venv/bin/python build_decisions.py --episodes data/episodes.jsonl --out data/decisions
+    python -m sys1.datasets.build_decisions --episodes data/episodes.jsonl --out data/decisions
 
 Each tool step (and each episode's final answer) becomes one decision:
   state   goal + the most recent steps (tool, ok, truncated args/result)
@@ -21,15 +21,16 @@ import json
 import random
 from pathlib import Path
 
+from sys1.paths import COMPOSITIONAL_JSON, OPCODES_JSON
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers, trainers
 
 SPECIAL = ["[PAD]", "[EOS]", "[GOAL]", "[STEP]", "[OPTS]", "[OPT]", "[DECIDE]"]
 # Op-codes for agent mechanics (opcodes.py) are reserved as single tokens.
-_OPCODES = Path(__file__).with_name("opcodes.json")
+_OPCODES = OPCODES_JSON
 if _OPCODES.exists():
     SPECIAL += [op["token"] for op in json.loads(_OPCODES.read_text())["ops"]]
 # Compositional family/verb/object tokens (compositional.py) for unseen pairs.
-_COMPOSITIONAL = Path(__file__).with_name("compositional.json")
+_COMPOSITIONAL = COMPOSITIONAL_JSON
 if _COMPOSITIONAL.exists():
     SPECIAL += json.loads(_COMPOSITIONAL.read_text())["tokens"]
 FINAL = "FINAL"

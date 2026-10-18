@@ -11,10 +11,11 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-EPISODES = ROOT / "data" / "episodes.jsonl"
-OPCODES = ROOT / "opcodes.json"
-OUT_DIR = ROOT / "data" / "labels"
+from sys1.paths import DATA, OPCODES_JSON
+
+EPISODES = DATA / "episodes.jsonl"
+OPCODES = OPCODES_JSON
+OUT_DIR = DATA / "labels"
 
 GENERIC = "ACT.CALL"
 LOOP_MIN_REPEATS = 3

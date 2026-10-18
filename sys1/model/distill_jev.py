@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Distill Jev (TypeSafe System One) op-code decisions into Sys1Model.
 
-    .venv/bin/python distill_jev.py --steps 600 --lr 3e-4 --out runs/distill/a
-    .venv/bin/python distill_jev.py --frac 0.5 ...      # learning-curve point
+    python -m sys1.model.distill_jev --steps 600 --lr 3e-4 --out runs/distill/a
+    python -m sys1.model.distill_jev --frac 0.5 ...      # learning-curve point
 
 Data: Jev results from jevmr runs, joined back to regenerated situation text by
 recomputing jevmr item ids. Repeated observations of the same item are averaged
@@ -31,9 +31,9 @@ import torch
 import torch.nn.functional as F
 from tokenizers import Tokenizer
 
-from jevmr.families import FAMILIES, OPS
-from jevmr.jevmr import item_id, read_results
-from model import PRESETS, Sys1Model, param_count
+from sys1.jevmr.families import FAMILIES, OPS
+from sys1.jevmr.jevmr import item_id, read_results
+from sys1.model.model import PRESETS, Sys1Model, param_count
 
 RUNS = ["runs/jev/v3", "runs/jev/v4-ctx", "runs/jev/standing/agent-mechanics"]
 

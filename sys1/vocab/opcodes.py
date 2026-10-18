@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Op-code vocabulary for autonomous agent mechanics.
 
-    .venv/bin/python opcodes.py            # writes opcodes.json, checks invariants
+    python -m sys1.vocab.opcodes            # writes opcodes.json, checks invariants
 
 Each op-code is one reserved token the System One model can read or emit
 ("functional tokens", cf. Octopus v2, arXiv:2404.01744). An entry records:

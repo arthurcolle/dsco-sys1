@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Adjudicate Jev misses with independent dsco workers (Claude and Codex).
 
-    python -m jevmr.adjudicate --run runs/jev/fractal-v1 --out runs/jev/fractal-v1/adjudication
+    python -m sys1.jevmr.adjudicate --run runs/jev/fractal-v1 --out runs/jev/fractal-v1/adjudication
 
 For every item Jev got wrong in variants whose gold follows from stated rules
 (explicit compositions and ablations), batches of situations go to dsco
@@ -24,9 +24,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from jevmr import fractal  # noqa: F401  (registers variants)
-from jevmr.families import FAMILIES, OPS
-from jevmr.jevmr import item_id, read_results
+from sys1.jevmr import fractal  # noqa: F401  (registers variants)
+from sys1.jevmr.families import FAMILIES, OPS
+from sys1.jevmr.jevmr import item_id, read_results
 
 DSCO = "/Users/arthurcolle/Dsco/dsco-cli/dsco"
 WORKERS = {

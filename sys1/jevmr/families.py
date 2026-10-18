@@ -14,7 +14,9 @@ import json
 import random
 from pathlib import Path
 
-OPS = {o["mnemonic"]: o for o in json.loads((Path(__file__).resolve().parents[1] / "opcodes.json").read_text())["ops"]}
+from sys1.paths import OPCODES_JSON
+
+OPS = {o["mnemonic"]: o for o in json.loads(OPCODES_JSON.read_text())["ops"]}
 
 
 def option(mnemonic: str) -> tuple[str, str]:

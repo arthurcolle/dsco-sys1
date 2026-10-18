@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Full operational definitions for every op-code.
 
-    .venv/bin/python definitions.py        # rewrites opcodes.json with definitions
+    python -m sys1.vocab.definitions        # rewrites opcodes.json with definitions
 
 Adds to each op-code:
   signature      MNEMONIC(operands) -> ReturnType
@@ -22,7 +22,7 @@ import json
 import sys
 from pathlib import Path
 
-import opcodes
+from sys1.vocab import opcodes
 
 # Archetype -> (returns, pre, post, reversibility, failure_ops)
 ARCHETYPES = {

@@ -1,0 +1,18 @@
+[project]
+name = "dsco-sys1"
+version = "0.1.0"
+description = "Small deep decision model and decision-quality tooling for autonomous agents"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["torch>=2.4", "tokenizers>=0.20", "numpy"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["sys1*"]
+
+[tool.setuptools.package-data]
+"sys1.vocab" = ["*.json"]
+"sys1.jevmr" = ["jobs/*.json", "run_loop.sh"]

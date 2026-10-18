@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compositional op-code tokens alongside the 1,500 fused ones.
 
-    .venv/bin/python compositional.py      # writes compositional.json
+    python -m sys1.vocab.compositional      # writes compositional.json
 
 Fused tokens (<|op:ctx.mask.observation_block|>) stay canonical. These extra
 tokens let the model express verb+object pairs it never saw fused:
@@ -17,7 +17,7 @@ import json
 import sys
 from pathlib import Path
 
-import opcodes
+from sys1.vocab import opcodes
 
 
 def build() -> dict:

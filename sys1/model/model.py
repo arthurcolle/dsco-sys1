@@ -41,6 +41,9 @@ class Sys1Config:
 PRESETS = {
     # ~666M deep-thin target (see param_count); 44 layers x 1152 wide.
     "sys1-666m": Sys1Config(),
+    # 983.2M, under the 999M cap: MobileLLM-1B depth and width (54 x 1280,
+    # 20 query / 5 key-value heads, arXiv:2402.14905) with a 3,456 SwiGLU.
+    "sys1-999m": Sys1Config(d_model=1280, n_layers=54, n_heads=20, n_kv_heads=5, ffn_dim=3456),
     # Pipeline smoke test on a laptop GPU.
     "sys1-tiny": Sys1Config(d_model=384, n_layers=12, n_heads=6, n_kv_heads=2, ffn_dim=1024, max_seq=2048),
 }

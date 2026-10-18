@@ -918,6 +918,76 @@ def tidy(text: str) -> str:
     return re.sub(r"\b([Aa]) ([aeio]|u(?!ni|s|ti|bi)|HTTP|MCP|API|SQL|URL|LLM)", lambda m: ("an " if m.group(1) == "a" else "An ") + m.group(2), text)
 
 
+VERB_ARCHETYPE.update({
+    "solve": "judge", "compute": "judge", "rewrite": "judge", "translate": "judge", "render": "judge",
+    "apply": "mutate", "transcribe": "observe", "respond": "egress", "reset": "mutate", "redact": "mutate",
+    "pin_version": "mutate", "upgrade": "mutate",
+})
+VERB_RETURNS.update({"solve": "Solution{values, residual}", "compute": "Value", "transcribe": "Transcript",
+                     "translate": "Text", "rewrite": "Text", "render": "Artifact"})
+VERB_WHEN.update({
+    "compute": "Emit whenever {o} needs an exact number; never estimate what code can count.",
+    "redact": "Emit before {o} is stored, shared or sent anywhere it does not need personal details.",
+    "reset": "Emit when {o} is in an unknown or polluted state and a clean start is cheaper than repair.",
+    "upgrade": "Emit when {o} has a fix or feature the task needs, after checking release notes for breaking changes.",
+})
+
+# Singles added by the 2,062-op expansion.
+SINGLE_SPEC.update({
+    "DB.DEADLOCK": S("Signal", "Emit when the database reports a deadlock or two transactions each wait on a lock the other holds.", kind="signal"),
+    "DB.SLOW_QUERY": S("Signal", "Emit when a query's measured latency exceeds its budget or the slow-query log names it.", kind="signal"),
+    "DB.N_PLUS_ONE": S("Judgment", "Emit when a trace or code shows one query per loop iteration that a single join or IN-list could replace.", kind="judge"),
+    "DB.READ_REPLICA_FIRST": S("Ack", "Emit when a read-only query can tolerate replica lag and the primary is under load.", kind="directive"),
+    "API.IDEMPOTENCY_KEY": S("Key", "Emit before sending a non-idempotent request that may be retried.", kind="execute"),
+    "API.BREAKING_API_CHANGE": S("Signal", "Emit when responses stop matching the recorded schema or the provider announces an incompatible version.", kind="signal"),
+    "API.PAGINATE_ALL": S("Items[]", "Emit when a response includes a next cursor and the task needs the complete set.", kind="observe"),
+    "CI.CANARY": S("RolloutRef", "Emit when releasing a change whose failure would affect many users.", kind="execute"),
+    "CI.RED_BUILD": S("Signal", "Emit when the latest main-branch CI run failed.", kind="signal"),
+    "CI.GREEN_BUILD": S("Signal", "Emit when the latest main-branch CI run passed every required check.", kind="signal"),
+    "CI.FREEZE": S("Ack", "Emit during an incident or release window when no further deploys should start.", kind="control"),
+    "INFRA.DRIFT": S("Signal", "Emit when a plan or diff shows live resources differ from the declared configuration.", kind="signal"),
+    "INFRA.CAPACITY_HEADROOM": S("Observation", "Emit before a launch or load test, or when utilization trends toward the limit.", kind="observe"),
+    "INFRA.INFRA_AS_CODE": S("Ack", "Emit when about to change infrastructure; route the change through declared configuration.", kind="directive"),
+    "QUEUE.BACKPRESSURE": S("Signal", "Emit when consumer lag grows across consecutive measurements.", kind="signal"),
+    "QUEUE.POISON_MESSAGE": S("Signal", "Emit when the same message has failed processing on every delivery attempt.", kind="signal"),
+    "QUEUE.ORDERING_REQUIRED": S("Ack", "Emit when later events depend on earlier ones with the same key.", kind="directive"),
+    "MATH.EXACT_ARITHMETIC_IN_CODE": S("Ack", "Emit whenever a decision depends on a count, sum, date difference or threshold comparison.", kind="directive"),
+    "MATH.NUMERIC_TOLERANCE": S("Ack", "Emit when comparing floating-point results that need not match bit for bit.", kind="directive"),
+    "MATH.UNIT_MISMATCH": S("Judgment", "Emit when a formula adds, compares or assigns quantities with different units.", kind="judge"),
+    "MATH.PRECISION_LOSS": S("Judgment", "Emit when large and small magnitudes are combined or integers exceed exact float range.", kind="judge"),
+    "TEXT.TONE_MATCH": S("Ack", "Emit when writing for a named audience or channel with known conventions.", kind="directive"),
+    "TEXT.LENGTH_BUDGET": S("Ack", "Emit when the request or medium states a word, character or token limit.", kind="directive"),
+    "TEXT.PLAGIARISM_RISK": S("Judgment", "Emit when a span closely matches a source and carries no citation.", kind="judge"),
+    "MEDIA.ALT_TEXT": S("Text", "Emit when publishing an image in a document or interface.", kind="judge"),
+    "MEDIA.OCR_UNCERTAIN": S("Judgment", "Emit when text came from an image and the recognizer reports low confidence or the text looks garbled.", kind="judge"),
+    "COLLAB.ASSIGNEE": S("Receipt", "Emit when an issue has no owner or ownership changes.", kind="execute"),
+    "COLLAB.STALE_THREAD": S("Signal", "Emit when a thread with an open question has had no replies for longer than the team's response window.", kind="signal"),
+    "COLLAB.NEEDS_DECISION": S("Signal", "Emit when work cannot continue until a named person chooses between options.", kind="signal"),
+    "KG.DUPLICATE_ENTITY": S("Judgment", "Emit when two nodes share identifiers or near-identical attributes.", kind="judge"),
+    "KG.ORPHAN_NODE": S("Signal", "Emit when a node has no incoming or outgoing edges after an import or deletion.", kind="signal"),
+    "SIM.DETERMINISTIC_RUN": S("Ack", "Emit when a result must be reproducible: evaluations, bisects and bug reports.", kind="directive"),
+    "SIM.SIM_TO_REAL_GAP": S("Judgment", "Emit before trusting a sandbox result for production when the sandbox mocks timing, data or dependencies.", kind="judge"),
+    "PRIV.MINIMIZE_DATA": S("Ack", "Emit when designing storage, logging or a request that could include personal data.", kind="directive"),
+    "PRIV.PURPOSE_LIMIT": S("Ack", "Emit when personal data collected for one task is about to be used for another.", kind="directive"),
+    "LOC.MISSING_TRANSLATION": S("Signal", "Emit when a lookup for the active locale falls back to the source language.", kind="signal"),
+    "LOC.RTL_LAYOUT": S("Ack", "Emit when the active locale is written right to left (for example Arabic or Hebrew).", kind="directive"),
+    "NOTEBOOK.STALE_CELL_STATE": S("Signal", "Emit when cell execution counts are out of order or a cell depends on a deleted cell's variables.", kind="signal"),
+    "NOTEBOOK.RESTART_AND_RUN_ALL": S("Result", "Emit before sharing or trusting notebook results.", kind="execute"),
+    "CAL.TIME_CONFLICT": S("Signal", "Emit when a proposed or existing event overlaps another for the same participant.", kind="signal"),
+    "CAL.WORKING_HOURS": S("Ack", "Emit when proposing meeting times for people in other time zones.", kind="directive"),
+    "RESEARCH.REPLICATION": S("Result", "Emit before a plan depends on a single published result.", kind="execute"),
+    "RESEARCH.PREPRINT_CAUTION": S("Judgment", "Emit when citing a result that has not been peer reviewed.", kind="judge"),
+    "RESEARCH.MEASURED_VS_INFERRED": S("Ack", "Emit when writing up results that mix experiments with interpretation.", kind="directive"),
+    "PERF.MEASURE_FIRST": S("Ack", "Emit before any optimization that lacks a profile showing where time or memory goes.", kind="directive"),
+    "PERF.PERF_REGRESSION": S("Signal", "Emit when a benchmark is slower than its baseline beyond noise.", kind="signal"),
+    "DOCW.AUDIENCE_FIRST": S("Ack", "Emit at the start of any document; name the reader and what they need to do afterwards.", kind="directive"),
+    "DOCW.SELF_CONTAINED": S("Ack", "Emit when a section will be read on its own, such as a linked page or a summary.", kind="directive"),
+    "PKG.VERSION_CONFLICT": S("Signal", "Emit when the resolver reports incompatible requirements.", kind="signal"),
+    "PKG.REPRODUCIBLE_INSTALL": S("Ack", "Emit when setting up CI, a container or a teammate's environment.", kind="directive"),
+    "EVALH.CONTAMINATION_RISK": S("Judgment", "Emit when evaluation items are public, generated from training templates, or near-duplicates of training data.", kind="judge"),
+    "EVALH.HELD_OUT_BY_GROUP": S("Ack", "Emit when items share a source such as a session, template or family.", kind="directive"),
+})
+
 def define(op: dict) -> dict:
     parts = op["mnemonic"].split(".")
     if len(parts) == 3:

@@ -8,9 +8,9 @@ The model is meant to sit next to a large LLM inside the [dsco](https://github.c
 
 | Package | What it does |
 |---|---|
-| `sys1/vocab` | 1,500 op-codes for agent mechanics (control flow, goals, tools, context, memory, verification, errors, uncertainty, governance, budgets, multi-agent, durability, computer use and more), each with a signature, return type, pre/post conditions, reversibility, inverse, failure modes and an emission cue. 458 compositional family/verb/object tokens sit alongside them. |
+| `sys1/vocab` | 2,062 op-codes across 54 families of agent mechanics (control flow, goals, tools, context, memory, verification, errors, uncertainty, governance, budgets, multi-agent, durability, computer use, databases, APIs, CI/CD, infrastructure, queues, math, text, media, research and more). Each has a signature, return type, pre/post conditions, reversibility, inverse, failure modes and an emission cue. 601 compositional family/verb/object tokens sit alongside them. Codes are append-only, so existing labels stay valid. |
 | `sys1/datasets` | Rebuilds agent episodes from local dsco logs, turns them into typed decision examples, and labels every logged step with op-codes. |
-| `sys1/model` | A 663M deep-and-thin decoder (44 layers x 1152, grouped-query attention, depth-scaled norms) with pointer-choice, yes/no and value heads; a trainer; and distillation from TypeSafe Jev's probability outputs. |
+| `sys1/model` | Deep-and-thin decoders with pointer-choice, yes/no and value heads: `sys1-999m` (983.2M, 54 x 1280, MobileLLM-1B depth and width), `sys1-666m` (663.4M, 44 x 1152) and `sys1-tiny` (31.8M). Grouped-query attention and depth-scaled norms. Includes a trainer and distillation from TypeSafe Jev's probability outputs. |
 | `sys1/jevmr` | Map-reduce over [TypeSafe Jev](https://docs.typesafe.ai) decisions: generated prompt families with rule-derived answers, fractal variants (ablation, distractors, 2-4 way composition), multi-provider adjudication of misses, and scheduled runs. |
 
 ## Layout
@@ -27,7 +27,7 @@ sys1/
     build_decisions.py     episodes -> typed decisions + tokenizer
     label_episodes.py      episodes -> op-code sequences
   model/
-    model.py               Sys1Model and presets (sys1-666m, sys1-tiny)
+    model.py               Sys1Model and presets (sys1-999m, sys1-666m, sys1-tiny)
     train.py               decision training and evaluation
     distill_jev.py         distill Jev's soft targets
   jevmr/
@@ -69,7 +69,7 @@ python -m sys1.jevmr.adjudicate --run runs/jev/pilot --out runs/jev/pilot/adjudi
 
 Measured October 2026 on the author's machine (Apple M4 Max) and logs. They are early research numbers, not guarantees.
 
-**Data.** 6,331 episodes and 118,531 tool decisions recovered from dsco logs. 99.999% of steps map to a specific op-code.
+**Data.** 6,331 episodes and 118,531 tool decisions recovered from dsco logs. 99.999% of steps map to a specific op-code (labels use the original 1,500 codes).
 
 **Model.** A 32M from-scratch model reached 61.2% next-action accuracy on held-out sessions, below the 64.1% "repeat the last tool" baseline. A model with no language pretraining cannot read goals and tool output well enough. Starting from a pretrained base is the next step.
 

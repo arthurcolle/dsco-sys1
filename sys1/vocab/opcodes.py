@@ -28,7 +28,7 @@ import re
 import sys
 from pathlib import Path
 
-TARGET = 1500
+TARGET = 2062
 
 # verb: (description template with {o}, operands, effect)
 VERBS = {
@@ -894,6 +894,252 @@ FAMILIES.update({
         ("NO_MONEY_WITHOUT_APPROVAL", "Never move money without explicit operator approval.", [], "control"),
         ("EVIDENCE_REQUIRED", "Record financial facts only with an evidence reference.", ["ref:id"], "control"),
         ("PIPELINE_IS_NOT_CASH", "Do not count pipeline, commitments or pending funds as cash.", [], "pure"),
+    ]),
+})
+
+
+
+VERBS.update({
+    "solve": ("Find values that satisfy {o}.", ["ref:id"], "pure"),
+    "compute": ("Evaluate {o} exactly in code rather than by estimation.", ["ref:id"], "pure"),
+    "rewrite": ("Rewrite {o} to meet a stated style, length or audience.", ["ref:id", "goal:str"], "pure"),
+    "translate": ("Translate {o} into another language.", ["ref:id", "lang:str"], "pure"),
+    "render": ("Produce the final output of {o}.", ["ref:id", "format:str"], "pure"),
+    "apply": ("Apply {o} to its target.", ["ref:id", "target:ref"], "local"),
+    "transcribe": ("Convert the speech in {o} to text.", ["ref:id"], "observe"),
+    "respond": ("Reply to {o}.", ["ref:id", "text:str"], "egress"),
+    "reset": ("Return {o} to its initial state.", ["ref:id"], "local"),
+    "redact": ("Remove personal or sensitive details from {o}.", ["ref:id"], "local"),
+    "pin_version": ("Fix {o} to an exact version.", ["ref:id", "version:str"], "local"),
+    "upgrade": ("Move {o} to a newer version.", ["ref:id", "version:str"], "local"),
+})
+
+# Expansion (appended so the first 1,500 codes keep their numbers).
+FAMILIES.update({
+    "DB": ("Database operations.", {
+        "sql_query": ("SQL query", ["create", "validate", "invoke", "dry_run", "explain", "profile", "cache", "review"]),
+        "transaction": ("database transaction", ["open", "commit", "rollback", "inspect", "timeout", "lock"]),
+        "db_table": ("database table", ["create", "read", "inspect", "update", "delete", "snapshot", "restore", "measure"]),
+        "db_index": ("database index", ["create", "delete", "inspect", "benchmark", "validate"]),
+        "db_connection": ("database connection", ["open", "close", "inspect", "timeout", "throttle"]),
+        "replica": ("database replica", ["inspect", "monitor", "promote", "demote", "validate"]),
+        "db_backup": ("database backup", ["create", "restore", "validate", "list", "expire", "copy"]),
+        "query_plan": ("query plan", ["read", "explain", "compare", "score"]),
+    }, [
+        ("DEADLOCK", "Two transactions are waiting on each other.", ["tx:id"], "observe"),
+        ("SLOW_QUERY", "A query exceeded its latency budget.", ["query:id", "ms:int"], "observe"),
+        ("N_PLUS_ONE", "A loop issues one query per item instead of one batched query.", ["site:ref"], "pure"),
+        ("READ_REPLICA_FIRST", "Send read-only queries to a replica.", [], "pure"),
+    ]),
+    "API": ("External API integration.", {
+        "api_endpoint": ("API endpoint", ["describe", "invoke", "benchmark", "throttle", "cache", "validate", "monitor"]),
+        "webhook": ("webhook", ["register", "unregister", "validate", "inspect", "replay"]),
+        "pagination_cursor": ("pagination cursor", ["read", "update", "expire", "validate"]),
+        "api_schema": ("API schema", ["read", "validate", "diff", "document", "check"]),
+        "api_quota": ("API quota", ["read", "forecast", "measure", "allocate"]),
+        "sdk_client": ("SDK client", ["create", "update", "inspect", "describe", "upgrade"]),
+        "api_response": ("API response", ["parse", "validate", "cache", "summarize", "check"]),
+    }, [
+        ("IDEMPOTENCY_KEY", "Attach a unique key so a retried request has one effect.", ["key:str"], "local"),
+        ("BREAKING_API_CHANGE", "The provider changed the contract in an incompatible way.", ["endpoint:ref"], "observe"),
+        ("PAGINATE_ALL", "Follow cursors until every page is fetched.", ["endpoint:ref"], "observe"),
+    ]),
+    "CI": ("Continuous integration and delivery.", {
+        "pipeline": ("CI pipeline", ["create", "invoke", "cancel", "inspect", "retry", "monitor", "benchmark"]),
+        "ci_job": ("CI job", ["invoke", "cancel", "retry", "inspect", "timeout"]),
+        "release": ("release", ["create", "validate", "promote", "rollback", "document", "attest"]),
+        "rollout": ("staged rollout", ["create", "pause", "resume", "rollback", "monitor"]),
+        "feature_flag": ("feature flag", ["create", "update", "delete", "inspect", "expire"]),
+        "deploy_environment": ("deployment environment", ["create", "inspect", "diff", "validate", "teardown"]),
+        "ci_cache": ("CI cache", ["inspect", "reset", "measure", "validate"]),
+    }, [
+        ("CANARY", "Ship to a small share of traffic first and watch error rates.", ["share:float"], "local"),
+        ("RED_BUILD", "The main branch build is failing.", ["build:id"], "observe"),
+        ("GREEN_BUILD", "The main branch build is passing.", ["build:id"], "observe"),
+        ("FREEZE", "Hold all deploys until a stated condition clears.", ["until:str"], "control"),
+    ]),
+    "INFRA": ("Infrastructure management.", {
+        "container": ("container", ["create", "inspect", "kill", "list", "monitor", "snapshot"]),
+        "service": ("running service", ["create", "inspect", "monitor", "update", "delete", "benchmark"]),
+        "volume": ("storage volume", ["create", "delete", "inspect", "snapshot", "restore", "measure"]),
+        "dns_record": ("DNS record", ["create", "update", "delete", "inspect", "validate"]),
+        "load_balancer": ("load balancer", ["inspect", "update", "monitor", "benchmark"]),
+        "autoscaler": ("autoscaler", ["inspect", "update", "threshold", "cap"]),
+        "config_file": ("configuration file", ["read", "update", "validate", "diff", "snapshot"]),
+        "certificate": ("TLS certificate", ["inspect", "validate", "expire", "rotate"]),
+    }, [
+        ("DRIFT", "Live infrastructure differs from its declared configuration.", ["resource:ref"], "observe"),
+        ("CAPACITY_HEADROOM", "Report spare capacity against expected peak load.", ["resource:ref"], "observe"),
+        ("INFRA_AS_CODE", "Change infrastructure through declared configuration, not by hand.", [], "pure"),
+    ]),
+    "QUEUE": ("Work queues and event streams.", {
+        "message": ("queued message", ["send", "read", "delete", "validate", "replay", "tag"]),
+        "topic": ("event topic", ["create", "delete", "list", "inspect", "watch"]),
+        "consumer": ("queue consumer", ["create", "pause", "resume", "monitor", "terminate", "throttle"]),
+        "dead_letter_queue": ("dead-letter queue", ["read", "inspect", "replay", "measure"]),
+        "retry_schedule": ("retry schedule", ["create", "update", "inspect", "cancel"]),
+        "event_offset": ("consumer offset", ["read", "update", "reset", "validate"]),
+    }, [
+        ("BACKPRESSURE", "Producers outpace consumers; slow intake.", ["lag:int"], "observe"),
+        ("POISON_MESSAGE", "A message fails every time it is processed.", ["msg:id"], "observe"),
+        ("ORDERING_REQUIRED", "Process these events strictly in order.", ["key:str"], "pure"),
+    ]),
+    "MATH": ("Numerical and symbolic computation.", {
+        "expression": ("expression", ["compute", "normalize", "verify", "explain", "parse"]),
+        "equation": ("equation", ["solve", "verify", "explain", "validate"]),
+        "statistic": ("statistic", ["compute", "compare", "verify", "explain"]),
+        "probability_model": ("probability model", ["create", "update", "simulate", "validate"]),
+        "optimization_problem": ("optimization problem", ["create", "solve", "bound", "explain", "validate"]),
+        "matrix": ("matrix", ["compute", "transform", "validate", "measure"]),
+        "series": ("numeric series", ["compute", "aggregate", "forecast", "summarize"]),
+    }, [
+        ("EXACT_ARITHMETIC_IN_CODE", "Do counting and arithmetic in code, not by judgment.", [], "pure"),
+        ("NUMERIC_TOLERANCE", "Compare numbers within a stated tolerance.", ["eps:float"], "pure"),
+        ("UNIT_MISMATCH", "Quantities with different units were combined.", ["expr:str"], "pure"),
+        ("PRECISION_LOSS", "A computation lost precision that matters to the result.", ["expr:str"], "pure"),
+    ]),
+    "TEXT": ("Text processing and writing.", {
+        "paragraph": ("paragraph", ["summarize", "rewrite", "translate", "classify", "critique"]),
+        "regex_pattern": ("regular expression", ["create", "validate", "test", "explain"]),
+        "text_span": ("text span", ["search", "cite", "classify", "redact"]),
+        "diff_hunk": ("diff hunk", ["review", "explain", "apply", "validate"]),
+        "template": ("text template", ["create", "fill", "validate", "render"]),
+        "message_draft": ("message draft", ["create", "rewrite", "review", "critique"]),
+        "glossary": ("glossary", ["create", "update", "search", "validate"]),
+    }, [
+        ("TONE_MATCH", "Write in the tone the reader expects.", ["audience:str"], "pure"),
+        ("LENGTH_BUDGET", "Keep the text within a stated length.", ["max_words:int"], "pure"),
+        ("PLAGIARISM_RISK", "Text closely copies a source without attribution.", ["span:range"], "pure"),
+    ]),
+    "MEDIA": ("Images, audio and video.", {
+        "image": ("image", ["read", "classify", "summarize", "transform", "compress", "validate"]),
+        "audio_clip": ("audio clip", ["transcribe", "summarize", "classify", "compress", "split"]),
+        "video": ("video", ["transcribe", "summarize", "capture", "split"]),
+        "transcript": ("transcript", ["read", "summarize", "search", "cite"]),
+        "caption": ("caption", ["create", "update", "validate", "translate"]),
+        "chart": ("chart", ["create", "render", "validate", "explain"]),
+    }, [
+        ("ALT_TEXT", "Describe an image for readers who cannot see it.", ["image:ref"], "pure"),
+        ("OCR_UNCERTAIN", "Text read from an image may be wrong.", ["span:range"], "pure"),
+    ]),
+    "COLLAB": ("Team collaboration.", {
+        "issue": ("issue", ["create", "update", "prioritize", "list", "complete", "tag", "search"]),
+        "review_comment": ("review comment", ["create", "read", "respond", "summarize"]),
+        "approval_request": ("approval request", ["create", "request", "check", "expire"]),
+        "meeting_note": ("meeting note", ["create", "summarize", "store", "search"]),
+        "changelog": ("changelog", ["create", "update", "validate", "summarize"]),
+        "team_channel": ("team channel", ["send", "read", "watch", "summarize"]),
+        "decision_record": ("decision record", ["create", "read", "revise", "cite"]),
+    }, [
+        ("ASSIGNEE", "Record who owns an issue.", ["issue:id", "person:str"], "local"),
+        ("STALE_THREAD", "A discussion has gone quiet without a resolution.", ["thread:id"], "observe"),
+        ("NEEDS_DECISION", "Work is blocked until a person decides.", ["question:str"], "observe"),
+    ]),
+    "KG": ("Knowledge graphs.", {
+        "kg_node": ("graph node", ["create", "update", "delete", "resolve", "merge", "search"]),
+        "kg_edge": ("graph edge", ["create", "delete", "verify", "rank"]),
+        "ontology_class": ("ontology class", ["create", "update", "validate", "explain"]),
+        "kg_query": ("graph query", ["create", "invoke", "explain", "cache"]),
+        "kg_snapshot": ("graph snapshot", ["create", "diff", "restore", "validate"]),
+    }, [
+        ("DUPLICATE_ENTITY", "Two nodes describe the same thing.", ["a:id", "b:id"], "pure"),
+        ("ORPHAN_NODE", "A node has no edges.", ["node:id"], "observe"),
+    ]),
+    "SIM": ("Sandboxes and simulated environments.", {
+        "sandbox_env": ("sandbox environment", ["create", "snapshot", "restore", "teardown", "inspect", "reset"]),
+        "sim_step": ("simulation step", ["simulate", "check", "replay", "score"]),
+        "scenario": ("test scenario", ["create", "enumerate", "simulate", "score", "validate"]),
+        "env_seed": ("random seed", ["set", "read", "reset"]),
+        "mock_service": ("mock service", ["create", "update", "inspect", "teardown"]),
+    }, [
+        ("DETERMINISTIC_RUN", "Fix seeds and inputs so a run can be repeated exactly.", [], "pure"),
+        ("SIM_TO_REAL_GAP", "Behaviour in the sandbox may not match production.", ["scenario:id"], "pure"),
+    ]),
+    "PRIV": ("Privacy and data protection.", {
+        "personal_record": ("record containing personal data", ["search", "redact", "audit", "delete", "inspect"]),
+        "consent": ("consent record", ["read", "check", "expire", "inspect"]),
+        "retention_policy": ("data retention policy", ["read", "enforce", "update", "audit"]),
+        "data_subject_request": ("data subject request", ["create", "inspect", "complete", "audit"]),
+        "data_map": ("map of where personal data lives", ["create", "update", "audit", "validate"]),
+    }, [
+        ("MINIMIZE_DATA", "Collect and keep only the personal data the task needs.", [], "pure"),
+        ("PURPOSE_LIMIT", "Use personal data only for the purpose it was collected for.", [], "pure"),
+    ]),
+    "LOC": ("Localization.", {
+        "locale_string": ("localized string", ["create", "translate", "validate", "update", "list"]),
+        "locale": ("locale setting", ["set", "read", "list", "validate"]),
+        "date_format": ("date format", ["normalize", "validate", "explain"]),
+        "currency_amount": ("currency amount", ["normalize", "validate", "compute"]),
+    }, [
+        ("MISSING_TRANSLATION", "A string has no translation for the active locale.", ["key:str"], "observe"),
+        ("RTL_LAYOUT", "The locale reads right to left; mirror the layout.", ["locale:str"], "pure"),
+    ]),
+    "NOTEBOOK": ("Interactive notebooks.", {
+        "notebook": ("notebook", ["open", "read", "write", "close", "snapshot"]),
+        "notebook_cell": ("notebook cell", ["create", "invoke", "update", "delete", "inspect"]),
+        "kernel": ("notebook kernel", ["create", "kill", "inspect", "reset"]),
+        "plot": ("plot", ["create", "render", "capture", "explain"]),
+    }, [
+        ("STALE_CELL_STATE", "Cells ran out of order; results may not reproduce.", ["notebook:id"], "observe"),
+        ("RESTART_AND_RUN_ALL", "Re-run every cell from a fresh kernel.", ["notebook:id"], "local"),
+    ]),
+    "CAL": ("Calendars and meetings.", {
+        "calendar_event": ("calendar event", ["create", "update", "delete", "list", "inspect"]),
+        "availability_window": ("availability window", ["read", "search", "compare"]),
+        "meeting": ("meeting", ["schedule", "cancel", "summarize", "inspect"]),
+        "agenda": ("meeting agenda", ["create", "update", "prioritize", "summarize"]),
+    }, [
+        ("TIME_CONFLICT", "Two events overlap.", ["a:id", "b:id"], "observe"),
+        ("WORKING_HOURS", "Schedule only inside participants' working hours.", [], "pure"),
+    ]),
+    "RESEARCH": ("Research and literature.", {
+        "paper": ("research paper", ["search", "read", "summarize", "cite", "compare", "critique"]),
+        "literature_review": ("literature review", ["create", "update", "summarize", "validate"]),
+        "benchmark_result": ("benchmark result", ["read", "compare", "verify", "cite"]),
+        "research_question": ("research question", ["create", "refine", "decompose", "revise"]),
+        "finding": ("finding", ["create", "verify", "cite", "quantify", "question"]),
+    }, [
+        ("REPLICATION", "Reproduce a published result before building on it.", ["paper:ref"], "local"),
+        ("PREPRINT_CAUTION", "Treat an unreviewed preprint's claims as provisional.", ["paper:ref"], "pure"),
+        ("MEASURED_VS_INFERRED", "Separate measured results from inference.", [], "pure"),
+    ]),
+    "PERF": ("Performance engineering.", {
+        "latency_profile": ("latency profile", ["profile", "compare", "explain"]),
+        "memory_profile": ("memory profile", ["profile", "compare", "explain"]),
+        "cache_layer": ("cache layer", ["inspect", "update", "measure", "reset"]),
+        "throughput_test": ("throughput test", ["create", "invoke", "compare"]),
+        "hot_path": ("hot path", ["profile", "review", "benchmark", "explain"]),
+    }, [
+        ("MEASURE_FIRST", "Profile before optimizing.", [], "pure"),
+        ("PERF_REGRESSION", "A change made a tracked path slower.", ["metric:str", "pct:float"], "observe"),
+    ]),
+    "DOCW": ("Document authoring.", {
+        "doc_section": ("document section", ["create", "update", "review", "summarize", "cite"]),
+        "outline": ("document outline", ["create", "refine", "revise", "validate"]),
+        "style_guide": ("style guide", ["read", "enforce", "explain"]),
+        "figure": ("figure", ["create", "render", "validate", "cite"]),
+        "bibliography": ("bibliography", ["create", "update", "validate"]),
+    }, [
+        ("AUDIENCE_FIRST", "Write for the stated reader's knowledge and goal.", ["audience:str"], "pure"),
+        ("SELF_CONTAINED", "Make each section understandable without the others.", [], "pure"),
+    ]),
+    "PKG": ("Package and dependency management.", {
+        "lockfile": ("lockfile", ["read", "update", "diff", "validate"]),
+        "package_version": ("package version", ["inspect", "pin_version", "upgrade", "audit"]),
+        "registry": ("package registry", ["search", "fetch", "inspect"]),
+        "virtual_env": ("virtual environment", ["create", "delete", "inspect", "reset"]),
+    }, [
+        ("VERSION_CONFLICT", "Two dependencies require incompatible versions.", ["a:str", "b:str"], "observe"),
+        ("REPRODUCIBLE_INSTALL", "Install from the lockfile so environments match.", [], "pure"),
+    ]),
+    "EVALH": ("Evaluation harnesses.", {
+        "eval_case": ("evaluation case", ["create", "update", "delete", "validate", "tag"]),
+        "eval_run": ("evaluation run", ["create", "invoke", "inspect", "compare", "replay"]),
+        "grader": ("grader", ["create", "calibrate", "validate", "explain"]),
+        "leaderboard": ("leaderboard", ["read", "update", "compare"]),
+    }, [
+        ("CONTAMINATION_RISK", "Evaluation items may have leaked into training data.", ["suite:ref"], "pure"),
+        ("HELD_OUT_BY_GROUP", "Hold out whole groups so related items never straddle the split.", ["key:str"], "pure"),
     ]),
 })
 

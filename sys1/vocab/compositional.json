@@ -1,38 +1,58 @@
 {
  "version": 1,
- "families": 34,
- "verbs": 207,
- "objects": 217,
+ "families": 54,
+ "verbs": 219,
+ "objects": 328,
  "tokens": [
   "<|fam:act|>",
+  "<|fam:api|>",
   "<|fam:bud|>",
+  "<|fam:cal|>",
+  "<|fam:ci|>",
   "<|fam:code|>",
+  "<|fam:collab|>",
   "<|fam:comm|>",
   "<|fam:compute|>",
   "<|fam:ctrl|>",
   "<|fam:ctx|>",
   "<|fam:data|>",
+  "<|fam:db|>",
   "<|fam:dial|>",
+  "<|fam:docw|>",
   "<|fam:dur|>",
   "<|fam:econ|>",
   "<|fam:env|>",
   "<|fam:err|>",
   "<|fam:eval|>",
+  "<|fam:evalh|>",
   "<|fam:goal|>",
   "<|fam:gov|>",
+  "<|fam:infra|>",
+  "<|fam:kg|>",
   "<|fam:know|>",
   "<|fam:learn|>",
+  "<|fam:loc|>",
+  "<|fam:math|>",
+  "<|fam:media|>",
   "<|fam:mem|>",
   "<|fam:meta|>",
+  "<|fam:notebook|>",
   "<|fam:obs|>",
   "<|fam:perc|>",
+  "<|fam:perf|>",
+  "<|fam:pkg|>",
   "<|fam:plan|>",
+  "<|fam:priv|>",
+  "<|fam:queue|>",
   "<|fam:reason|>",
+  "<|fam:research|>",
   "<|fam:route|>",
   "<|fam:sec|>",
+  "<|fam:sim|>",
   "<|fam:skill|>",
   "<|fam:state|>",
   "<|fam:swarm|>",
+  "<|fam:text|>",
   "<|fam:time|>",
   "<|fam:ui|>",
   "<|fam:unc|>",
@@ -46,6 +66,7 @@
   "<|verb:alert|>",
   "<|verb:allocate|>",
   "<|verb:analogize|>",
+  "<|verb:apply|>",
   "<|verb:arbitrate|>",
   "<|verb:archive|>",
   "<|verb:ask|>",
@@ -77,6 +98,7 @@
   "<|verb:compare|>",
   "<|verb:complete|>",
   "<|verb:compress|>",
+  "<|verb:compute|>",
   "<|verb:confirm|>",
   "<|verb:consolidate|>",
   "<|verb:copy|>",
@@ -154,6 +176,7 @@
   "<|verb:pause|>",
   "<|verb:penalize|>",
   "<|verb:pin|>",
+  "<|verb:pin_version|>",
   "<|verb:press|>",
   "<|verb:price|>",
   "<|verb:prioritize|>",
@@ -170,6 +193,7 @@
   "<|verb:reclaim|>",
   "<|verb:reconcile|>",
   "<|verb:recover|>",
+  "<|verb:redact|>",
   "<|verb:refactor|>",
   "<|verb:refine|>",
   "<|verb:reflect|>",
@@ -177,17 +201,21 @@
   "<|verb:reinforce|>",
   "<|verb:relate|>",
   "<|verb:rename|>",
+  "<|verb:render|>",
   "<|verb:replay|>",
   "<|verb:report|>",
   "<|verb:reproduce|>",
   "<|verb:request|>",
+  "<|verb:reset|>",
   "<|verb:resolve|>",
+  "<|verb:respond|>",
   "<|verb:restore|>",
   "<|verb:resume|>",
   "<|verb:retry|>",
   "<|verb:review|>",
   "<|verb:revise|>",
   "<|verb:revoke|>",
+  "<|verb:rewrite|>",
   "<|verb:rollback|>",
   "<|verb:rotate|>",
   "<|verb:route|>",
@@ -207,6 +235,7 @@
   "<|verb:simulate|>",
   "<|verb:sleep|>",
   "<|verb:snapshot|>",
+  "<|verb:solve|>",
   "<|verb:spawn|>",
   "<|verb:spend|>",
   "<|verb:split|>",
@@ -228,7 +257,9 @@
   "<|verb:timeout|>",
   "<|verb:trace|>",
   "<|verb:track|>",
+  "<|verb:transcribe|>",
   "<|verb:transform|>",
+  "<|verb:translate|>",
   "<|verb:type_into|>",
   "<|verb:typecheck|>",
   "<|verb:unlock|>",
@@ -238,6 +269,7 @@
   "<|verb:untaint|>",
   "<|verb:unwatch|>",
   "<|verb:update|>",
+  "<|verb:upgrade|>",
   "<|verb:validate|>",
   "<|verb:verify|>",
   "<|verb:vote|>",
@@ -247,22 +279,33 @@
   "<|verb:zoom|>",
   "<|obj:acceptance|>",
   "<|obj:adapter|>",
+  "<|obj:agenda|>",
   "<|obj:agent_group|>",
   "<|obj:agent_process|>",
   "<|obj:agent_state|>",
   "<|obj:ambiguity|>",
   "<|obj:anomaly_case|>",
   "<|obj:api_contract|>",
+  "<|obj:api_endpoint|>",
+  "<|obj:api_quota|>",
+  "<|obj:api_response|>",
+  "<|obj:api_schema|>",
   "<|obj:application|>",
   "<|obj:approval|>",
+  "<|obj:approval_request|>",
   "<|obj:archive_page|>",
   "<|obj:argument|>",
   "<|obj:artifact|>",
   "<|obj:assumption|>",
   "<|obj:attack_surface|>",
+  "<|obj:audio_clip|>",
+  "<|obj:autoscaler|>",
+  "<|obj:availability_window|>",
   "<|obj:belief|>",
   "<|obj:belief_state|>",
+  "<|obj:benchmark_result|>",
   "<|obj:benchmark_suite|>",
+  "<|obj:bibliography|>",
   "<|obj:blob_store|>",
   "<|obj:branch|>",
   "<|obj:browser_tab|>",
@@ -270,11 +313,19 @@
   "<|obj:build|>",
   "<|obj:build_config|>",
   "<|obj:button|>",
+  "<|obj:cache_layer|>",
+  "<|obj:calendar_event|>",
   "<|obj:capability|>",
+  "<|obj:caption|>",
+  "<|obj:certificate|>",
   "<|obj:change|>",
+  "<|obj:changelog|>",
+  "<|obj:chart|>",
   "<|obj:checkbox|>",
   "<|obj:checkpoint|>",
   "<|obj:checkpoint_file|>",
+  "<|obj:ci_cache|>",
+  "<|obj:ci_job|>",
   "<|obj:claim|>",
   "<|obj:claim_ledger|>",
   "<|obj:claim_of_done|>",
@@ -284,91 +335,154 @@
   "<|obj:compute_market|>",
   "<|obj:condition|>",
   "<|obj:confidence|>",
+  "<|obj:config_file|>",
+  "<|obj:consent|>",
   "<|obj:constraint|>",
+  "<|obj:consumer|>",
+  "<|obj:container|>",
   "<|obj:context|>",
   "<|obj:contract|>",
   "<|obj:cost_ledger|>",
   "<|obj:crash|>",
   "<|obj:credential|>",
   "<|obj:cron_rule|>",
+  "<|obj:currency_amount|>",
   "<|obj:data_corruption|>",
+  "<|obj:data_map|>",
+  "<|obj:data_subject_request|>",
   "<|obj:dataset|>",
+  "<|obj:date_format|>",
+  "<|obj:db_backup|>",
+  "<|obj:db_connection|>",
+  "<|obj:db_index|>",
+  "<|obj:db_table|>",
+  "<|obj:dead_letter_queue|>",
   "<|obj:decision|>",
+  "<|obj:decision_record|>",
   "<|obj:dependency|>",
+  "<|obj:deploy_environment|>",
   "<|obj:deployment|>",
+  "<|obj:diff_hunk|>",
   "<|obj:directory|>",
+  "<|obj:dns_record|>",
+  "<|obj:doc_section|>",
   "<|obj:document|>",
   "<|obj:documentation|>",
   "<|obj:dollar_budget|>",
   "<|obj:dom_element|>",
   "<|obj:egress_channel|>",
   "<|obj:entity|>",
+  "<|obj:env_seed|>",
   "<|obj:environment_state|>",
   "<|obj:environment_variable|>",
   "<|obj:episode|>",
   "<|obj:episodic_memory|>",
+  "<|obj:equation|>",
   "<|obj:error|>",
+  "<|obj:eval_case|>",
+  "<|obj:eval_run|>",
+  "<|obj:event_offset|>",
   "<|obj:experiment|>",
+  "<|obj:expression|>",
   "<|obj:fact|>",
+  "<|obj:feature_flag|>",
+  "<|obj:figure|>",
   "<|obj:file|>",
+  "<|obj:finding|>",
   "<|obj:form|>",
   "<|obj:frontier|>",
   "<|obj:function|>",
+  "<|obj:glossary|>",
   "<|obj:goal|>",
   "<|obj:goal_queue|>",
   "<|obj:gpu_instance|>",
+  "<|obj:grader|>",
   "<|obj:health_check|>",
   "<|obj:heuristic|>",
+  "<|obj:hot_path|>",
   "<|obj:http_endpoint|>",
   "<|obj:hypothesis|>",
+  "<|obj:image|>",
   "<|obj:image_block|>",
   "<|obj:incident|>",
   "<|obj:inference_server|>",
   "<|obj:instruction|>",
   "<|obj:invariant|>",
+  "<|obj:issue|>",
   "<|obj:iteration|>",
   "<|obj:job|>",
   "<|obj:journal|>",
   "<|obj:json_document|>",
   "<|obj:judge|>",
+  "<|obj:kernel|>",
+  "<|obj:kg_edge|>",
+  "<|obj:kg_node|>",
+  "<|obj:kg_query|>",
+  "<|obj:kg_snapshot|>",
   "<|obj:kill_switch|>",
   "<|obj:knowledge_base|>",
+  "<|obj:latency_profile|>",
+  "<|obj:leaderboard|>",
   "<|obj:lease|>",
   "<|obj:lesson|>",
   "<|obj:lexical_index|>",
   "<|obj:link|>",
+  "<|obj:literature_review|>",
+  "<|obj:load_balancer|>",
+  "<|obj:locale|>",
+  "<|obj:locale_string|>",
+  "<|obj:lockfile|>",
   "<|obj:log|>",
   "<|obj:loop|>",
+  "<|obj:matrix|>",
   "<|obj:mcp_server|>",
+  "<|obj:meeting|>",
+  "<|obj:meeting_note|>",
+  "<|obj:memory_profile|>",
   "<|obj:menu_item|>",
   "<|obj:message|>",
   "<|obj:message_bus|>",
+  "<|obj:message_draft|>",
   "<|obj:metric|>",
   "<|obj:metric_series|>",
   "<|obj:metric_target|>",
   "<|obj:migration|>",
   "<|obj:milestone|>",
+  "<|obj:mock_service|>",
   "<|obj:model|>",
   "<|obj:module|>",
+  "<|obj:notebook|>",
+  "<|obj:notebook_cell|>",
   "<|obj:objective_function|>",
   "<|obj:observation|>",
   "<|obj:observation_block|>",
   "<|obj:offer|>",
+  "<|obj:ontology_class|>",
   "<|obj:operator|>",
+  "<|obj:optimization_problem|>",
   "<|obj:option|>",
+  "<|obj:outline|>",
+  "<|obj:package_version|>",
   "<|obj:page|>",
+  "<|obj:pagination_cursor|>",
+  "<|obj:paper|>",
+  "<|obj:paragraph|>",
   "<|obj:patch|>",
   "<|obj:pattern|>",
   "<|obj:payload|>",
   "<|obj:peer_agent|>",
   "<|obj:performance_hotspot|>",
   "<|obj:permission_denial|>",
+  "<|obj:personal_record|>",
+  "<|obj:pipeline|>",
   "<|obj:plan|>",
+  "<|obj:plot|>",
   "<|obj:policy|>",
   "<|obj:policy_model|>",
   "<|obj:prefix_cache|>",
   "<|obj:premise|>",
   "<|obj:probability|>",
+  "<|obj:probability_model|>",
   "<|obj:problem|>",
   "<|obj:procedural_memory|>",
   "<|obj:process|>",
@@ -376,34 +490,50 @@
   "<|obj:provider|>",
   "<|obj:pull_request|>",
   "<|obj:quantity|>",
+  "<|obj:query_plan|>",
   "<|obj:rate_limit|>",
   "<|obj:record_set|>",
   "<|obj:reference|>",
+  "<|obj:regex_pattern|>",
+  "<|obj:registry|>",
   "<|obj:regression|>",
   "<|obj:relation|>",
+  "<|obj:release|>",
   "<|obj:reminder|>",
+  "<|obj:replica|>",
   "<|obj:report|>",
   "<|obj:repository|>",
   "<|obj:request|>",
+  "<|obj:research_question|>",
   "<|obj:result|>",
+  "<|obj:retention_policy|>",
+  "<|obj:retry_schedule|>",
   "<|obj:revenue_event|>",
+  "<|obj:review_comment|>",
   "<|obj:reward_signal|>",
   "<|obj:risk|>",
+  "<|obj:rollout|>",
   "<|obj:rubric|>",
   "<|obj:sandbox|>",
+  "<|obj:sandbox_env|>",
+  "<|obj:scenario|>",
   "<|obj:schema|>",
   "<|obj:scratchpad|>",
   "<|obj:screen|>",
   "<|obj:screen_region|>",
+  "<|obj:sdk_client|>",
   "<|obj:search_tree|>",
   "<|obj:secret|>",
   "<|obj:self_model|>",
   "<|obj:semantic_memory|>",
+  "<|obj:series|>",
+  "<|obj:service|>",
   "<|obj:session|>",
   "<|obj:shared_blackboard|>",
   "<|obj:shell_command|>",
   "<|obj:side_effect|>",
   "<|obj:signal|>",
+  "<|obj:sim_step|>",
   "<|obj:skill|>",
   "<|obj:skill_candidate|>",
   "<|obj:skill_invocation|>",
@@ -411,9 +541,12 @@
   "<|obj:skill_precondition|>",
   "<|obj:source|>",
   "<|obj:span|>",
+  "<|obj:sql_query|>",
+  "<|obj:statistic|>",
   "<|obj:status_update|>",
   "<|obj:step|>",
   "<|obj:strategy|>",
+  "<|obj:style_guide|>",
   "<|obj:subagent|>",
   "<|obj:subgoal|>",
   "<|obj:subroutine|>",
@@ -425,10 +558,14 @@
   "<|obj:system_two|>",
   "<|obj:table|>",
   "<|obj:task|>",
+  "<|obj:team_channel|>",
   "<|obj:telemetry_event|>",
+  "<|obj:template|>",
   "<|obj:test_suite|>",
   "<|obj:text_corpus|>",
   "<|obj:text_field|>",
+  "<|obj:text_span|>",
+  "<|obj:throughput_test|>",
   "<|obj:time_budget|>",
   "<|obj:time_series|>",
   "<|obj:timeout_event|>",
@@ -445,6 +582,8 @@
   "<|obj:training_example|>",
   "<|obj:training_job|>",
   "<|obj:trajectory|>",
+  "<|obj:transaction|>",
+  "<|obj:transcript|>",
   "<|obj:turn|>",
   "<|obj:type|>",
   "<|obj:ui_element|>",
@@ -454,9 +593,13 @@
   "<|obj:user_memory|>",
   "<|obj:user_preference|>",
   "<|obj:vector_index|>",
+  "<|obj:video|>",
+  "<|obj:virtual_env|>",
+  "<|obj:volume|>",
   "<|obj:vulnerability|>",
   "<|obj:web|>",
   "<|obj:web_table|>",
+  "<|obj:webhook|>",
   "<|obj:window|>",
   "<|obj:worker|>",
   "<|obj:workflow|>",
@@ -6423,6 +6566,2556 @@
    "<|fam:econ|>",
    "<|verb:verify|>",
    "<|obj:revenue_event|>"
+  ],
+  "<|op:db.create.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:create|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.validate.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:validate|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.invoke.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:invoke|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.dry_run.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:dry_run|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.explain.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:explain|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.profile.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:profile|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.cache.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:cache|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.review.sql_query|>": [
+   "<|fam:db|>",
+   "<|verb:review|>",
+   "<|obj:sql_query|>"
+  ],
+  "<|op:db.open.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:open|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.commit.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:commit|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.rollback.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:rollback|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.inspect.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:inspect|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.timeout.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:timeout|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.lock.transaction|>": [
+   "<|fam:db|>",
+   "<|verb:lock|>",
+   "<|obj:transaction|>"
+  ],
+  "<|op:db.create.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:create|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.read.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:read|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.inspect.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:inspect|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.update.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:update|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.delete.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:delete|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.snapshot.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:snapshot|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.restore.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:restore|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.measure.db_table|>": [
+   "<|fam:db|>",
+   "<|verb:measure|>",
+   "<|obj:db_table|>"
+  ],
+  "<|op:db.create.db_index|>": [
+   "<|fam:db|>",
+   "<|verb:create|>",
+   "<|obj:db_index|>"
+  ],
+  "<|op:db.delete.db_index|>": [
+   "<|fam:db|>",
+   "<|verb:delete|>",
+   "<|obj:db_index|>"
+  ],
+  "<|op:db.inspect.db_index|>": [
+   "<|fam:db|>",
+   "<|verb:inspect|>",
+   "<|obj:db_index|>"
+  ],
+  "<|op:db.benchmark.db_index|>": [
+   "<|fam:db|>",
+   "<|verb:benchmark|>",
+   "<|obj:db_index|>"
+  ],
+  "<|op:db.validate.db_index|>": [
+   "<|fam:db|>",
+   "<|verb:validate|>",
+   "<|obj:db_index|>"
+  ],
+  "<|op:db.open.db_connection|>": [
+   "<|fam:db|>",
+   "<|verb:open|>",
+   "<|obj:db_connection|>"
+  ],
+  "<|op:db.close.db_connection|>": [
+   "<|fam:db|>",
+   "<|verb:close|>",
+   "<|obj:db_connection|>"
+  ],
+  "<|op:db.inspect.db_connection|>": [
+   "<|fam:db|>",
+   "<|verb:inspect|>",
+   "<|obj:db_connection|>"
+  ],
+  "<|op:db.timeout.db_connection|>": [
+   "<|fam:db|>",
+   "<|verb:timeout|>",
+   "<|obj:db_connection|>"
+  ],
+  "<|op:db.throttle.db_connection|>": [
+   "<|fam:db|>",
+   "<|verb:throttle|>",
+   "<|obj:db_connection|>"
+  ],
+  "<|op:db.inspect.replica|>": [
+   "<|fam:db|>",
+   "<|verb:inspect|>",
+   "<|obj:replica|>"
+  ],
+  "<|op:db.monitor.replica|>": [
+   "<|fam:db|>",
+   "<|verb:monitor|>",
+   "<|obj:replica|>"
+  ],
+  "<|op:db.promote.replica|>": [
+   "<|fam:db|>",
+   "<|verb:promote|>",
+   "<|obj:replica|>"
+  ],
+  "<|op:db.demote.replica|>": [
+   "<|fam:db|>",
+   "<|verb:demote|>",
+   "<|obj:replica|>"
+  ],
+  "<|op:db.validate.replica|>": [
+   "<|fam:db|>",
+   "<|verb:validate|>",
+   "<|obj:replica|>"
+  ],
+  "<|op:db.create.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:create|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.restore.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:restore|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.validate.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:validate|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.list.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:list|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.expire.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:expire|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.copy.db_backup|>": [
+   "<|fam:db|>",
+   "<|verb:copy|>",
+   "<|obj:db_backup|>"
+  ],
+  "<|op:db.read.query_plan|>": [
+   "<|fam:db|>",
+   "<|verb:read|>",
+   "<|obj:query_plan|>"
+  ],
+  "<|op:db.explain.query_plan|>": [
+   "<|fam:db|>",
+   "<|verb:explain|>",
+   "<|obj:query_plan|>"
+  ],
+  "<|op:db.compare.query_plan|>": [
+   "<|fam:db|>",
+   "<|verb:compare|>",
+   "<|obj:query_plan|>"
+  ],
+  "<|op:db.score.query_plan|>": [
+   "<|fam:db|>",
+   "<|verb:score|>",
+   "<|obj:query_plan|>"
+  ],
+  "<|op:api.describe.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:describe|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.invoke.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:invoke|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.benchmark.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:benchmark|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.throttle.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:throttle|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.cache.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:cache|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.validate.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:validate|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.monitor.api_endpoint|>": [
+   "<|fam:api|>",
+   "<|verb:monitor|>",
+   "<|obj:api_endpoint|>"
+  ],
+  "<|op:api.register.webhook|>": [
+   "<|fam:api|>",
+   "<|verb:register|>",
+   "<|obj:webhook|>"
+  ],
+  "<|op:api.unregister.webhook|>": [
+   "<|fam:api|>",
+   "<|verb:unregister|>",
+   "<|obj:webhook|>"
+  ],
+  "<|op:api.validate.webhook|>": [
+   "<|fam:api|>",
+   "<|verb:validate|>",
+   "<|obj:webhook|>"
+  ],
+  "<|op:api.inspect.webhook|>": [
+   "<|fam:api|>",
+   "<|verb:inspect|>",
+   "<|obj:webhook|>"
+  ],
+  "<|op:api.replay.webhook|>": [
+   "<|fam:api|>",
+   "<|verb:replay|>",
+   "<|obj:webhook|>"
+  ],
+  "<|op:api.read.pagination_cursor|>": [
+   "<|fam:api|>",
+   "<|verb:read|>",
+   "<|obj:pagination_cursor|>"
+  ],
+  "<|op:api.update.pagination_cursor|>": [
+   "<|fam:api|>",
+   "<|verb:update|>",
+   "<|obj:pagination_cursor|>"
+  ],
+  "<|op:api.expire.pagination_cursor|>": [
+   "<|fam:api|>",
+   "<|verb:expire|>",
+   "<|obj:pagination_cursor|>"
+  ],
+  "<|op:api.validate.pagination_cursor|>": [
+   "<|fam:api|>",
+   "<|verb:validate|>",
+   "<|obj:pagination_cursor|>"
+  ],
+  "<|op:api.read.api_schema|>": [
+   "<|fam:api|>",
+   "<|verb:read|>",
+   "<|obj:api_schema|>"
+  ],
+  "<|op:api.validate.api_schema|>": [
+   "<|fam:api|>",
+   "<|verb:validate|>",
+   "<|obj:api_schema|>"
+  ],
+  "<|op:api.diff.api_schema|>": [
+   "<|fam:api|>",
+   "<|verb:diff|>",
+   "<|obj:api_schema|>"
+  ],
+  "<|op:api.document.api_schema|>": [
+   "<|fam:api|>",
+   "<|verb:document|>",
+   "<|obj:api_schema|>"
+  ],
+  "<|op:api.check.api_schema|>": [
+   "<|fam:api|>",
+   "<|verb:check|>",
+   "<|obj:api_schema|>"
+  ],
+  "<|op:api.read.api_quota|>": [
+   "<|fam:api|>",
+   "<|verb:read|>",
+   "<|obj:api_quota|>"
+  ],
+  "<|op:api.forecast.api_quota|>": [
+   "<|fam:api|>",
+   "<|verb:forecast|>",
+   "<|obj:api_quota|>"
+  ],
+  "<|op:api.measure.api_quota|>": [
+   "<|fam:api|>",
+   "<|verb:measure|>",
+   "<|obj:api_quota|>"
+  ],
+  "<|op:api.allocate.api_quota|>": [
+   "<|fam:api|>",
+   "<|verb:allocate|>",
+   "<|obj:api_quota|>"
+  ],
+  "<|op:api.create.sdk_client|>": [
+   "<|fam:api|>",
+   "<|verb:create|>",
+   "<|obj:sdk_client|>"
+  ],
+  "<|op:api.update.sdk_client|>": [
+   "<|fam:api|>",
+   "<|verb:update|>",
+   "<|obj:sdk_client|>"
+  ],
+  "<|op:api.inspect.sdk_client|>": [
+   "<|fam:api|>",
+   "<|verb:inspect|>",
+   "<|obj:sdk_client|>"
+  ],
+  "<|op:api.describe.sdk_client|>": [
+   "<|fam:api|>",
+   "<|verb:describe|>",
+   "<|obj:sdk_client|>"
+  ],
+  "<|op:api.upgrade.sdk_client|>": [
+   "<|fam:api|>",
+   "<|verb:upgrade|>",
+   "<|obj:sdk_client|>"
+  ],
+  "<|op:api.parse.api_response|>": [
+   "<|fam:api|>",
+   "<|verb:parse|>",
+   "<|obj:api_response|>"
+  ],
+  "<|op:api.validate.api_response|>": [
+   "<|fam:api|>",
+   "<|verb:validate|>",
+   "<|obj:api_response|>"
+  ],
+  "<|op:api.cache.api_response|>": [
+   "<|fam:api|>",
+   "<|verb:cache|>",
+   "<|obj:api_response|>"
+  ],
+  "<|op:api.summarize.api_response|>": [
+   "<|fam:api|>",
+   "<|verb:summarize|>",
+   "<|obj:api_response|>"
+  ],
+  "<|op:api.check.api_response|>": [
+   "<|fam:api|>",
+   "<|verb:check|>",
+   "<|obj:api_response|>"
+  ],
+  "<|op:ci.create.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:create|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.invoke.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:invoke|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.cancel.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:cancel|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.inspect.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:inspect|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.retry.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:retry|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.monitor.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:monitor|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.benchmark.pipeline|>": [
+   "<|fam:ci|>",
+   "<|verb:benchmark|>",
+   "<|obj:pipeline|>"
+  ],
+  "<|op:ci.invoke.ci_job|>": [
+   "<|fam:ci|>",
+   "<|verb:invoke|>",
+   "<|obj:ci_job|>"
+  ],
+  "<|op:ci.cancel.ci_job|>": [
+   "<|fam:ci|>",
+   "<|verb:cancel|>",
+   "<|obj:ci_job|>"
+  ],
+  "<|op:ci.retry.ci_job|>": [
+   "<|fam:ci|>",
+   "<|verb:retry|>",
+   "<|obj:ci_job|>"
+  ],
+  "<|op:ci.inspect.ci_job|>": [
+   "<|fam:ci|>",
+   "<|verb:inspect|>",
+   "<|obj:ci_job|>"
+  ],
+  "<|op:ci.timeout.ci_job|>": [
+   "<|fam:ci|>",
+   "<|verb:timeout|>",
+   "<|obj:ci_job|>"
+  ],
+  "<|op:ci.create.release|>": [
+   "<|fam:ci|>",
+   "<|verb:create|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.validate.release|>": [
+   "<|fam:ci|>",
+   "<|verb:validate|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.promote.release|>": [
+   "<|fam:ci|>",
+   "<|verb:promote|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.rollback.release|>": [
+   "<|fam:ci|>",
+   "<|verb:rollback|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.document.release|>": [
+   "<|fam:ci|>",
+   "<|verb:document|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.attest.release|>": [
+   "<|fam:ci|>",
+   "<|verb:attest|>",
+   "<|obj:release|>"
+  ],
+  "<|op:ci.create.rollout|>": [
+   "<|fam:ci|>",
+   "<|verb:create|>",
+   "<|obj:rollout|>"
+  ],
+  "<|op:ci.pause.rollout|>": [
+   "<|fam:ci|>",
+   "<|verb:pause|>",
+   "<|obj:rollout|>"
+  ],
+  "<|op:ci.resume.rollout|>": [
+   "<|fam:ci|>",
+   "<|verb:resume|>",
+   "<|obj:rollout|>"
+  ],
+  "<|op:ci.rollback.rollout|>": [
+   "<|fam:ci|>",
+   "<|verb:rollback|>",
+   "<|obj:rollout|>"
+  ],
+  "<|op:ci.monitor.rollout|>": [
+   "<|fam:ci|>",
+   "<|verb:monitor|>",
+   "<|obj:rollout|>"
+  ],
+  "<|op:ci.create.feature_flag|>": [
+   "<|fam:ci|>",
+   "<|verb:create|>",
+   "<|obj:feature_flag|>"
+  ],
+  "<|op:ci.update.feature_flag|>": [
+   "<|fam:ci|>",
+   "<|verb:update|>",
+   "<|obj:feature_flag|>"
+  ],
+  "<|op:ci.delete.feature_flag|>": [
+   "<|fam:ci|>",
+   "<|verb:delete|>",
+   "<|obj:feature_flag|>"
+  ],
+  "<|op:ci.inspect.feature_flag|>": [
+   "<|fam:ci|>",
+   "<|verb:inspect|>",
+   "<|obj:feature_flag|>"
+  ],
+  "<|op:ci.expire.feature_flag|>": [
+   "<|fam:ci|>",
+   "<|verb:expire|>",
+   "<|obj:feature_flag|>"
+  ],
+  "<|op:ci.create.deploy_environment|>": [
+   "<|fam:ci|>",
+   "<|verb:create|>",
+   "<|obj:deploy_environment|>"
+  ],
+  "<|op:ci.inspect.deploy_environment|>": [
+   "<|fam:ci|>",
+   "<|verb:inspect|>",
+   "<|obj:deploy_environment|>"
+  ],
+  "<|op:ci.diff.deploy_environment|>": [
+   "<|fam:ci|>",
+   "<|verb:diff|>",
+   "<|obj:deploy_environment|>"
+  ],
+  "<|op:ci.validate.deploy_environment|>": [
+   "<|fam:ci|>",
+   "<|verb:validate|>",
+   "<|obj:deploy_environment|>"
+  ],
+  "<|op:ci.teardown.deploy_environment|>": [
+   "<|fam:ci|>",
+   "<|verb:teardown|>",
+   "<|obj:deploy_environment|>"
+  ],
+  "<|op:ci.inspect.ci_cache|>": [
+   "<|fam:ci|>",
+   "<|verb:inspect|>",
+   "<|obj:ci_cache|>"
+  ],
+  "<|op:ci.reset.ci_cache|>": [
+   "<|fam:ci|>",
+   "<|verb:reset|>",
+   "<|obj:ci_cache|>"
+  ],
+  "<|op:ci.measure.ci_cache|>": [
+   "<|fam:ci|>",
+   "<|verb:measure|>",
+   "<|obj:ci_cache|>"
+  ],
+  "<|op:ci.validate.ci_cache|>": [
+   "<|fam:ci|>",
+   "<|verb:validate|>",
+   "<|obj:ci_cache|>"
+  ],
+  "<|op:infra.create.container|>": [
+   "<|fam:infra|>",
+   "<|verb:create|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.inspect.container|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.kill.container|>": [
+   "<|fam:infra|>",
+   "<|verb:kill|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.list.container|>": [
+   "<|fam:infra|>",
+   "<|verb:list|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.monitor.container|>": [
+   "<|fam:infra|>",
+   "<|verb:monitor|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.snapshot.container|>": [
+   "<|fam:infra|>",
+   "<|verb:snapshot|>",
+   "<|obj:container|>"
+  ],
+  "<|op:infra.create.service|>": [
+   "<|fam:infra|>",
+   "<|verb:create|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.inspect.service|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.monitor.service|>": [
+   "<|fam:infra|>",
+   "<|verb:monitor|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.update.service|>": [
+   "<|fam:infra|>",
+   "<|verb:update|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.delete.service|>": [
+   "<|fam:infra|>",
+   "<|verb:delete|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.benchmark.service|>": [
+   "<|fam:infra|>",
+   "<|verb:benchmark|>",
+   "<|obj:service|>"
+  ],
+  "<|op:infra.create.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:create|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.delete.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:delete|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.inspect.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.snapshot.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:snapshot|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.restore.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:restore|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.measure.volume|>": [
+   "<|fam:infra|>",
+   "<|verb:measure|>",
+   "<|obj:volume|>"
+  ],
+  "<|op:infra.create.dns_record|>": [
+   "<|fam:infra|>",
+   "<|verb:create|>",
+   "<|obj:dns_record|>"
+  ],
+  "<|op:infra.update.dns_record|>": [
+   "<|fam:infra|>",
+   "<|verb:update|>",
+   "<|obj:dns_record|>"
+  ],
+  "<|op:infra.delete.dns_record|>": [
+   "<|fam:infra|>",
+   "<|verb:delete|>",
+   "<|obj:dns_record|>"
+  ],
+  "<|op:infra.inspect.dns_record|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:dns_record|>"
+  ],
+  "<|op:infra.validate.dns_record|>": [
+   "<|fam:infra|>",
+   "<|verb:validate|>",
+   "<|obj:dns_record|>"
+  ],
+  "<|op:infra.inspect.load_balancer|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:load_balancer|>"
+  ],
+  "<|op:infra.update.load_balancer|>": [
+   "<|fam:infra|>",
+   "<|verb:update|>",
+   "<|obj:load_balancer|>"
+  ],
+  "<|op:infra.monitor.load_balancer|>": [
+   "<|fam:infra|>",
+   "<|verb:monitor|>",
+   "<|obj:load_balancer|>"
+  ],
+  "<|op:infra.benchmark.load_balancer|>": [
+   "<|fam:infra|>",
+   "<|verb:benchmark|>",
+   "<|obj:load_balancer|>"
+  ],
+  "<|op:infra.inspect.autoscaler|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:autoscaler|>"
+  ],
+  "<|op:infra.update.autoscaler|>": [
+   "<|fam:infra|>",
+   "<|verb:update|>",
+   "<|obj:autoscaler|>"
+  ],
+  "<|op:infra.threshold.autoscaler|>": [
+   "<|fam:infra|>",
+   "<|verb:threshold|>",
+   "<|obj:autoscaler|>"
+  ],
+  "<|op:infra.cap.autoscaler|>": [
+   "<|fam:infra|>",
+   "<|verb:cap|>",
+   "<|obj:autoscaler|>"
+  ],
+  "<|op:infra.read.config_file|>": [
+   "<|fam:infra|>",
+   "<|verb:read|>",
+   "<|obj:config_file|>"
+  ],
+  "<|op:infra.update.config_file|>": [
+   "<|fam:infra|>",
+   "<|verb:update|>",
+   "<|obj:config_file|>"
+  ],
+  "<|op:infra.validate.config_file|>": [
+   "<|fam:infra|>",
+   "<|verb:validate|>",
+   "<|obj:config_file|>"
+  ],
+  "<|op:infra.diff.config_file|>": [
+   "<|fam:infra|>",
+   "<|verb:diff|>",
+   "<|obj:config_file|>"
+  ],
+  "<|op:infra.snapshot.config_file|>": [
+   "<|fam:infra|>",
+   "<|verb:snapshot|>",
+   "<|obj:config_file|>"
+  ],
+  "<|op:infra.inspect.certificate|>": [
+   "<|fam:infra|>",
+   "<|verb:inspect|>",
+   "<|obj:certificate|>"
+  ],
+  "<|op:infra.validate.certificate|>": [
+   "<|fam:infra|>",
+   "<|verb:validate|>",
+   "<|obj:certificate|>"
+  ],
+  "<|op:infra.expire.certificate|>": [
+   "<|fam:infra|>",
+   "<|verb:expire|>",
+   "<|obj:certificate|>"
+  ],
+  "<|op:infra.rotate.certificate|>": [
+   "<|fam:infra|>",
+   "<|verb:rotate|>",
+   "<|obj:certificate|>"
+  ],
+  "<|op:queue.send.message|>": [
+   "<|fam:queue|>",
+   "<|verb:send|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.read.message|>": [
+   "<|fam:queue|>",
+   "<|verb:read|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.delete.message|>": [
+   "<|fam:queue|>",
+   "<|verb:delete|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.validate.message|>": [
+   "<|fam:queue|>",
+   "<|verb:validate|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.replay.message|>": [
+   "<|fam:queue|>",
+   "<|verb:replay|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.tag.message|>": [
+   "<|fam:queue|>",
+   "<|verb:tag|>",
+   "<|obj:message|>"
+  ],
+  "<|op:queue.create.topic|>": [
+   "<|fam:queue|>",
+   "<|verb:create|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:queue.delete.topic|>": [
+   "<|fam:queue|>",
+   "<|verb:delete|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:queue.list.topic|>": [
+   "<|fam:queue|>",
+   "<|verb:list|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:queue.inspect.topic|>": [
+   "<|fam:queue|>",
+   "<|verb:inspect|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:queue.watch.topic|>": [
+   "<|fam:queue|>",
+   "<|verb:watch|>",
+   "<|obj:topic|>"
+  ],
+  "<|op:queue.create.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:create|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.pause.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:pause|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.resume.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:resume|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.monitor.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:monitor|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.terminate.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:terminate|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.throttle.consumer|>": [
+   "<|fam:queue|>",
+   "<|verb:throttle|>",
+   "<|obj:consumer|>"
+  ],
+  "<|op:queue.read.dead_letter_queue|>": [
+   "<|fam:queue|>",
+   "<|verb:read|>",
+   "<|obj:dead_letter_queue|>"
+  ],
+  "<|op:queue.inspect.dead_letter_queue|>": [
+   "<|fam:queue|>",
+   "<|verb:inspect|>",
+   "<|obj:dead_letter_queue|>"
+  ],
+  "<|op:queue.replay.dead_letter_queue|>": [
+   "<|fam:queue|>",
+   "<|verb:replay|>",
+   "<|obj:dead_letter_queue|>"
+  ],
+  "<|op:queue.measure.dead_letter_queue|>": [
+   "<|fam:queue|>",
+   "<|verb:measure|>",
+   "<|obj:dead_letter_queue|>"
+  ],
+  "<|op:queue.create.retry_schedule|>": [
+   "<|fam:queue|>",
+   "<|verb:create|>",
+   "<|obj:retry_schedule|>"
+  ],
+  "<|op:queue.update.retry_schedule|>": [
+   "<|fam:queue|>",
+   "<|verb:update|>",
+   "<|obj:retry_schedule|>"
+  ],
+  "<|op:queue.inspect.retry_schedule|>": [
+   "<|fam:queue|>",
+   "<|verb:inspect|>",
+   "<|obj:retry_schedule|>"
+  ],
+  "<|op:queue.cancel.retry_schedule|>": [
+   "<|fam:queue|>",
+   "<|verb:cancel|>",
+   "<|obj:retry_schedule|>"
+  ],
+  "<|op:queue.read.event_offset|>": [
+   "<|fam:queue|>",
+   "<|verb:read|>",
+   "<|obj:event_offset|>"
+  ],
+  "<|op:queue.update.event_offset|>": [
+   "<|fam:queue|>",
+   "<|verb:update|>",
+   "<|obj:event_offset|>"
+  ],
+  "<|op:queue.reset.event_offset|>": [
+   "<|fam:queue|>",
+   "<|verb:reset|>",
+   "<|obj:event_offset|>"
+  ],
+  "<|op:queue.validate.event_offset|>": [
+   "<|fam:queue|>",
+   "<|verb:validate|>",
+   "<|obj:event_offset|>"
+  ],
+  "<|op:math.compute.expression|>": [
+   "<|fam:math|>",
+   "<|verb:compute|>",
+   "<|obj:expression|>"
+  ],
+  "<|op:math.normalize.expression|>": [
+   "<|fam:math|>",
+   "<|verb:normalize|>",
+   "<|obj:expression|>"
+  ],
+  "<|op:math.verify.expression|>": [
+   "<|fam:math|>",
+   "<|verb:verify|>",
+   "<|obj:expression|>"
+  ],
+  "<|op:math.explain.expression|>": [
+   "<|fam:math|>",
+   "<|verb:explain|>",
+   "<|obj:expression|>"
+  ],
+  "<|op:math.parse.expression|>": [
+   "<|fam:math|>",
+   "<|verb:parse|>",
+   "<|obj:expression|>"
+  ],
+  "<|op:math.solve.equation|>": [
+   "<|fam:math|>",
+   "<|verb:solve|>",
+   "<|obj:equation|>"
+  ],
+  "<|op:math.verify.equation|>": [
+   "<|fam:math|>",
+   "<|verb:verify|>",
+   "<|obj:equation|>"
+  ],
+  "<|op:math.explain.equation|>": [
+   "<|fam:math|>",
+   "<|verb:explain|>",
+   "<|obj:equation|>"
+  ],
+  "<|op:math.validate.equation|>": [
+   "<|fam:math|>",
+   "<|verb:validate|>",
+   "<|obj:equation|>"
+  ],
+  "<|op:math.compute.statistic|>": [
+   "<|fam:math|>",
+   "<|verb:compute|>",
+   "<|obj:statistic|>"
+  ],
+  "<|op:math.compare.statistic|>": [
+   "<|fam:math|>",
+   "<|verb:compare|>",
+   "<|obj:statistic|>"
+  ],
+  "<|op:math.verify.statistic|>": [
+   "<|fam:math|>",
+   "<|verb:verify|>",
+   "<|obj:statistic|>"
+  ],
+  "<|op:math.explain.statistic|>": [
+   "<|fam:math|>",
+   "<|verb:explain|>",
+   "<|obj:statistic|>"
+  ],
+  "<|op:math.create.probability_model|>": [
+   "<|fam:math|>",
+   "<|verb:create|>",
+   "<|obj:probability_model|>"
+  ],
+  "<|op:math.update.probability_model|>": [
+   "<|fam:math|>",
+   "<|verb:update|>",
+   "<|obj:probability_model|>"
+  ],
+  "<|op:math.simulate.probability_model|>": [
+   "<|fam:math|>",
+   "<|verb:simulate|>",
+   "<|obj:probability_model|>"
+  ],
+  "<|op:math.validate.probability_model|>": [
+   "<|fam:math|>",
+   "<|verb:validate|>",
+   "<|obj:probability_model|>"
+  ],
+  "<|op:math.create.optimization_problem|>": [
+   "<|fam:math|>",
+   "<|verb:create|>",
+   "<|obj:optimization_problem|>"
+  ],
+  "<|op:math.solve.optimization_problem|>": [
+   "<|fam:math|>",
+   "<|verb:solve|>",
+   "<|obj:optimization_problem|>"
+  ],
+  "<|op:math.bound.optimization_problem|>": [
+   "<|fam:math|>",
+   "<|verb:bound|>",
+   "<|obj:optimization_problem|>"
+  ],
+  "<|op:math.explain.optimization_problem|>": [
+   "<|fam:math|>",
+   "<|verb:explain|>",
+   "<|obj:optimization_problem|>"
+  ],
+  "<|op:math.validate.optimization_problem|>": [
+   "<|fam:math|>",
+   "<|verb:validate|>",
+   "<|obj:optimization_problem|>"
+  ],
+  "<|op:math.compute.matrix|>": [
+   "<|fam:math|>",
+   "<|verb:compute|>",
+   "<|obj:matrix|>"
+  ],
+  "<|op:math.transform.matrix|>": [
+   "<|fam:math|>",
+   "<|verb:transform|>",
+   "<|obj:matrix|>"
+  ],
+  "<|op:math.validate.matrix|>": [
+   "<|fam:math|>",
+   "<|verb:validate|>",
+   "<|obj:matrix|>"
+  ],
+  "<|op:math.measure.matrix|>": [
+   "<|fam:math|>",
+   "<|verb:measure|>",
+   "<|obj:matrix|>"
+  ],
+  "<|op:math.compute.series|>": [
+   "<|fam:math|>",
+   "<|verb:compute|>",
+   "<|obj:series|>"
+  ],
+  "<|op:math.aggregate.series|>": [
+   "<|fam:math|>",
+   "<|verb:aggregate|>",
+   "<|obj:series|>"
+  ],
+  "<|op:math.forecast.series|>": [
+   "<|fam:math|>",
+   "<|verb:forecast|>",
+   "<|obj:series|>"
+  ],
+  "<|op:math.summarize.series|>": [
+   "<|fam:math|>",
+   "<|verb:summarize|>",
+   "<|obj:series|>"
+  ],
+  "<|op:text.summarize.paragraph|>": [
+   "<|fam:text|>",
+   "<|verb:summarize|>",
+   "<|obj:paragraph|>"
+  ],
+  "<|op:text.rewrite.paragraph|>": [
+   "<|fam:text|>",
+   "<|verb:rewrite|>",
+   "<|obj:paragraph|>"
+  ],
+  "<|op:text.translate.paragraph|>": [
+   "<|fam:text|>",
+   "<|verb:translate|>",
+   "<|obj:paragraph|>"
+  ],
+  "<|op:text.classify.paragraph|>": [
+   "<|fam:text|>",
+   "<|verb:classify|>",
+   "<|obj:paragraph|>"
+  ],
+  "<|op:text.critique.paragraph|>": [
+   "<|fam:text|>",
+   "<|verb:critique|>",
+   "<|obj:paragraph|>"
+  ],
+  "<|op:text.create.regex_pattern|>": [
+   "<|fam:text|>",
+   "<|verb:create|>",
+   "<|obj:regex_pattern|>"
+  ],
+  "<|op:text.validate.regex_pattern|>": [
+   "<|fam:text|>",
+   "<|verb:validate|>",
+   "<|obj:regex_pattern|>"
+  ],
+  "<|op:text.test.regex_pattern|>": [
+   "<|fam:text|>",
+   "<|verb:test|>",
+   "<|obj:regex_pattern|>"
+  ],
+  "<|op:text.explain.regex_pattern|>": [
+   "<|fam:text|>",
+   "<|verb:explain|>",
+   "<|obj:regex_pattern|>"
+  ],
+  "<|op:text.search.text_span|>": [
+   "<|fam:text|>",
+   "<|verb:search|>",
+   "<|obj:text_span|>"
+  ],
+  "<|op:text.cite.text_span|>": [
+   "<|fam:text|>",
+   "<|verb:cite|>",
+   "<|obj:text_span|>"
+  ],
+  "<|op:text.classify.text_span|>": [
+   "<|fam:text|>",
+   "<|verb:classify|>",
+   "<|obj:text_span|>"
+  ],
+  "<|op:text.redact.text_span|>": [
+   "<|fam:text|>",
+   "<|verb:redact|>",
+   "<|obj:text_span|>"
+  ],
+  "<|op:text.review.diff_hunk|>": [
+   "<|fam:text|>",
+   "<|verb:review|>",
+   "<|obj:diff_hunk|>"
+  ],
+  "<|op:text.explain.diff_hunk|>": [
+   "<|fam:text|>",
+   "<|verb:explain|>",
+   "<|obj:diff_hunk|>"
+  ],
+  "<|op:text.apply.diff_hunk|>": [
+   "<|fam:text|>",
+   "<|verb:apply|>",
+   "<|obj:diff_hunk|>"
+  ],
+  "<|op:text.validate.diff_hunk|>": [
+   "<|fam:text|>",
+   "<|verb:validate|>",
+   "<|obj:diff_hunk|>"
+  ],
+  "<|op:text.create.template|>": [
+   "<|fam:text|>",
+   "<|verb:create|>",
+   "<|obj:template|>"
+  ],
+  "<|op:text.fill.template|>": [
+   "<|fam:text|>",
+   "<|verb:fill|>",
+   "<|obj:template|>"
+  ],
+  "<|op:text.validate.template|>": [
+   "<|fam:text|>",
+   "<|verb:validate|>",
+   "<|obj:template|>"
+  ],
+  "<|op:text.render.template|>": [
+   "<|fam:text|>",
+   "<|verb:render|>",
+   "<|obj:template|>"
+  ],
+  "<|op:text.create.message_draft|>": [
+   "<|fam:text|>",
+   "<|verb:create|>",
+   "<|obj:message_draft|>"
+  ],
+  "<|op:text.rewrite.message_draft|>": [
+   "<|fam:text|>",
+   "<|verb:rewrite|>",
+   "<|obj:message_draft|>"
+  ],
+  "<|op:text.review.message_draft|>": [
+   "<|fam:text|>",
+   "<|verb:review|>",
+   "<|obj:message_draft|>"
+  ],
+  "<|op:text.critique.message_draft|>": [
+   "<|fam:text|>",
+   "<|verb:critique|>",
+   "<|obj:message_draft|>"
+  ],
+  "<|op:text.create.glossary|>": [
+   "<|fam:text|>",
+   "<|verb:create|>",
+   "<|obj:glossary|>"
+  ],
+  "<|op:text.update.glossary|>": [
+   "<|fam:text|>",
+   "<|verb:update|>",
+   "<|obj:glossary|>"
+  ],
+  "<|op:text.search.glossary|>": [
+   "<|fam:text|>",
+   "<|verb:search|>",
+   "<|obj:glossary|>"
+  ],
+  "<|op:text.validate.glossary|>": [
+   "<|fam:text|>",
+   "<|verb:validate|>",
+   "<|obj:glossary|>"
+  ],
+  "<|op:media.read.image|>": [
+   "<|fam:media|>",
+   "<|verb:read|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.classify.image|>": [
+   "<|fam:media|>",
+   "<|verb:classify|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.summarize.image|>": [
+   "<|fam:media|>",
+   "<|verb:summarize|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.transform.image|>": [
+   "<|fam:media|>",
+   "<|verb:transform|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.compress.image|>": [
+   "<|fam:media|>",
+   "<|verb:compress|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.validate.image|>": [
+   "<|fam:media|>",
+   "<|verb:validate|>",
+   "<|obj:image|>"
+  ],
+  "<|op:media.transcribe.audio_clip|>": [
+   "<|fam:media|>",
+   "<|verb:transcribe|>",
+   "<|obj:audio_clip|>"
+  ],
+  "<|op:media.summarize.audio_clip|>": [
+   "<|fam:media|>",
+   "<|verb:summarize|>",
+   "<|obj:audio_clip|>"
+  ],
+  "<|op:media.classify.audio_clip|>": [
+   "<|fam:media|>",
+   "<|verb:classify|>",
+   "<|obj:audio_clip|>"
+  ],
+  "<|op:media.compress.audio_clip|>": [
+   "<|fam:media|>",
+   "<|verb:compress|>",
+   "<|obj:audio_clip|>"
+  ],
+  "<|op:media.split.audio_clip|>": [
+   "<|fam:media|>",
+   "<|verb:split|>",
+   "<|obj:audio_clip|>"
+  ],
+  "<|op:media.transcribe.video|>": [
+   "<|fam:media|>",
+   "<|verb:transcribe|>",
+   "<|obj:video|>"
+  ],
+  "<|op:media.summarize.video|>": [
+   "<|fam:media|>",
+   "<|verb:summarize|>",
+   "<|obj:video|>"
+  ],
+  "<|op:media.capture.video|>": [
+   "<|fam:media|>",
+   "<|verb:capture|>",
+   "<|obj:video|>"
+  ],
+  "<|op:media.split.video|>": [
+   "<|fam:media|>",
+   "<|verb:split|>",
+   "<|obj:video|>"
+  ],
+  "<|op:media.read.transcript|>": [
+   "<|fam:media|>",
+   "<|verb:read|>",
+   "<|obj:transcript|>"
+  ],
+  "<|op:media.summarize.transcript|>": [
+   "<|fam:media|>",
+   "<|verb:summarize|>",
+   "<|obj:transcript|>"
+  ],
+  "<|op:media.search.transcript|>": [
+   "<|fam:media|>",
+   "<|verb:search|>",
+   "<|obj:transcript|>"
+  ],
+  "<|op:media.cite.transcript|>": [
+   "<|fam:media|>",
+   "<|verb:cite|>",
+   "<|obj:transcript|>"
+  ],
+  "<|op:media.create.caption|>": [
+   "<|fam:media|>",
+   "<|verb:create|>",
+   "<|obj:caption|>"
+  ],
+  "<|op:media.update.caption|>": [
+   "<|fam:media|>",
+   "<|verb:update|>",
+   "<|obj:caption|>"
+  ],
+  "<|op:media.validate.caption|>": [
+   "<|fam:media|>",
+   "<|verb:validate|>",
+   "<|obj:caption|>"
+  ],
+  "<|op:media.translate.caption|>": [
+   "<|fam:media|>",
+   "<|verb:translate|>",
+   "<|obj:caption|>"
+  ],
+  "<|op:media.create.chart|>": [
+   "<|fam:media|>",
+   "<|verb:create|>",
+   "<|obj:chart|>"
+  ],
+  "<|op:media.render.chart|>": [
+   "<|fam:media|>",
+   "<|verb:render|>",
+   "<|obj:chart|>"
+  ],
+  "<|op:media.validate.chart|>": [
+   "<|fam:media|>",
+   "<|verb:validate|>",
+   "<|obj:chart|>"
+  ],
+  "<|op:media.explain.chart|>": [
+   "<|fam:media|>",
+   "<|verb:explain|>",
+   "<|obj:chart|>"
+  ],
+  "<|op:collab.create.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.update.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:update|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.prioritize.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:prioritize|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.list.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:list|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.complete.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:complete|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.tag.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:tag|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.search.issue|>": [
+   "<|fam:collab|>",
+   "<|verb:search|>",
+   "<|obj:issue|>"
+  ],
+  "<|op:collab.create.review_comment|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:review_comment|>"
+  ],
+  "<|op:collab.read.review_comment|>": [
+   "<|fam:collab|>",
+   "<|verb:read|>",
+   "<|obj:review_comment|>"
+  ],
+  "<|op:collab.respond.review_comment|>": [
+   "<|fam:collab|>",
+   "<|verb:respond|>",
+   "<|obj:review_comment|>"
+  ],
+  "<|op:collab.summarize.review_comment|>": [
+   "<|fam:collab|>",
+   "<|verb:summarize|>",
+   "<|obj:review_comment|>"
+  ],
+  "<|op:collab.create.approval_request|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:approval_request|>"
+  ],
+  "<|op:collab.request.approval_request|>": [
+   "<|fam:collab|>",
+   "<|verb:request|>",
+   "<|obj:approval_request|>"
+  ],
+  "<|op:collab.check.approval_request|>": [
+   "<|fam:collab|>",
+   "<|verb:check|>",
+   "<|obj:approval_request|>"
+  ],
+  "<|op:collab.expire.approval_request|>": [
+   "<|fam:collab|>",
+   "<|verb:expire|>",
+   "<|obj:approval_request|>"
+  ],
+  "<|op:collab.create.meeting_note|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:meeting_note|>"
+  ],
+  "<|op:collab.summarize.meeting_note|>": [
+   "<|fam:collab|>",
+   "<|verb:summarize|>",
+   "<|obj:meeting_note|>"
+  ],
+  "<|op:collab.store.meeting_note|>": [
+   "<|fam:collab|>",
+   "<|verb:store|>",
+   "<|obj:meeting_note|>"
+  ],
+  "<|op:collab.search.meeting_note|>": [
+   "<|fam:collab|>",
+   "<|verb:search|>",
+   "<|obj:meeting_note|>"
+  ],
+  "<|op:collab.create.changelog|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:changelog|>"
+  ],
+  "<|op:collab.update.changelog|>": [
+   "<|fam:collab|>",
+   "<|verb:update|>",
+   "<|obj:changelog|>"
+  ],
+  "<|op:collab.validate.changelog|>": [
+   "<|fam:collab|>",
+   "<|verb:validate|>",
+   "<|obj:changelog|>"
+  ],
+  "<|op:collab.summarize.changelog|>": [
+   "<|fam:collab|>",
+   "<|verb:summarize|>",
+   "<|obj:changelog|>"
+  ],
+  "<|op:collab.send.team_channel|>": [
+   "<|fam:collab|>",
+   "<|verb:send|>",
+   "<|obj:team_channel|>"
+  ],
+  "<|op:collab.read.team_channel|>": [
+   "<|fam:collab|>",
+   "<|verb:read|>",
+   "<|obj:team_channel|>"
+  ],
+  "<|op:collab.watch.team_channel|>": [
+   "<|fam:collab|>",
+   "<|verb:watch|>",
+   "<|obj:team_channel|>"
+  ],
+  "<|op:collab.summarize.team_channel|>": [
+   "<|fam:collab|>",
+   "<|verb:summarize|>",
+   "<|obj:team_channel|>"
+  ],
+  "<|op:collab.create.decision_record|>": [
+   "<|fam:collab|>",
+   "<|verb:create|>",
+   "<|obj:decision_record|>"
+  ],
+  "<|op:collab.read.decision_record|>": [
+   "<|fam:collab|>",
+   "<|verb:read|>",
+   "<|obj:decision_record|>"
+  ],
+  "<|op:collab.revise.decision_record|>": [
+   "<|fam:collab|>",
+   "<|verb:revise|>",
+   "<|obj:decision_record|>"
+  ],
+  "<|op:collab.cite.decision_record|>": [
+   "<|fam:collab|>",
+   "<|verb:cite|>",
+   "<|obj:decision_record|>"
+  ],
+  "<|op:kg.create.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:create|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.update.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:update|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.delete.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:delete|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.resolve.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:resolve|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.merge.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:merge|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.search.kg_node|>": [
+   "<|fam:kg|>",
+   "<|verb:search|>",
+   "<|obj:kg_node|>"
+  ],
+  "<|op:kg.create.kg_edge|>": [
+   "<|fam:kg|>",
+   "<|verb:create|>",
+   "<|obj:kg_edge|>"
+  ],
+  "<|op:kg.delete.kg_edge|>": [
+   "<|fam:kg|>",
+   "<|verb:delete|>",
+   "<|obj:kg_edge|>"
+  ],
+  "<|op:kg.verify.kg_edge|>": [
+   "<|fam:kg|>",
+   "<|verb:verify|>",
+   "<|obj:kg_edge|>"
+  ],
+  "<|op:kg.rank.kg_edge|>": [
+   "<|fam:kg|>",
+   "<|verb:rank|>",
+   "<|obj:kg_edge|>"
+  ],
+  "<|op:kg.create.ontology_class|>": [
+   "<|fam:kg|>",
+   "<|verb:create|>",
+   "<|obj:ontology_class|>"
+  ],
+  "<|op:kg.update.ontology_class|>": [
+   "<|fam:kg|>",
+   "<|verb:update|>",
+   "<|obj:ontology_class|>"
+  ],
+  "<|op:kg.validate.ontology_class|>": [
+   "<|fam:kg|>",
+   "<|verb:validate|>",
+   "<|obj:ontology_class|>"
+  ],
+  "<|op:kg.explain.ontology_class|>": [
+   "<|fam:kg|>",
+   "<|verb:explain|>",
+   "<|obj:ontology_class|>"
+  ],
+  "<|op:kg.create.kg_query|>": [
+   "<|fam:kg|>",
+   "<|verb:create|>",
+   "<|obj:kg_query|>"
+  ],
+  "<|op:kg.invoke.kg_query|>": [
+   "<|fam:kg|>",
+   "<|verb:invoke|>",
+   "<|obj:kg_query|>"
+  ],
+  "<|op:kg.explain.kg_query|>": [
+   "<|fam:kg|>",
+   "<|verb:explain|>",
+   "<|obj:kg_query|>"
+  ],
+  "<|op:kg.cache.kg_query|>": [
+   "<|fam:kg|>",
+   "<|verb:cache|>",
+   "<|obj:kg_query|>"
+  ],
+  "<|op:kg.create.kg_snapshot|>": [
+   "<|fam:kg|>",
+   "<|verb:create|>",
+   "<|obj:kg_snapshot|>"
+  ],
+  "<|op:kg.diff.kg_snapshot|>": [
+   "<|fam:kg|>",
+   "<|verb:diff|>",
+   "<|obj:kg_snapshot|>"
+  ],
+  "<|op:kg.restore.kg_snapshot|>": [
+   "<|fam:kg|>",
+   "<|verb:restore|>",
+   "<|obj:kg_snapshot|>"
+  ],
+  "<|op:kg.validate.kg_snapshot|>": [
+   "<|fam:kg|>",
+   "<|verb:validate|>",
+   "<|obj:kg_snapshot|>"
+  ],
+  "<|op:sim.create.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:create|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.snapshot.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:snapshot|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.restore.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:restore|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.teardown.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:teardown|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.inspect.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:inspect|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.reset.sandbox_env|>": [
+   "<|fam:sim|>",
+   "<|verb:reset|>",
+   "<|obj:sandbox_env|>"
+  ],
+  "<|op:sim.simulate.sim_step|>": [
+   "<|fam:sim|>",
+   "<|verb:simulate|>",
+   "<|obj:sim_step|>"
+  ],
+  "<|op:sim.check.sim_step|>": [
+   "<|fam:sim|>",
+   "<|verb:check|>",
+   "<|obj:sim_step|>"
+  ],
+  "<|op:sim.replay.sim_step|>": [
+   "<|fam:sim|>",
+   "<|verb:replay|>",
+   "<|obj:sim_step|>"
+  ],
+  "<|op:sim.score.sim_step|>": [
+   "<|fam:sim|>",
+   "<|verb:score|>",
+   "<|obj:sim_step|>"
+  ],
+  "<|op:sim.create.scenario|>": [
+   "<|fam:sim|>",
+   "<|verb:create|>",
+   "<|obj:scenario|>"
+  ],
+  "<|op:sim.enumerate.scenario|>": [
+   "<|fam:sim|>",
+   "<|verb:enumerate|>",
+   "<|obj:scenario|>"
+  ],
+  "<|op:sim.simulate.scenario|>": [
+   "<|fam:sim|>",
+   "<|verb:simulate|>",
+   "<|obj:scenario|>"
+  ],
+  "<|op:sim.score.scenario|>": [
+   "<|fam:sim|>",
+   "<|verb:score|>",
+   "<|obj:scenario|>"
+  ],
+  "<|op:sim.validate.scenario|>": [
+   "<|fam:sim|>",
+   "<|verb:validate|>",
+   "<|obj:scenario|>"
+  ],
+  "<|op:sim.set.env_seed|>": [
+   "<|fam:sim|>",
+   "<|verb:set|>",
+   "<|obj:env_seed|>"
+  ],
+  "<|op:sim.read.env_seed|>": [
+   "<|fam:sim|>",
+   "<|verb:read|>",
+   "<|obj:env_seed|>"
+  ],
+  "<|op:sim.reset.env_seed|>": [
+   "<|fam:sim|>",
+   "<|verb:reset|>",
+   "<|obj:env_seed|>"
+  ],
+  "<|op:sim.create.mock_service|>": [
+   "<|fam:sim|>",
+   "<|verb:create|>",
+   "<|obj:mock_service|>"
+  ],
+  "<|op:sim.update.mock_service|>": [
+   "<|fam:sim|>",
+   "<|verb:update|>",
+   "<|obj:mock_service|>"
+  ],
+  "<|op:sim.inspect.mock_service|>": [
+   "<|fam:sim|>",
+   "<|verb:inspect|>",
+   "<|obj:mock_service|>"
+  ],
+  "<|op:sim.teardown.mock_service|>": [
+   "<|fam:sim|>",
+   "<|verb:teardown|>",
+   "<|obj:mock_service|>"
+  ],
+  "<|op:priv.search.personal_record|>": [
+   "<|fam:priv|>",
+   "<|verb:search|>",
+   "<|obj:personal_record|>"
+  ],
+  "<|op:priv.redact.personal_record|>": [
+   "<|fam:priv|>",
+   "<|verb:redact|>",
+   "<|obj:personal_record|>"
+  ],
+  "<|op:priv.audit.personal_record|>": [
+   "<|fam:priv|>",
+   "<|verb:audit|>",
+   "<|obj:personal_record|>"
+  ],
+  "<|op:priv.delete.personal_record|>": [
+   "<|fam:priv|>",
+   "<|verb:delete|>",
+   "<|obj:personal_record|>"
+  ],
+  "<|op:priv.inspect.personal_record|>": [
+   "<|fam:priv|>",
+   "<|verb:inspect|>",
+   "<|obj:personal_record|>"
+  ],
+  "<|op:priv.read.consent|>": [
+   "<|fam:priv|>",
+   "<|verb:read|>",
+   "<|obj:consent|>"
+  ],
+  "<|op:priv.check.consent|>": [
+   "<|fam:priv|>",
+   "<|verb:check|>",
+   "<|obj:consent|>"
+  ],
+  "<|op:priv.expire.consent|>": [
+   "<|fam:priv|>",
+   "<|verb:expire|>",
+   "<|obj:consent|>"
+  ],
+  "<|op:priv.inspect.consent|>": [
+   "<|fam:priv|>",
+   "<|verb:inspect|>",
+   "<|obj:consent|>"
+  ],
+  "<|op:priv.read.retention_policy|>": [
+   "<|fam:priv|>",
+   "<|verb:read|>",
+   "<|obj:retention_policy|>"
+  ],
+  "<|op:priv.enforce.retention_policy|>": [
+   "<|fam:priv|>",
+   "<|verb:enforce|>",
+   "<|obj:retention_policy|>"
+  ],
+  "<|op:priv.update.retention_policy|>": [
+   "<|fam:priv|>",
+   "<|verb:update|>",
+   "<|obj:retention_policy|>"
+  ],
+  "<|op:priv.audit.retention_policy|>": [
+   "<|fam:priv|>",
+   "<|verb:audit|>",
+   "<|obj:retention_policy|>"
+  ],
+  "<|op:priv.create.data_subject_request|>": [
+   "<|fam:priv|>",
+   "<|verb:create|>",
+   "<|obj:data_subject_request|>"
+  ],
+  "<|op:priv.inspect.data_subject_request|>": [
+   "<|fam:priv|>",
+   "<|verb:inspect|>",
+   "<|obj:data_subject_request|>"
+  ],
+  "<|op:priv.complete.data_subject_request|>": [
+   "<|fam:priv|>",
+   "<|verb:complete|>",
+   "<|obj:data_subject_request|>"
+  ],
+  "<|op:priv.audit.data_subject_request|>": [
+   "<|fam:priv|>",
+   "<|verb:audit|>",
+   "<|obj:data_subject_request|>"
+  ],
+  "<|op:priv.create.data_map|>": [
+   "<|fam:priv|>",
+   "<|verb:create|>",
+   "<|obj:data_map|>"
+  ],
+  "<|op:priv.update.data_map|>": [
+   "<|fam:priv|>",
+   "<|verb:update|>",
+   "<|obj:data_map|>"
+  ],
+  "<|op:priv.audit.data_map|>": [
+   "<|fam:priv|>",
+   "<|verb:audit|>",
+   "<|obj:data_map|>"
+  ],
+  "<|op:priv.validate.data_map|>": [
+   "<|fam:priv|>",
+   "<|verb:validate|>",
+   "<|obj:data_map|>"
+  ],
+  "<|op:loc.create.locale_string|>": [
+   "<|fam:loc|>",
+   "<|verb:create|>",
+   "<|obj:locale_string|>"
+  ],
+  "<|op:loc.translate.locale_string|>": [
+   "<|fam:loc|>",
+   "<|verb:translate|>",
+   "<|obj:locale_string|>"
+  ],
+  "<|op:loc.validate.locale_string|>": [
+   "<|fam:loc|>",
+   "<|verb:validate|>",
+   "<|obj:locale_string|>"
+  ],
+  "<|op:loc.update.locale_string|>": [
+   "<|fam:loc|>",
+   "<|verb:update|>",
+   "<|obj:locale_string|>"
+  ],
+  "<|op:loc.list.locale_string|>": [
+   "<|fam:loc|>",
+   "<|verb:list|>",
+   "<|obj:locale_string|>"
+  ],
+  "<|op:loc.set.locale|>": [
+   "<|fam:loc|>",
+   "<|verb:set|>",
+   "<|obj:locale|>"
+  ],
+  "<|op:loc.read.locale|>": [
+   "<|fam:loc|>",
+   "<|verb:read|>",
+   "<|obj:locale|>"
+  ],
+  "<|op:loc.list.locale|>": [
+   "<|fam:loc|>",
+   "<|verb:list|>",
+   "<|obj:locale|>"
+  ],
+  "<|op:loc.validate.locale|>": [
+   "<|fam:loc|>",
+   "<|verb:validate|>",
+   "<|obj:locale|>"
+  ],
+  "<|op:loc.normalize.date_format|>": [
+   "<|fam:loc|>",
+   "<|verb:normalize|>",
+   "<|obj:date_format|>"
+  ],
+  "<|op:loc.validate.date_format|>": [
+   "<|fam:loc|>",
+   "<|verb:validate|>",
+   "<|obj:date_format|>"
+  ],
+  "<|op:loc.explain.date_format|>": [
+   "<|fam:loc|>",
+   "<|verb:explain|>",
+   "<|obj:date_format|>"
+  ],
+  "<|op:loc.normalize.currency_amount|>": [
+   "<|fam:loc|>",
+   "<|verb:normalize|>",
+   "<|obj:currency_amount|>"
+  ],
+  "<|op:loc.validate.currency_amount|>": [
+   "<|fam:loc|>",
+   "<|verb:validate|>",
+   "<|obj:currency_amount|>"
+  ],
+  "<|op:loc.compute.currency_amount|>": [
+   "<|fam:loc|>",
+   "<|verb:compute|>",
+   "<|obj:currency_amount|>"
+  ],
+  "<|op:notebook.open.notebook|>": [
+   "<|fam:notebook|>",
+   "<|verb:open|>",
+   "<|obj:notebook|>"
+  ],
+  "<|op:notebook.read.notebook|>": [
+   "<|fam:notebook|>",
+   "<|verb:read|>",
+   "<|obj:notebook|>"
+  ],
+  "<|op:notebook.write.notebook|>": [
+   "<|fam:notebook|>",
+   "<|verb:write|>",
+   "<|obj:notebook|>"
+  ],
+  "<|op:notebook.close.notebook|>": [
+   "<|fam:notebook|>",
+   "<|verb:close|>",
+   "<|obj:notebook|>"
+  ],
+  "<|op:notebook.snapshot.notebook|>": [
+   "<|fam:notebook|>",
+   "<|verb:snapshot|>",
+   "<|obj:notebook|>"
+  ],
+  "<|op:notebook.create.notebook_cell|>": [
+   "<|fam:notebook|>",
+   "<|verb:create|>",
+   "<|obj:notebook_cell|>"
+  ],
+  "<|op:notebook.invoke.notebook_cell|>": [
+   "<|fam:notebook|>",
+   "<|verb:invoke|>",
+   "<|obj:notebook_cell|>"
+  ],
+  "<|op:notebook.update.notebook_cell|>": [
+   "<|fam:notebook|>",
+   "<|verb:update|>",
+   "<|obj:notebook_cell|>"
+  ],
+  "<|op:notebook.delete.notebook_cell|>": [
+   "<|fam:notebook|>",
+   "<|verb:delete|>",
+   "<|obj:notebook_cell|>"
+  ],
+  "<|op:notebook.inspect.notebook_cell|>": [
+   "<|fam:notebook|>",
+   "<|verb:inspect|>",
+   "<|obj:notebook_cell|>"
+  ],
+  "<|op:notebook.create.kernel|>": [
+   "<|fam:notebook|>",
+   "<|verb:create|>",
+   "<|obj:kernel|>"
+  ],
+  "<|op:notebook.kill.kernel|>": [
+   "<|fam:notebook|>",
+   "<|verb:kill|>",
+   "<|obj:kernel|>"
+  ],
+  "<|op:notebook.inspect.kernel|>": [
+   "<|fam:notebook|>",
+   "<|verb:inspect|>",
+   "<|obj:kernel|>"
+  ],
+  "<|op:notebook.reset.kernel|>": [
+   "<|fam:notebook|>",
+   "<|verb:reset|>",
+   "<|obj:kernel|>"
+  ],
+  "<|op:notebook.create.plot|>": [
+   "<|fam:notebook|>",
+   "<|verb:create|>",
+   "<|obj:plot|>"
+  ],
+  "<|op:notebook.render.plot|>": [
+   "<|fam:notebook|>",
+   "<|verb:render|>",
+   "<|obj:plot|>"
+  ],
+  "<|op:notebook.capture.plot|>": [
+   "<|fam:notebook|>",
+   "<|verb:capture|>",
+   "<|obj:plot|>"
+  ],
+  "<|op:notebook.explain.plot|>": [
+   "<|fam:notebook|>",
+   "<|verb:explain|>",
+   "<|obj:plot|>"
+  ],
+  "<|op:cal.create.calendar_event|>": [
+   "<|fam:cal|>",
+   "<|verb:create|>",
+   "<|obj:calendar_event|>"
+  ],
+  "<|op:cal.update.calendar_event|>": [
+   "<|fam:cal|>",
+   "<|verb:update|>",
+   "<|obj:calendar_event|>"
+  ],
+  "<|op:cal.delete.calendar_event|>": [
+   "<|fam:cal|>",
+   "<|verb:delete|>",
+   "<|obj:calendar_event|>"
+  ],
+  "<|op:cal.list.calendar_event|>": [
+   "<|fam:cal|>",
+   "<|verb:list|>",
+   "<|obj:calendar_event|>"
+  ],
+  "<|op:cal.inspect.calendar_event|>": [
+   "<|fam:cal|>",
+   "<|verb:inspect|>",
+   "<|obj:calendar_event|>"
+  ],
+  "<|op:cal.read.availability_window|>": [
+   "<|fam:cal|>",
+   "<|verb:read|>",
+   "<|obj:availability_window|>"
+  ],
+  "<|op:cal.search.availability_window|>": [
+   "<|fam:cal|>",
+   "<|verb:search|>",
+   "<|obj:availability_window|>"
+  ],
+  "<|op:cal.compare.availability_window|>": [
+   "<|fam:cal|>",
+   "<|verb:compare|>",
+   "<|obj:availability_window|>"
+  ],
+  "<|op:cal.schedule.meeting|>": [
+   "<|fam:cal|>",
+   "<|verb:schedule|>",
+   "<|obj:meeting|>"
+  ],
+  "<|op:cal.cancel.meeting|>": [
+   "<|fam:cal|>",
+   "<|verb:cancel|>",
+   "<|obj:meeting|>"
+  ],
+  "<|op:cal.summarize.meeting|>": [
+   "<|fam:cal|>",
+   "<|verb:summarize|>",
+   "<|obj:meeting|>"
+  ],
+  "<|op:cal.inspect.meeting|>": [
+   "<|fam:cal|>",
+   "<|verb:inspect|>",
+   "<|obj:meeting|>"
+  ],
+  "<|op:cal.create.agenda|>": [
+   "<|fam:cal|>",
+   "<|verb:create|>",
+   "<|obj:agenda|>"
+  ],
+  "<|op:cal.update.agenda|>": [
+   "<|fam:cal|>",
+   "<|verb:update|>",
+   "<|obj:agenda|>"
+  ],
+  "<|op:cal.prioritize.agenda|>": [
+   "<|fam:cal|>",
+   "<|verb:prioritize|>",
+   "<|obj:agenda|>"
+  ],
+  "<|op:cal.summarize.agenda|>": [
+   "<|fam:cal|>",
+   "<|verb:summarize|>",
+   "<|obj:agenda|>"
+  ],
+  "<|op:research.search.paper|>": [
+   "<|fam:research|>",
+   "<|verb:search|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.read.paper|>": [
+   "<|fam:research|>",
+   "<|verb:read|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.summarize.paper|>": [
+   "<|fam:research|>",
+   "<|verb:summarize|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.cite.paper|>": [
+   "<|fam:research|>",
+   "<|verb:cite|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.compare.paper|>": [
+   "<|fam:research|>",
+   "<|verb:compare|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.critique.paper|>": [
+   "<|fam:research|>",
+   "<|verb:critique|>",
+   "<|obj:paper|>"
+  ],
+  "<|op:research.create.literature_review|>": [
+   "<|fam:research|>",
+   "<|verb:create|>",
+   "<|obj:literature_review|>"
+  ],
+  "<|op:research.update.literature_review|>": [
+   "<|fam:research|>",
+   "<|verb:update|>",
+   "<|obj:literature_review|>"
+  ],
+  "<|op:research.summarize.literature_review|>": [
+   "<|fam:research|>",
+   "<|verb:summarize|>",
+   "<|obj:literature_review|>"
+  ],
+  "<|op:research.validate.literature_review|>": [
+   "<|fam:research|>",
+   "<|verb:validate|>",
+   "<|obj:literature_review|>"
+  ],
+  "<|op:research.read.benchmark_result|>": [
+   "<|fam:research|>",
+   "<|verb:read|>",
+   "<|obj:benchmark_result|>"
+  ],
+  "<|op:research.compare.benchmark_result|>": [
+   "<|fam:research|>",
+   "<|verb:compare|>",
+   "<|obj:benchmark_result|>"
+  ],
+  "<|op:research.verify.benchmark_result|>": [
+   "<|fam:research|>",
+   "<|verb:verify|>",
+   "<|obj:benchmark_result|>"
+  ],
+  "<|op:research.cite.benchmark_result|>": [
+   "<|fam:research|>",
+   "<|verb:cite|>",
+   "<|obj:benchmark_result|>"
+  ],
+  "<|op:research.create.research_question|>": [
+   "<|fam:research|>",
+   "<|verb:create|>",
+   "<|obj:research_question|>"
+  ],
+  "<|op:research.refine.research_question|>": [
+   "<|fam:research|>",
+   "<|verb:refine|>",
+   "<|obj:research_question|>"
+  ],
+  "<|op:research.decompose.research_question|>": [
+   "<|fam:research|>",
+   "<|verb:decompose|>",
+   "<|obj:research_question|>"
+  ],
+  "<|op:research.revise.research_question|>": [
+   "<|fam:research|>",
+   "<|verb:revise|>",
+   "<|obj:research_question|>"
+  ],
+  "<|op:research.create.finding|>": [
+   "<|fam:research|>",
+   "<|verb:create|>",
+   "<|obj:finding|>"
+  ],
+  "<|op:research.verify.finding|>": [
+   "<|fam:research|>",
+   "<|verb:verify|>",
+   "<|obj:finding|>"
+  ],
+  "<|op:research.cite.finding|>": [
+   "<|fam:research|>",
+   "<|verb:cite|>",
+   "<|obj:finding|>"
+  ],
+  "<|op:research.quantify.finding|>": [
+   "<|fam:research|>",
+   "<|verb:quantify|>",
+   "<|obj:finding|>"
+  ],
+  "<|op:research.question.finding|>": [
+   "<|fam:research|>",
+   "<|verb:question|>",
+   "<|obj:finding|>"
+  ],
+  "<|op:perf.profile.latency_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:profile|>",
+   "<|obj:latency_profile|>"
+  ],
+  "<|op:perf.compare.latency_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:compare|>",
+   "<|obj:latency_profile|>"
+  ],
+  "<|op:perf.explain.latency_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:explain|>",
+   "<|obj:latency_profile|>"
+  ],
+  "<|op:perf.profile.memory_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:profile|>",
+   "<|obj:memory_profile|>"
+  ],
+  "<|op:perf.compare.memory_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:compare|>",
+   "<|obj:memory_profile|>"
+  ],
+  "<|op:perf.explain.memory_profile|>": [
+   "<|fam:perf|>",
+   "<|verb:explain|>",
+   "<|obj:memory_profile|>"
+  ],
+  "<|op:perf.inspect.cache_layer|>": [
+   "<|fam:perf|>",
+   "<|verb:inspect|>",
+   "<|obj:cache_layer|>"
+  ],
+  "<|op:perf.update.cache_layer|>": [
+   "<|fam:perf|>",
+   "<|verb:update|>",
+   "<|obj:cache_layer|>"
+  ],
+  "<|op:perf.measure.cache_layer|>": [
+   "<|fam:perf|>",
+   "<|verb:measure|>",
+   "<|obj:cache_layer|>"
+  ],
+  "<|op:perf.reset.cache_layer|>": [
+   "<|fam:perf|>",
+   "<|verb:reset|>",
+   "<|obj:cache_layer|>"
+  ],
+  "<|op:perf.create.throughput_test|>": [
+   "<|fam:perf|>",
+   "<|verb:create|>",
+   "<|obj:throughput_test|>"
+  ],
+  "<|op:perf.invoke.throughput_test|>": [
+   "<|fam:perf|>",
+   "<|verb:invoke|>",
+   "<|obj:throughput_test|>"
+  ],
+  "<|op:perf.compare.throughput_test|>": [
+   "<|fam:perf|>",
+   "<|verb:compare|>",
+   "<|obj:throughput_test|>"
+  ],
+  "<|op:perf.profile.hot_path|>": [
+   "<|fam:perf|>",
+   "<|verb:profile|>",
+   "<|obj:hot_path|>"
+  ],
+  "<|op:perf.review.hot_path|>": [
+   "<|fam:perf|>",
+   "<|verb:review|>",
+   "<|obj:hot_path|>"
+  ],
+  "<|op:perf.benchmark.hot_path|>": [
+   "<|fam:perf|>",
+   "<|verb:benchmark|>",
+   "<|obj:hot_path|>"
+  ],
+  "<|op:perf.explain.hot_path|>": [
+   "<|fam:perf|>",
+   "<|verb:explain|>",
+   "<|obj:hot_path|>"
+  ],
+  "<|op:docw.create.doc_section|>": [
+   "<|fam:docw|>",
+   "<|verb:create|>",
+   "<|obj:doc_section|>"
+  ],
+  "<|op:docw.update.doc_section|>": [
+   "<|fam:docw|>",
+   "<|verb:update|>",
+   "<|obj:doc_section|>"
+  ],
+  "<|op:docw.review.doc_section|>": [
+   "<|fam:docw|>",
+   "<|verb:review|>",
+   "<|obj:doc_section|>"
+  ],
+  "<|op:docw.summarize.doc_section|>": [
+   "<|fam:docw|>",
+   "<|verb:summarize|>",
+   "<|obj:doc_section|>"
+  ],
+  "<|op:docw.cite.doc_section|>": [
+   "<|fam:docw|>",
+   "<|verb:cite|>",
+   "<|obj:doc_section|>"
+  ],
+  "<|op:docw.create.outline|>": [
+   "<|fam:docw|>",
+   "<|verb:create|>",
+   "<|obj:outline|>"
+  ],
+  "<|op:docw.refine.outline|>": [
+   "<|fam:docw|>",
+   "<|verb:refine|>",
+   "<|obj:outline|>"
+  ],
+  "<|op:docw.revise.outline|>": [
+   "<|fam:docw|>",
+   "<|verb:revise|>",
+   "<|obj:outline|>"
+  ],
+  "<|op:docw.validate.outline|>": [
+   "<|fam:docw|>",
+   "<|verb:validate|>",
+   "<|obj:outline|>"
+  ],
+  "<|op:docw.read.style_guide|>": [
+   "<|fam:docw|>",
+   "<|verb:read|>",
+   "<|obj:style_guide|>"
+  ],
+  "<|op:docw.enforce.style_guide|>": [
+   "<|fam:docw|>",
+   "<|verb:enforce|>",
+   "<|obj:style_guide|>"
+  ],
+  "<|op:docw.explain.style_guide|>": [
+   "<|fam:docw|>",
+   "<|verb:explain|>",
+   "<|obj:style_guide|>"
+  ],
+  "<|op:docw.create.figure|>": [
+   "<|fam:docw|>",
+   "<|verb:create|>",
+   "<|obj:figure|>"
+  ],
+  "<|op:docw.render.figure|>": [
+   "<|fam:docw|>",
+   "<|verb:render|>",
+   "<|obj:figure|>"
+  ],
+  "<|op:docw.validate.figure|>": [
+   "<|fam:docw|>",
+   "<|verb:validate|>",
+   "<|obj:figure|>"
+  ],
+  "<|op:docw.cite.figure|>": [
+   "<|fam:docw|>",
+   "<|verb:cite|>",
+   "<|obj:figure|>"
+  ],
+  "<|op:docw.create.bibliography|>": [
+   "<|fam:docw|>",
+   "<|verb:create|>",
+   "<|obj:bibliography|>"
+  ],
+  "<|op:docw.update.bibliography|>": [
+   "<|fam:docw|>",
+   "<|verb:update|>",
+   "<|obj:bibliography|>"
+  ],
+  "<|op:docw.validate.bibliography|>": [
+   "<|fam:docw|>",
+   "<|verb:validate|>",
+   "<|obj:bibliography|>"
+  ],
+  "<|op:pkg.read.lockfile|>": [
+   "<|fam:pkg|>",
+   "<|verb:read|>",
+   "<|obj:lockfile|>"
+  ],
+  "<|op:pkg.update.lockfile|>": [
+   "<|fam:pkg|>",
+   "<|verb:update|>",
+   "<|obj:lockfile|>"
+  ],
+  "<|op:pkg.diff.lockfile|>": [
+   "<|fam:pkg|>",
+   "<|verb:diff|>",
+   "<|obj:lockfile|>"
+  ],
+  "<|op:pkg.validate.lockfile|>": [
+   "<|fam:pkg|>",
+   "<|verb:validate|>",
+   "<|obj:lockfile|>"
+  ],
+  "<|op:pkg.inspect.package_version|>": [
+   "<|fam:pkg|>",
+   "<|verb:inspect|>",
+   "<|obj:package_version|>"
+  ],
+  "<|op:pkg.pin_version.package_version|>": [
+   "<|fam:pkg|>",
+   "<|verb:pin_version|>",
+   "<|obj:package_version|>"
+  ],
+  "<|op:pkg.upgrade.package_version|>": [
+   "<|fam:pkg|>",
+   "<|verb:upgrade|>",
+   "<|obj:package_version|>"
+  ],
+  "<|op:pkg.audit.package_version|>": [
+   "<|fam:pkg|>",
+   "<|verb:audit|>",
+   "<|obj:package_version|>"
+  ],
+  "<|op:pkg.search.registry|>": [
+   "<|fam:pkg|>",
+   "<|verb:search|>",
+   "<|obj:registry|>"
+  ],
+  "<|op:pkg.fetch.registry|>": [
+   "<|fam:pkg|>",
+   "<|verb:fetch|>",
+   "<|obj:registry|>"
+  ],
+  "<|op:pkg.inspect.registry|>": [
+   "<|fam:pkg|>",
+   "<|verb:inspect|>",
+   "<|obj:registry|>"
+  ],
+  "<|op:pkg.create.virtual_env|>": [
+   "<|fam:pkg|>",
+   "<|verb:create|>",
+   "<|obj:virtual_env|>"
+  ],
+  "<|op:pkg.delete.virtual_env|>": [
+   "<|fam:pkg|>",
+   "<|verb:delete|>",
+   "<|obj:virtual_env|>"
+  ],
+  "<|op:pkg.inspect.virtual_env|>": [
+   "<|fam:pkg|>",
+   "<|verb:inspect|>",
+   "<|obj:virtual_env|>"
+  ],
+  "<|op:pkg.reset.virtual_env|>": [
+   "<|fam:pkg|>",
+   "<|verb:reset|>",
+   "<|obj:virtual_env|>"
+  ],
+  "<|op:evalh.create.eval_case|>": [
+   "<|fam:evalh|>",
+   "<|verb:create|>",
+   "<|obj:eval_case|>"
+  ],
+  "<|op:evalh.update.eval_case|>": [
+   "<|fam:evalh|>",
+   "<|verb:update|>",
+   "<|obj:eval_case|>"
+  ],
+  "<|op:evalh.delete.eval_case|>": [
+   "<|fam:evalh|>",
+   "<|verb:delete|>",
+   "<|obj:eval_case|>"
+  ],
+  "<|op:evalh.validate.eval_case|>": [
+   "<|fam:evalh|>",
+   "<|verb:validate|>",
+   "<|obj:eval_case|>"
+  ],
+  "<|op:evalh.tag.eval_case|>": [
+   "<|fam:evalh|>",
+   "<|verb:tag|>",
+   "<|obj:eval_case|>"
+  ],
+  "<|op:evalh.create.eval_run|>": [
+   "<|fam:evalh|>",
+   "<|verb:create|>",
+   "<|obj:eval_run|>"
+  ],
+  "<|op:evalh.invoke.eval_run|>": [
+   "<|fam:evalh|>",
+   "<|verb:invoke|>",
+   "<|obj:eval_run|>"
+  ],
+  "<|op:evalh.inspect.eval_run|>": [
+   "<|fam:evalh|>",
+   "<|verb:inspect|>",
+   "<|obj:eval_run|>"
+  ],
+  "<|op:evalh.compare.eval_run|>": [
+   "<|fam:evalh|>",
+   "<|verb:compare|>",
+   "<|obj:eval_run|>"
+  ],
+  "<|op:evalh.replay.eval_run|>": [
+   "<|fam:evalh|>",
+   "<|verb:replay|>",
+   "<|obj:eval_run|>"
+  ],
+  "<|op:evalh.create.grader|>": [
+   "<|fam:evalh|>",
+   "<|verb:create|>",
+   "<|obj:grader|>"
+  ],
+  "<|op:evalh.calibrate.grader|>": [
+   "<|fam:evalh|>",
+   "<|verb:calibrate|>",
+   "<|obj:grader|>"
+  ],
+  "<|op:evalh.validate.grader|>": [
+   "<|fam:evalh|>",
+   "<|verb:validate|>",
+   "<|obj:grader|>"
+  ],
+  "<|op:evalh.explain.grader|>": [
+   "<|fam:evalh|>",
+   "<|verb:explain|>",
+   "<|obj:grader|>"
+  ],
+  "<|op:evalh.read.leaderboard|>": [
+   "<|fam:evalh|>",
+   "<|verb:read|>",
+   "<|obj:leaderboard|>"
+  ],
+  "<|op:evalh.update.leaderboard|>": [
+   "<|fam:evalh|>",
+   "<|verb:update|>",
+   "<|obj:leaderboard|>"
+  ],
+  "<|op:evalh.compare.leaderboard|>": [
+   "<|fam:evalh|>",
+   "<|verb:compare|>",
+   "<|obj:leaderboard|>"
   ]
  }
 }

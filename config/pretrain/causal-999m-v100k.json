@@ -1,7 +1,7 @@
 {
   "schema": "sys1-pretrain-recipe-v1",
   "objective": "causal-next-token-cross-entropy",
-  "description": "From-scratch decoder-only language-model pretraining; recipe used by the active Matrix run.",
+  "description": "Historical Matrix training recipe; early stopping remains disabled to match the original run.",
   "expected_parameters": 998562562,
   "training": {
     "preset": "sys1-999m-v100k",
@@ -20,6 +20,8 @@
     "eval-every": 200,
     "eval-seqs": 32,
     "log-every": 10,
-    "seed": 1234
+    "seed": 1234,
+    "early-stop-patience": 0,
+    "early-stop-min-delta": 0.01
   }
 }

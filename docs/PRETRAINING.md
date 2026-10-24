@@ -9,6 +9,11 @@ The versioned recipe is `config/pretrain/causal-999m-v100k.json`. It describes t
 998,562,562-parameter model with 46 layers, width 1,280, 20 query heads, five KV
 heads, a 3,840-wide SwiGLU, and a tied 100,352-token embedding table.
 
+For a new run, prefer `config/pretrain/causal-999m-v100k-validated.json`. It adds
+validation-based early stopping. The historical recipe explicitly disables
+early stopping to preserve the original Matrix run's behavior. Updating this
+repository does not install that guard into the already-running Matrix process.
+
 ## Data and tokenizer
 
 The recipe samples 50% English, 30% code, and 20% synthetic agent sequences.
@@ -60,7 +65,8 @@ python -m sys1.model.pretrain \
   --mix en=0.5,code=0.3,agent=0.2 \
   --seq 1024 --micro-batch 2 --accum 8 --steps 30000 \
   --lr 3e-4 --warmup 500 --precision bf16 \
-  --ckpt-every 200 --keep 3 --eval-every 200 --eval-seqs 32 --log-every 10
+  --ckpt-every 200 --keep 3 --eval-every 200 --eval-seqs 32 --log-every 10 \
+  --early-stop-patience 0
 ```
 
 This is 16,384 tokens per optimizer step and 491,520,000 planned tokens. Use a
@@ -74,6 +80,32 @@ Checkpoints contain model/optimizer state, the mixture cursor, Python/NumPy/Torc
 RNG state, architecture, and arguments. `--resume auto` uses the latest checkpoint.
 Exact replay requires identical code, tokenizer, corpus contents, and training
 configuration. Changing these invalidates that claim.
+
+## Avoiding overfitting in new runs
+
+The current trainer defaults to eight evaluations without more than 0.01
+cumulative improvement in mixture-weighted validation cross-entropy before
+stopping. Freeze those weights and thresholds in the run recipe. Training loss
+does not select the best checkpoint. Each source must have finite validation
+loss; enabled early stopping requires validation data for every mixture source.
+
+Every genuine validation minimum updates the `checkpoints/best` pointer. The
+best and newest recovery checkpoint both fit inside `--keep` (minimum two);
+there is no additional full-size best-weights copy. Periodic cleanup cannot
+delete the best checkpoint. A final-step evaluation can also select a new best.
+The best pointer is a candidate-selection record, not a serving promotion.
+
+Checkpoint state includes the validation best, patience counters, and stopping
+policy, bound to the fixed validation-token and tokenizer fingerprint. A resume
+cannot silently reset patience, change that policy, or compare scores from a
+different validation set. A legacy
+checkpoint without validation state starts a new validation history; upgrading
+the code is not exact replay of the old run. This mechanism uses validation data
+for model selection and does not establish performance on a separate final test.
+
+Use `--early-stop-patience 8 --early-stop-min-delta 0.01` for the guarded recipe.
+`--early-stop-patience 0` disables stopping while retaining best-checkpoint
+selection when complete validation data is available.
 
 Run the local CPU checks with:
 

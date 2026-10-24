@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import json
 import math
 import os
@@ -47,6 +48,7 @@ import torch.nn.functional as F
 from tokenizers import Tokenizer
 
 from sys1.model.model import PRESETS, Sys1Model, param_count
+from sys1.model.validation import ValidationGuard
 from sys1.paths import DATA, RUNS
 
 SOURCES = ("en", "code", "agent", "private")
@@ -478,21 +480,61 @@ def set_rng_state(st: dict, device):
         torch.mps.set_rng_state(st["mps"])
 
 
-def save_checkpoint(out: Path, step: int, model, opt, mix, args, precision, keep: int):
+def validation_fingerprint(heldout: dict, tokenizer_path: str) -> str:
+    digest = hashlib.sha256()
+    with open(tokenizer_path, "rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    for name, tensor in sorted(heldout.items()):
+        digest.update(json.dumps([name, list(tensor.shape) if tensor is not None else None]).encode())
+        if tensor is not None:
+            digest.update(str(tensor.dtype).encode())
+            digest.update(tensor.cpu().contiguous().numpy().tobytes())
+    return digest.hexdigest()
+
+
+def save_checkpoint(out: Path, step: int, model, opt, mix, args, precision, keep: int,
+                    validation=None, is_best: bool = False):
     ckdir = out / "checkpoints"
     ckdir.mkdir(parents=True, exist_ok=True)
     raw = getattr(model, "_orig_mod", model)
     blob = {"step": step, "model": raw.state_dict(), "optimizer": opt.state_dict(),
             "data": mix.state(), "rng": rng_state(next(raw.parameters()).device),
             "config": asdict(raw.cfg), "args": vars(args), "precision": precision}
+    if validation is not None:
+        blob["validation"] = validation.state()
     path = ckdir / f"step_{step:08d}.pt"
     tmp = path.with_suffix(".pt.tmp")
     torch.save(blob, tmp)
     os.replace(tmp, path)
     (ckdir / "latest.tmp").write_text(path.name)
     os.replace(ckdir / "latest.tmp", ckdir / "latest")
-    for old in sorted(ckdir.glob("step_*.pt"))[:-keep] if keep > 0 else []:
-        old.unlink()
+    if is_best:
+        (ckdir / "best.tmp").write_text(path.name)
+        os.replace(ckdir / "best.tmp", ckdir / "best")
+    if keep > 0:
+        # The best is part of the existing retention budget, not an extra
+        # full-size copy. Always retain the newest recovery checkpoint too.
+        protected = {path}
+        best = ckdir / "best"
+        if best.exists():
+            name = best.read_text().strip()
+            if name != Path(name).name or not name.startswith("step_") or not name.endswith(".pt"):
+                raise ValueError("invalid best-checkpoint pointer")
+            candidate = ckdir / name
+            if not candidate.is_file():
+                raise ValueError("best checkpoint is missing; refusing retention cleanup")
+            protected.add(candidate)
+        if len(protected) > keep:
+            raise ValueError("checkpoint budget must retain both best and latest")
+        all_checkpoints = sorted(ckdir.glob("step_*.pt"), reverse=True)
+        for candidate in all_checkpoints:
+            if len(protected) >= keep:
+                break
+            protected.add(candidate)
+        for old in all_checkpoints:
+            if old not in protected:
+                old.unlink()
     return path
 
 
@@ -557,11 +599,19 @@ def main(argv=None):
     ap.add_argument("--resume", default="auto", help="'auto' (latest in run dir), a path, or '' for fresh")
     ap.add_argument("--eval-every", type=int, default=250)
     ap.add_argument("--eval-seqs", type=int, default=32, help="heldout windows per source")
+    ap.add_argument("--early-stop-patience", type=int, default=8,
+                    help="evaluations without meaningful improvement; 0 disables stopping")
+    ap.add_argument("--early-stop-min-delta", type=float, default=0.01,
+                    help="minimum cumulative weighted validation-loss improvement")
     ap.add_argument("--log-every", type=int, default=10)
     ap.add_argument("--peak-tflops", type=float, default=0.0, help="device peak for MFU; auto on known CUDA GPUs")
     ap.add_argument("--seed", type=int, default=1234)
     ap.add_argument("--stop-after", type=int, default=0, help="exit after this many steps this invocation (testing)")
     args = ap.parse_args(argv)
+    if args.keep < 0 or args.keep == 1:
+        ap.error("--keep must be at least 2 (or 0 for unlimited) to retain best and latest")
+    if args.early_stop_patience and not args.eval_every:
+        ap.error("early stopping requires --eval-every; use --early-stop-patience 0 to disable it")
 
     device = pick_device(args.device)
     out = RUNS / "pretrain" / args.name
@@ -581,6 +631,11 @@ def main(argv=None):
     cfg = type(cfg)(**{**asdict(cfg), "vocab_size": tok.get_vocab_size(), "max_seq": max(cfg.max_seq, args.seq)})
     model = Sys1Model(cfg).to(device)
     mix, heldout, origin = build_data(args, tok, eos)
+    validation = ValidationGuard(dict(zip(mix.names, mix.weights)),
+                                 args.early_stop_patience, args.early_stop_min_delta,
+                                 validation_id=validation_fingerprint(heldout, args.tokenizer))
+    if args.early_stop_patience and any(heldout.get(name) is None for name in mix.names):
+        raise ValueError("early stopping requires validation data for every mixture source")
 
     resume_path = find_resume(out, args.resume)
     blob = torch.load(resume_path, map_location="cpu", weights_only=False) if resume_path else None
@@ -612,6 +667,8 @@ def main(argv=None):
         mix.load_state(blob["data"])
         set_rng_state(blob["rng"], device)
         step = blob["step"]
+        if "validation" in blob:
+            validation.load_state(blob["validation"])
         del blob
     train_model = torch.compile(model) if args.compile else model
 
@@ -631,6 +688,7 @@ def main(argv=None):
          "device": str(device), "precision": precision, "bf16_probe": probe, "preset": args.preset,
          "config": asdict(cfg), "params": pc["total"], "non_embedding": pc["non_embedding"],
          "sources": origin, "weights": dict(zip(mix.names, mix.weights)), "tokens_per_step": tokens_per_step,
+         "validation_policy": validation.policy(),
          "flops_per_token": fpt, "peak_flops": peak or None, "torch": torch.__version__})
 
     stop = {"flag": False}
@@ -644,6 +702,7 @@ def main(argv=None):
 
     train_model.train()
     t_last, tok_last, ran = time.time(), 0, 0
+    early_stopped, last_saved_step = False, step
     while step < args.steps and not stop["flag"]:
         lr = lr_at(step, args)
         for g in opt.param_groups:
@@ -675,22 +734,33 @@ def main(argv=None):
                 log({"event": "abort", "step": step, "reason": "non-finite loss"})
                 break
             t_last, tok_last = time.time(), 0
-        if args.eval_every and step % args.eval_every == 0:
-            log({"event": "eval", "step": step, "heldout_loss": evaluate(model, heldout, args, device, amp)})
+        is_best = False
+        if (args.eval_every and step % args.eval_every == 0) or step == args.steps:
+            losses = evaluate(model, heldout, args, device, amp)
+            decision = None
+            if validation.weights.keys() <= losses.keys():
+                decision = validation.observe(step, losses)
+                is_best, early_stopped = decision["improved"], decision["should_stop"]
+            log({"event": "eval", "step": step, "heldout_loss": losses, "validation": decision})
             t_last, tok_last = time.time(), 0
-        if args.ckpt_every and step % args.ckpt_every == 0:
-            p = save_checkpoint(out, step, model, opt, mix, args, precision, args.keep)
-            log({"event": "checkpoint", "step": step, "path": str(p)})
+        if is_best or early_stopped or step == args.steps or (args.ckpt_every and step % args.ckpt_every == 0):
+            p = save_checkpoint(out, step, model, opt, mix, args, precision, args.keep,
+                                validation=validation, is_best=is_best)
+            last_saved_step = step
+            log({"event": "checkpoint", "step": step, "path": str(p), "best": is_best})
             t_last, tok_last = time.time(), 0
+        if early_stopped:
+            log({"event": "early_stopped", "step": step, "best_step": validation.best_step,
+                 "best_score": validation.best_score, "bad_evaluations": validation.bad_evaluations})
+            break
         if args.stop_after and ran >= args.stop_after:
             break
 
-    if stop["flag"] or (args.ckpt_every and step % args.ckpt_every):
-        p = save_checkpoint(out, step, model, opt, mix, args, precision, args.keep)
+    if last_saved_step != step:
+        p = save_checkpoint(out, step, model, opt, mix, args, precision, args.keep,
+                            validation=validation)
         log({"event": "checkpoint", "step": step, "path": str(p)})
-    if step >= args.steps:
-        if not (args.eval_every and step % args.eval_every == 0):
-            log({"event": "eval", "step": step, "heldout_loss": evaluate(model, heldout, args, device, amp)})
+    if step >= args.steps and not early_stopped:
         log({"event": "done", "step": step})
     log_f.close()
 

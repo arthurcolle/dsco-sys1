@@ -14,6 +14,7 @@ from tokenizers import Tokenizer, models, pre_tokenizers
 
 from sys1.model import pretrain as pt
 from sys1.model.model import PRESETS, Sys1Config, Sys1Model, param_count
+from sys1.model.validation import ValidationGuard
 
 
 @pytest.fixture(autouse=True)
@@ -96,6 +97,19 @@ def test_training_excludes_holdout_and_evaluation_is_fixed(tmp_path):
         assert bool(torch.isin(held[name], torch.tensor([6, 7])).any())
 
 
+def test_validation_fingerprint_binds_tokens_and_tokenizer(tmp_path):
+    tok = tmp_path / "tokenizer.json"
+    tokenizer().save(str(tok))
+    held = {"en": torch.tensor([[2, 3, 4]])}
+    first = pt.validation_fingerprint(held, str(tok))
+    assert first == pt.validation_fingerprint(held, str(tok))
+    held["en"][0, 0] = 5
+    assert first != pt.validation_fingerprint(held, str(tok))
+    second = pt.validation_fingerprint(held, str(tok))
+    tok.write_text(tok.read_text() + "\n")
+    assert second != pt.validation_fingerprint(held, str(tok))
+
+
 def test_mixture_restores_the_exact_next_batches(tmp_path):
     corpus(tmp_path)
     args, tok = data_args(tmp_path), tokenizer()
@@ -143,8 +157,87 @@ def test_full_training_resume_matches_uninterrupted_run(tmp_path, monkeypatch):
     a, b = final_states
     assert a["step"] == b["step"] == 6
     assert a["data"]["drawn"] == b["data"]["drawn"]
+    assert a["validation"] == b["validation"]
     for key in a["model"]:
         torch.testing.assert_close(a["model"][key], b["model"][key], rtol=0, atol=0)
+
+
+def test_checkpoint_budget_retains_old_best_and_latest(tmp_path):
+    data = tmp_path / "corpus"
+    corpus(data)
+    mix, _, _ = pt.build_data(data_args(data), tokenizer(), 1)
+    model = Sys1Model(tiny_cfg())
+    optimizer = torch.optim.AdamW(model.parameters())
+    guard = ValidationGuard({"en": 0.5, "code": 0.5})
+    out = tmp_path / "run"
+    for step, loss in [(2, 2.0), (4, 2.1), (6, 2.2)]:
+        decision = guard.observe(step, {"en": loss, "code": loss})
+        pt.save_checkpoint(out, step, model, optimizer, mix, SimpleNamespace(), "fp32", 2,
+                           validation=guard, is_best=decision["improved"])
+    ckdir = out / "checkpoints"
+    assert sorted(p.name for p in ckdir.glob("step_*.pt")) == ["step_00000002.pt", "step_00000006.pt"]
+    assert (ckdir / "best").read_text() == "step_00000002.pt"
+    assert (ckdir / "latest").read_text() == "step_00000006.pt"
+    state = torch.load(ckdir / "step_00000006.pt", map_location="cpu", weights_only=False)
+    assert state["validation"]["bad_evaluations"] == 2
+
+
+def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkeypatch):
+    data = tmp_path / "corpus"
+    corpus(data)
+    tok = tmp_path / "tokenizer.json"
+    tokenizer().save(str(tok))
+    monkeypatch.setitem(PRESETS, "test-causal", tiny_cfg())
+    monkeypatch.setattr(pt, "RUNS", tmp_path / "runs")
+    values = iter([2.0, 2.2, 2.4])
+    def worsening(*_):
+        value = next(values)
+        return {"en": value, "code": value}
+    monkeypatch.setattr(pt, "evaluate", worsening)
+    previous_handler = signal.getsignal(signal.SIGTERM)
+    try:
+        pt.main(["--name", "guarded", "--preset", "test-causal", "--tokenizer", str(tok),
+                 "--corpus", str(data), "--mix", "en=0.5,code=0.5", "--seq", "8",
+                 "--micro-batch", "2", "--steps", "20", "--device", "cpu", "--precision", "fp32",
+                 "--eval-every", "2", "--eval-seqs", "4", "--ckpt-every", "2", "--keep", "2",
+                 "--early-stop-patience", "2", "--log-every", "1"])
+    finally:
+        signal.signal(signal.SIGTERM, previous_handler)
+    out = tmp_path / "runs/pretrain/guarded"
+    rows = [json.loads(line) for line in (out / "log.jsonl").read_text().splitlines()]
+    assert rows[-1]["event"] == "early_stopped"
+    assert rows[-1]["step"] == 6
+    assert rows[-1]["best_step"] == 2
+    assert not any(r["event"] == "done" for r in rows)
+    assert (out / "checkpoints/best").read_text() == "step_00000002.pt"
+    assert (out / "checkpoints/step_00000002.pt").is_file()
+
+
+def test_final_step_validation_selects_a_new_best(tmp_path, monkeypatch):
+    data = tmp_path / "corpus"
+    corpus(data)
+    tok = tmp_path / "tokenizer.json"
+    tokenizer().save(str(tok))
+    monkeypatch.setitem(PRESETS, "test-causal", tiny_cfg())
+    monkeypatch.setattr(pt, "RUNS", tmp_path / "runs")
+    values = iter([2.0, 1.0])
+    def improving(*_):
+        value = next(values)
+        return {"en": value, "code": value}
+    monkeypatch.setattr(pt, "evaluate", improving)
+    previous_handler = signal.getsignal(signal.SIGTERM)
+    try:
+        pt.main(["--name", "final-best", "--preset", "test-causal", "--tokenizer", str(tok),
+                 "--corpus", str(data), "--mix", "en=0.5,code=0.5", "--seq", "8",
+                 "--micro-batch", "2", "--steps", "5", "--device", "cpu", "--precision", "fp32",
+                 "--eval-every", "4", "--eval-seqs", "4", "--ckpt-every", "4", "--keep", "2"])
+    finally:
+        signal.signal(signal.SIGTERM, previous_handler)
+    out = tmp_path / "runs/pretrain/final-best"
+    assert (out / "checkpoints/best").read_text() == "step_00000005.pt"
+    saved = torch.load(out / "checkpoints/step_00000005.pt", map_location="cpu", weights_only=False)
+    assert saved["validation"]["best_step"] == 5
+    assert saved["validation"]["best_score"] == 1.0
 
 
 def test_live_100k_presets_match_recorded_parameter_counts():

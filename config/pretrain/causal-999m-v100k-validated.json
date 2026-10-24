@@ -1,7 +1,7 @@
 {
   "schema": "sys1-pretrain-recipe-v1",
   "objective": "causal-next-token-cross-entropy",
-  "description": "For new runs: causal-LM pretraining with fixed-validation best-checkpoint retention and early stopping.",
+  "description": "For new runs: full-pass reservoir validation, bounded best-checkpoint retention, global and per-domain early stopping.",
   "expected_parameters": 998562562,
   "training": {
     "preset": "sys1-999m-v100k",
@@ -18,10 +18,13 @@
     "ckpt-every": 200,
     "keep": 3,
     "eval-every": 200,
-    "eval-seqs": 32,
+    "eval-seqs": 256,
     "log-every": 10,
     "seed": 1234,
     "early-stop-patience": 8,
-    "early-stop-min-delta": 0.01
+    "early-stop-min-delta": 0.01,
+    "validation-sampling": "reservoir",
+    "max-domain-regression": 0.15,
+    "domain-regression-patience": 4
   }
 }

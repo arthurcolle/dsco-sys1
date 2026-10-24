@@ -6,6 +6,7 @@ import argparse
 import datetime as dt
 import fcntl
 import hashlib
+import inspect
 import json
 import os
 import subprocess
@@ -13,6 +14,8 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from sys1.model.diagnostics import diagnose_training
 REMOTE_PROBE = r'''
 import hashlib,json,pathlib
 root=pathlib.Path.home()/"dsco-sys1"
@@ -32,8 +35,50 @@ for p in sorted(set(paths)):
  with p.open("rb") as f:
   for b in iter(lambda:f.read(65536),b""):h.update(b)
  files[rel]={"sha256":h.hexdigest(),"bytes":size};total+=size
-print(json.dumps({"files":files,"skipped":skipped,"bytes_hashed":total}))
+payload={"files":files,"skipped":skipped,"bytes_hashed":total}
 '''
+
+
+def remote_probe(run_name: str, trainer_pid: int | None = None) -> str:
+    import re
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,100}", run_name):
+        raise ValueError("invalid training run name")
+    if trainer_pid is not None and (type(trainer_pid) is not int or not 0 < trainer_pid < 2**31):
+        raise ValueError("invalid trainer PID")
+    trailer = '''
+import time,subprocess
+run=root/"runs/pretrain"/RUN_NAME
+log=run/"log.jsonl"
+try:
+ if not log.is_file() or log.is_symlink():raise ValueError("training_log_missing")
+ if log.stat().st_size>8*1024**2:raise ValueError("training_log_too_large")
+ raw=log.read_bytes();lines=raw.splitlines();rows=[];malformed=0
+ for index,line in enumerate(lines):
+  try:rows.append(json.loads(line))
+  except ValueError:
+   if index<len(lines)-1 or raw.endswith(b"\\n"):malformed+=1
+ retained=[]
+ for p in (run/"checkpoints").glob("step_*.pt"):
+  try:retained.append(int(p.stem.split("_")[1]))
+  except ValueError:pass
+ payload["training"]=diagnose_training(rows,retained,time.time())
+ if malformed:payload["training"]["alerts"].append("malformed_training_log")
+ legacy="b97bdd945cdd18e1f20bf7358b868542be097ea88df2872ba4197593351a7b12"
+ if files.get("sys1/model/pretrain.py",{}).get("sha256")==legacy:
+  payload["training"]["sampling"]="legacy_prefix"
+  payload["training"]["alerts"].append("legacy_prefix_validation_requires_coverage_review")
+ if TRAINER_PID is not None:
+  process=subprocess.run(["ps","-p",str(TRAINER_PID),"-o","pid=,lstart=,state=,time="],capture_output=True,text=True,timeout=5)
+  payload["training"]["registered_pid"]=TRAINER_PID
+  payload["training"]["registered_pid_present"]=process.returncode==0
+  payload["training"]["process_metadata"]=process.stdout.strip()
+  if process.returncode and payload["training"]["status"] not in ["completed","early_stopped"]:
+   payload["training"]["alerts"].append("registered_trainer_process_missing")
+except (OSError,ValueError,KeyError,TypeError,AttributeError) as error:
+ payload["training"]={"status":"unavailable","alerts":["training_diagnostics_unavailable"],"automatic_intervention":False}
+print(json.dumps(payload))
+'''
+    return REMOTE_PROBE + "\n" + inspect.getsource(diagnose_training) + "\nRUN_NAME=" + repr(run_name) + "\nTRAINER_PID=" + repr(trainer_pid) + "\n" + trailer
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -81,8 +126,16 @@ def git_state(repo: Path, update: bool) -> dict:
 def matrix_inventory(repo: Path) -> dict:
     sys.path.insert(0, str(repo.parent / "fleet-mesh"))
     import fleet_exec
+    config = read_json(repo / "runs/source-sync/watch-config.json")
+    run_name = config.get("training_run", "sys1-999m-v100k-run1")
+    import re
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,100}", run_name):
+        raise ValueError("invalid training run name")
+    manifest = read_json(repo / "runs/pretrain" / run_name / "run-manifest.json")
+    pid = config.get("trainer_pid", manifest.get("live_observation", {}).get("pid"))
+    source = remote_probe(run_name, pid)
     result = fleet_exec.run_fanout(
-        ["/usr/bin/python3", "-c", REMOTE_PROBE], nodes=fleet_exec.select_fleet_nodes(["matrix"]),
+        ["/usr/bin/python3", "-c", source], nodes=fleet_exec.select_fleet_nodes(["matrix"]),
         timeout=12, idempotent=True, max_attempts=2,
     )
     row = result["results"][0]
@@ -123,12 +176,16 @@ def check(repo: Path, state: Path, *, update: bool = False, accept_baseline: boo
         else:
             record["matrix"] = compare(baseline, inventory)
             record["matrix"]["source_files"] = len(inventory["files"])
+        if "training" in inventory:
+            record["training"] = inventory["training"]
     except (RuntimeError, ValueError, OSError) as error:
         record["matrix_error"] = str(error) if isinstance(error, RuntimeError) else type(error).__name__
     changes = record.get("matrix", {})
     source_drift = any(changes.get(key) for key in ("added", "removed", "changed", "skipped"))
     git_drift = bool(record.get("git", {}).get("behind") or record.get("git", {}).get("ahead"))
-    record["needs_review"] = source_drift or git_drift or "git_error" in record or "matrix_error" in record
+    source_review = source_drift or git_drift or "git_error" in record or "matrix_error" in record
+    record["source_status"] = "needs_review" if source_review else "current"
+    record["needs_review"] = source_review or bool(record.get("training", {}).get("alerts"))
     record["status"] = "needs_review" if record["needs_review"] else "current"
     atomic_json(state / "latest.json", record)
     return record
@@ -137,10 +194,12 @@ def check(repo: Path, state: Path, *, update: bool = False, accept_baseline: boo
 def notify_once(state: Path, record: dict) -> None:
     signal = {key: record.get(key) for key in ("status", "matrix", "matrix_error", "git_error")}
     signal["git_drift"] = {key: record.get("git", {}).get(key) for key in ("ahead", "behind")}
+    signal["training_alerts"] = sorted(record.get("training", {}).get("alerts", []))
+    signal["training_status"] = record.get("training", {}).get("status")
     signature = hashlib.sha256(json.dumps(signal, sort_keys=True).encode()).hexdigest()
     previous = read_json(state / "notification.json")
     if record["needs_review"] and previous.get("signature") != signature:
-        subprocess.run(["/usr/bin/osascript", "-e", 'display notification "Source or Git drift needs review. See dsco-sys1/runs/source-sync/latest.json." with title "DSCO System One"'],
+        subprocess.run(["/usr/bin/osascript", "-e", 'display notification "Source or training quality needs review. See dsco-sys1/runs/source-sync/latest.json." with title "DSCO System One"'],
                        capture_output=True, timeout=5, check=False)
     atomic_json(state / "notification.json", {"signature": signature})
 

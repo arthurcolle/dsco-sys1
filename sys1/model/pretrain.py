@@ -121,8 +121,9 @@ class DocReader:
     Cursor = (epoch, file index, position). Position is a byte offset for plain
     files and a line count for gzip files (not cheaply seekable)."""
 
-    def __init__(self, files: list[Path], txt_sep: str, episode_filter=None):
+    def __init__(self, files: list[Path], txt_sep: str, episode_filter=None, repeat: bool = True):
         self.files, self.txt_sep, self.episode_filter = files, txt_sep, episode_filter
+        self.repeat = repeat
         self.epoch, self.fi, self.pos = 0, 0, 0
         self._fh, self._gz = None, False
         self.kinds = [None if episode_filter else _shard_kind(f, txt_sep) for f in files]
@@ -177,6 +178,8 @@ class DocReader:
             self.fi, self.epoch = 0, self.epoch + 1
 
     def next_doc(self) -> str:
+        if not self.repeat and self.epoch:
+            raise StopIteration
         empty_files = 0
         while True:
             self._ensure_open()
@@ -241,6 +244,8 @@ class DocReader:
 
     def _eof(self, empty_files: int) -> int:
         self._advance_file()
+        if not self.repeat and self.epoch:
+            raise StopIteration
         if empty_files > 2 * len(self.files):
             raise RuntimeError(f"no documents in {[str(f) for f in self.files]}")
         return empty_files + 1
@@ -312,17 +317,73 @@ def _episode_heldout(ep: dict) -> bool:
     return zlib.crc32(str(ep.get("session", "")).encode()) % EPISODE_HELDOUT_MOD == 0
 
 
-def heldout_windows(paths: list[Path] | None, episodes: Path | None, tok, eos, window, n: int, txt_sep: str):
-    """First n packed windows of a source's heldout set (deterministic)."""
+def heldout_windows(paths: list[Path] | None, episodes: Path | None, tok, eos, window, n: int,
+                    txt_sep: str, sampling: str = "prefix", seed: int = 0, metadata=None):
+    """Deterministic prefix or uniform reservoir over one complete held-out pass."""
+    if sampling not in {"prefix", "reservoir"} or n < 1 or window < 2:
+        raise ValueError("invalid validation sampling configuration")
     if paths:
-        reader = DocReader(paths, txt_sep)
+        reader = DocReader(paths, txt_sep, repeat=sampling == "prefix")
     else:
-        reader = DocReader([episodes], txt_sep, episode_filter=_episode_heldout)
+        reader = DocReader([episodes], txt_sep, episode_filter=_episode_heldout,
+                           repeat=sampling == "prefix")
+    if sampling == "reservoir":
+        rng, reservoir, indices, buf = random.Random(seed), [], [], []
+        seen, documents, batch, chars = 0, 0, [], 0
+
+        def consume(docs):
+            nonlocal seen, buf
+            for encoded in tok.encode_batch(docs, add_special_tokens=False):
+                buf.extend(encoded.ids)
+                buf.append(eos)
+                cursor = 0
+                while cursor + window <= len(buf):
+                    index = seen
+                    seen += 1
+                    slot = index if index < n else rng.randrange(seen)
+                    if slot < n:
+                        value = buf[cursor:cursor + window]
+                        if len(reservoir) < n:
+                            reservoir.append(value)
+                            indices.append(index)
+                        else:
+                            reservoir[slot], indices[slot] = value, index
+                    cursor += window
+                buf = buf[cursor:]
+
+        try:
+            while True:
+                try:
+                    doc = reader.next_doc()
+                except StopIteration:
+                    break
+                if len(doc) > MAX_DOC_CHARS:
+                    raise ValueError("held-out document exceeds the 1 MiB validation limit")
+                batch.append(doc)
+                documents += 1
+                chars += len(doc)
+                if len(batch) >= ENCODE_BATCH or chars >= 8 * 1024**2:
+                    consume(batch)
+                    batch, chars = [], 0
+            if batch:
+                consume(batch)
+        finally:
+            reader.close()
+        ordered = sorted(zip(indices, reservoir))
+        if metadata is not None:
+            metadata.update(method=sampling, seed=seed, documents=documents,
+                            total_windows=seen, sampled_windows=len(ordered),
+                            selected_window_indices=[index for index, _ in ordered],
+                            complete_pass=True, tail_tokens=len(buf))
+        return torch.tensor([value for _, value in ordered], dtype=torch.long) if ordered else None
     src = PackedSource("heldout", reader, tok, eos, window)
     out = []
     while len(out) < n and reader.epoch == 0:
         out.append(src.next_window())
     reader.close()
+    if metadata is not None:
+        metadata.update(method="prefix", sampled_windows=len(out), complete_pass=False,
+                        selected_window_indices=list(range(len(out))))
     return torch.tensor(out, dtype=torch.long) if out else None
 
 
@@ -342,9 +403,14 @@ def build_data(args, tok, eos):
             continue
         reader = DocReader(files, args.txt_sep)
         sources[name] = PackedSource(name, reader, tok, eos, window)
-        heldout[name] = heldout_windows(held, None, tok, eos, window, args.eval_seqs, args.txt_sep) if held else None
+        validation_info = {}
+        heldout[name] = heldout_windows(
+            held, None, tok, eos, window, args.eval_seqs, args.txt_sep,
+            sampling=getattr(args, "validation_sampling", "prefix"),
+            seed=args.seed + zlib.crc32(name.encode()), metadata=validation_info) if held else None
         origin[name] = {"shards": len(files), "bytes": sum(p.stat().st_size for p in files),
-                        "layouts": sorted(set(reader.kinds)), "heldout": [str(p) for p in held] or None}
+                        "layouts": sorted(set(reader.kinds)), "heldout": [str(p) for p in held] or None,
+                        "validation_sampling": validation_info}
     if not sources:
         episodes = Path(args.episodes)
         if not episodes.exists():
@@ -353,8 +419,13 @@ def build_data(args, tok, eos):
         weights = {name: 1.0}
         reader = DocReader([episodes], args.txt_sep, episode_filter=lambda ep: not _episode_heldout(ep))
         sources[name] = PackedSource(name, reader, tok, eos, window)
-        heldout[name] = heldout_windows(None, episodes, tok, eos, window, args.eval_seqs, args.txt_sep)
-        origin[name] = {"fallback": str(episodes), "heldout": f"crc32(session) % {EPISODE_HELDOUT_MOD} == 0"}
+        validation_info = {}
+        heldout[name] = heldout_windows(
+            None, episodes, tok, eos, window, args.eval_seqs, args.txt_sep,
+            sampling=getattr(args, "validation_sampling", "prefix"),
+            seed=args.seed + zlib.crc32(name.encode()), metadata=validation_info)
+        origin[name] = {"fallback": str(episodes), "heldout": f"crc32(session) % {EPISODE_HELDOUT_MOD} == 0",
+                        "validation_sampling": validation_info}
     mix = Mixture(sources, weights, args.seed)
     return mix, heldout, origin
 
@@ -599,10 +670,15 @@ def main(argv=None):
     ap.add_argument("--resume", default="auto", help="'auto' (latest in run dir), a path, or '' for fresh")
     ap.add_argument("--eval-every", type=int, default=250)
     ap.add_argument("--eval-seqs", type=int, default=32, help="heldout windows per source")
+    ap.add_argument("--validation-sampling", choices=["prefix", "reservoir"], default="reservoir",
+                    help="reservoir samples fixed windows across a full held-out pass")
     ap.add_argument("--early-stop-patience", type=int, default=8,
                     help="evaluations without meaningful improvement; 0 disables stopping")
     ap.add_argument("--early-stop-min-delta", type=float, default=0.01,
                     help="minimum cumulative weighted validation-loss improvement")
+    ap.add_argument("--max-domain-regression", type=float, default=0.0,
+                    help="relative loss increase over any source's best; 0 disables this guard")
+    ap.add_argument("--domain-regression-patience", type=int, default=4)
     ap.add_argument("--log-every", type=int, default=10)
     ap.add_argument("--peak-tflops", type=float, default=0.0, help="device peak for MFU; auto on known CUDA GPUs")
     ap.add_argument("--seed", type=int, default=1234)
@@ -610,7 +686,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
     if args.keep < 0 or args.keep == 1:
         ap.error("--keep must be at least 2 (or 0 for unlimited) to retain best and latest")
-    if args.early_stop_patience and not args.eval_every:
+    if (args.early_stop_patience or args.max_domain_regression) and not args.eval_every:
         ap.error("early stopping requires --eval-every; use --early-stop-patience 0 to disable it")
 
     device = pick_device(args.device)
@@ -633,8 +709,10 @@ def main(argv=None):
     mix, heldout, origin = build_data(args, tok, eos)
     validation = ValidationGuard(dict(zip(mix.names, mix.weights)),
                                  args.early_stop_patience, args.early_stop_min_delta,
-                                 validation_id=validation_fingerprint(heldout, args.tokenizer))
-    if args.early_stop_patience and any(heldout.get(name) is None for name in mix.names):
+                                 validation_id=validation_fingerprint(heldout, args.tokenizer),
+                                 max_domain_regression=args.max_domain_regression or None,
+                                 domain_patience=args.domain_regression_patience)
+    if validation.enabled and any(heldout.get(name) is None for name in mix.names):
         raise ValueError("early stopping requires validation data for every mixture source")
 
     resume_path = find_resume(out, args.resume)
@@ -668,7 +746,7 @@ def main(argv=None):
         set_rng_state(blob["rng"], device)
         step = blob["step"]
         if "validation" in blob:
-            validation.load_state(blob["validation"])
+            validation.load_state(blob["validation"], step_hint=step)
         del blob
     train_model = torch.compile(model) if args.compile else model
 
@@ -690,6 +768,13 @@ def main(argv=None):
          "sources": origin, "weights": dict(zip(mix.names, mix.weights)), "tokens_per_step": tokens_per_step,
          "validation_policy": validation.policy(),
          "flops_per_token": fpt, "peak_flops": peak or None, "torch": torch.__version__})
+
+    if validation.should_stop:
+        log({"event": "early_stopped", "step": step, "best_step": validation.best_step,
+             "best_score": validation.best_score, "stop_reason": validation.stop_reason,
+             "resumed_terminal_guard": True})
+        log_f.close()
+        return
 
     stop = {"flag": False}
     signal.signal(signal.SIGTERM, lambda *_: stop.update(flag=True))
@@ -751,7 +836,8 @@ def main(argv=None):
             t_last, tok_last = time.time(), 0
         if early_stopped:
             log({"event": "early_stopped", "step": step, "best_step": validation.best_step,
-                 "best_score": validation.best_score, "bad_evaluations": validation.bad_evaluations})
+                 "best_score": validation.best_score, "bad_evaluations": validation.bad_evaluations,
+                 "stop_reason": validation.stop_reason})
             break
         if args.stop_after and ran >= args.stop_after:
             break

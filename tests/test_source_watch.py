@@ -99,3 +99,52 @@ def test_unreachable_matrix_is_not_reported_current(watch, repositories, tmp_pat
     result = watch.check(checkout, tmp_path / "state", probe=unavailable)
     assert result["needs_review"] is True
     assert result["matrix_error"] == "matrix_unreachable"
+
+
+def test_training_alert_does_not_masquerade_as_source_drift(watch, repositories, tmp_path):
+    _, checkout = repositories
+    state = tmp_path / "state"
+    inventory = {"files": {"sys1/model/pretrain.py": {"sha256": "a", "bytes": 10}}, "skipped": [],
+                 "training": {"status": "possible_overfitting", "alerts": ["possible_overfitting"]}}
+    report = watch.check(checkout, state, accept_baseline=True, probe=lambda _: inventory)
+    assert report["source_status"] == "current"
+    assert report["needs_review"] is True
+    assert report["matrix"]["changed"] == []
+    assert report["training"]["status"] == "possible_overfitting"
+
+
+def test_remote_probe_exports_only_aggregates_and_does_not_write_training_files(watch, tmp_path, monkeypatch, capsys):
+    from test_training_diagnostics import history
+    root = tmp_path / "dsco-sys1"
+    (root / "sys1/model").mkdir(parents=True)
+    code = root / "sys1/model/pretrain.py"
+    code.write_text("# source fixture\n")
+    run = root / "runs/pretrain/demo"
+    (run / "checkpoints").mkdir(parents=True)
+    log = run / "log.jsonl"
+    log.write_text("".join(json.dumps(row) + "\n" for row in history()))
+    checkpoint = run / "checkpoints/step_00000010.pt"
+    checkpoint.write_bytes(b"unchanged-checkpoint")
+    before = (code.read_bytes(), log.read_bytes(), checkpoint.read_bytes())
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
+    exec(compile(watch.remote_probe("demo"), "<read-only-probe>", "exec"), {})
+    output = capsys.readouterr().out
+    report = json.loads(output)
+    assert report["training"]["best_validation"]["step"] == 10
+    assert "PRIVATE_EXAMPLE" not in output
+    assert before == (code.read_bytes(), log.read_bytes(), checkpoint.read_bytes())
+    with pytest.raises(ValueError):
+        watch.remote_probe("../other")
+
+
+def test_notification_does_not_repeat_for_every_new_training_step(watch, tmp_path, monkeypatch):
+    import copy
+    calls = []
+    monkeypatch.setattr(watch.subprocess, "run", lambda *a, **k: calls.append(a))
+    record = {"status": "needs_review", "needs_review": True, "git": {"ahead": 0, "behind": 0},
+              "matrix": {}, "training": {"status": "improving", "alerts": ["lost_best"], "step": 10}}
+    watch.notify_once(tmp_path, record)
+    later = copy.deepcopy(record)
+    later["training"]["step"] = 20
+    watch.notify_once(tmp_path, later)
+    assert len(calls) == 1

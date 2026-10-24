@@ -22,6 +22,8 @@
     "log-every": 10,
     "seed": 1234,
     "early-stop-patience": 0,
-    "early-stop-min-delta": 0.01
+    "early-stop-min-delta": 0.01,
+    "validation-sampling": "prefix",
+    "max-domain-regression": 0.0
   }
 }

@@ -194,20 +194,26 @@ def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkey
         value = next(values)
         return {"en": value, "code": value}
     monkeypatch.setattr(pt, "evaluate", worsening)
+    argv = ["--name", "guarded", "--preset", "test-causal", "--tokenizer", str(tok),
+            "--corpus", str(data), "--mix", "en=0.5,code=0.5", "--seq", "8",
+            "--micro-batch", "2", "--steps", "20", "--device", "cpu", "--precision", "fp32",
+            "--eval-every", "2", "--eval-seqs", "4", "--ckpt-every", "2", "--keep", "2",
+            "--early-stop-patience", "2", "--log-every", "1"]
+    out = tmp_path / "runs/pretrain/guarded"
     previous_handler = signal.getsignal(signal.SIGTERM)
     try:
-        pt.main(["--name", "guarded", "--preset", "test-causal", "--tokenizer", str(tok),
-                 "--corpus", str(data), "--mix", "en=0.5,code=0.5", "--seq", "8",
-                 "--micro-batch", "2", "--steps", "20", "--device", "cpu", "--precision", "fp32",
-                 "--eval-every", "2", "--eval-seqs", "4", "--ckpt-every", "2", "--keep", "2",
-                 "--early-stop-patience", "2", "--log-every", "1"])
+        pt.main(argv)
+        saved = (out / "checkpoints/step_00000006.pt").read_bytes()
+        pt.main(argv)
+        assert saved == (out / "checkpoints/step_00000006.pt").read_bytes()
     finally:
         signal.signal(signal.SIGTERM, previous_handler)
-    out = tmp_path / "runs/pretrain/guarded"
     rows = [json.loads(line) for line in (out / "log.jsonl").read_text().splitlines()]
     assert rows[-1]["event"] == "early_stopped"
     assert rows[-1]["step"] == 6
     assert rows[-1]["best_step"] == 2
+    assert rows[-1]["resumed_terminal_guard"] is True
+    assert sum(row["event"] == "train" for row in rows) == 6
     assert not any(r["event"] == "done" for r in rows)
     assert (out / "checkpoints/best").read_text() == "step_00000002.pt"
     assert (out / "checkpoints/step_00000002.pt").is_file()

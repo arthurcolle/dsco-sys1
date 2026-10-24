@@ -43,3 +43,9 @@ publish arbitrary remote code or reset the deployment baseline.
 
 The private status is `runs/source-sync/latest.json`; the macOS LaunchAgent
 checks every 15 minutes while the coordinator is awake and connected.
+
+The watcher also reports aggregate training-quality diagnostics. A historical
+metric minimum or a single worsening source is a review signal, not proof of
+broad model overfitting. Check validation coverage and identity first. New runs
+should use the full-pass reservoir recipe and declared per-source guardrails;
+the protected live run must not be hot-patched to adopt these changes.

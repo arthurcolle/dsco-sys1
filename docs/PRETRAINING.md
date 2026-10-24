@@ -10,7 +10,7 @@ The versioned recipe is `config/pretrain/causal-999m-v100k.json`. It describes t
 heads, a 3,840-wide SwiGLU, and a tied 100,352-token embedding table.
 
 For a new run, prefer `config/pretrain/causal-999m-v100k-validated.json`. It adds
-validation-based early stopping. The historical recipe explicitly disables
+full-pass validation sampling and global/per-domain early stopping. The historical recipe explicitly disables
 early stopping to preserve the original Matrix run's behavior. Updating this
 repository does not install that guard into the already-running Matrix process.
 
@@ -36,6 +36,18 @@ python -m sys1.tokenizer.train_bpe --corpus data/corpus --out data/tokenizer-100
 Each source directory contains training shards and separately named `heldout*`
 files. Held-out files are excluded from the training mixture. Evaluation packs
 fixed windows at startup and reuses those windows for subsequent evaluations.
+
+New runs use seeded reservoir sampling across a complete held-out pass, with no
+repetition to fill a short validation set. The guarded recipe uses 256 windows
+per source. Memory stays bounded by the selected windows and tokenization batch;
+it does not materialize the corpus. Logs record the sampling method, seed,
+window count and selected positions, and checkpoint identity binds the selected
+tokens. Sampling is a one-time startup cost; every evaluation reuses that set.
+
+This matters for ordered corpora: the synthetic agent builder appends op-codes,
+decisions, transcripts and schemas in category order. A small prefix sample can
+measure only the first category. `--validation-sampling prefix` remains available
+for historical reproduction; it is not the recommended validation policy.
 
 ## Run configuration
 
@@ -66,7 +78,7 @@ python -m sys1.model.pretrain \
   --seq 1024 --micro-batch 2 --accum 8 --steps 30000 \
   --lr 3e-4 --warmup 500 --precision bf16 \
   --ckpt-every 200 --keep 3 --eval-every 200 --eval-seqs 32 --log-every 10 \
-  --early-stop-patience 0
+  --early-stop-patience 0 --validation-sampling prefix --max-domain-regression 0
 ```
 
 This is 16,384 tokens per optimizer step and 491,520,000 planned tokens. Use a
@@ -89,11 +101,18 @@ stopping. Freeze those weights and thresholds in the run recipe. Training loss
 does not select the best checkpoint. Each source must have finite validation
 loss; enabled early stopping requires validation data for every mixture source.
 
-Every genuine validation minimum updates the `checkpoints/best` pointer. The
+Every eligible validation minimum updates the `checkpoints/best` pointer. The
 best and newest recovery checkpoint both fit inside `--keep` (minimum two);
 there is no additional full-size best-weights copy. Periodic cleanup cannot
 delete the best checkpoint. A final-step evaluation can also select a new best.
 The best pointer is a candidate-selection record, not a serving promotion.
+
+The guarded recipe also sets `--max-domain-regression 0.15` and
+`--domain-regression-patience 4`. A source more than 15% above its own observed
+validation minimum makes that candidate ineligible for best selection. Four
+consecutive such evaluations stop the new run even if its weighted mean improves.
+These are explicit configurable guardrails, not a guarantee of downstream
+quality. Choose and freeze them before the run, using representative validation.
 
 Checkpoint state includes the validation best, patience counters, and stopping
 policy, bound to the fixed validation-token and tokenizer fingerprint. A resume
@@ -106,6 +125,11 @@ for model selection and does not establish performance on a separate final test.
 Use `--early-stop-patience 8 --early-stop-min-delta 0.01` for the guarded recipe.
 `--early-stop-patience 0` disables stopping while retaining best-checkpoint
 selection when complete validation data is available.
+To disable every stopping rule, also keep `--max-domain-regression 0`.
+A stopped validation state is terminal: resuming that checkpoint logs the stop
+without performing another optimization step. Version-1 guard state can migrate
+with its checkpoint step while domain guarding remains disabled; enabling a new
+domain policy requires a separately configured run.
 
 Run the local CPU checks with:
 
@@ -122,7 +146,15 @@ checkpoint/resume. They do not run on Matrix or alter its active training job.
 Fetch and compare `origin/main` before making conclusions about missing code.
 `scripts/source_watch.py --update --notify` checks Git and deployed Matrix source
 hashes. A clean `main` may fast-forward; a dirty or diverged checkout requires
-review. Matrix is only read. Its baseline is initialized explicitly once using
+review. The same read-only probe now reports recent training-versus-validation
+trends, per-source regression, stale metrics, missing best checkpoints and
+validation-identity gaps. It checks the registered trainer PID without reading
+its memory or loading weights. `source_status` is separate from the training status;
+notifications are deduplicated by alert type, not by each new training step.
+It never signals, pauses, restarts, or writes to the trainer. Matrix is only read.
+`runs/source-sync/watch-config.json` can name `training_run` and `trainer_pid`;
+otherwise the current run and its privately recorded live observation are used.
+Its source baseline is initialized explicitly once using
 `--accept-baseline`; a later code change produces an alert rather than silently
 becoming the new baseline. Private status lives in `runs/source-sync/latest.json`.
 The LaunchAgent template under `launchd/` runs every 15 minutes on the coordinator.

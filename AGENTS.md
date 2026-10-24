@@ -4,6 +4,10 @@ This checkout is the canonical source repository for System One. Keep its
 existing Git remote current with the reviewed, tested source changes made for
 the user's requested System One work.
 
+All agent commits must use `dsco <agent@distributed.systems>` for both author
+and committer. Configure this identity locally and verify it with `git var
+GIT_AUTHOR_IDENT` and `git var GIT_COMMITTER_IDENT` before committing.
+
 Before developing or reporting repository state:
 
 1. Fetch `origin` and compare local HEAD with `origin/main`. A stale local

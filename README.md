@@ -4,6 +4,14 @@ A small, deep decision model ("System One") for autonomous agents, plus the tool
 
 The model is meant to sit next to a large LLM inside the [dsco](https://github.com/arthurcolle) agent runtime and make fast, calibrated, typed decisions: which tool next, whether to stop, when to back off, when to ask. The large model keeps open-ended planning and synthesis.
 
+## Language-model pretraining
+
+The ordinary causal next-token training workflow is documented in
+[docs/PRETRAINING.md](docs/PRETRAINING.md). It includes corpus builders, the
+100K-token vocabulary, the exact 998.6M-parameter preset used by the Matrix run,
+a versioned training recipe, and checkpoint/resume checks. Decision-head
+training and Jev distillation remain separate later stages.
+
 ## What's here
 
 | Package | What it does |

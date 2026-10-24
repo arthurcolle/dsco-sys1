@@ -44,6 +44,13 @@ PRESETS = {
     # 983.2M, under the 999M cap: MobileLLM-1B depth and width (54 x 1280,
     # 20 query / 5 key-value heads, arXiv:2402.14905) with a 3,456 SwiGLU.
     "sys1-999m": Sys1Config(d_model=1280, n_layers=54, n_heads=20, n_kv_heads=5, ffn_dim=3456),
+    # Exact 100,352-token configurations used by the causal-LM pretrainer.
+    # The larger embedding table is offset by depth/FFN changes to retain
+    # the parameter budgets. Existing 32K presets and local additions stay intact.
+    "sys1-999m-v100k": Sys1Config(vocab_size=100352, d_model=1280, n_layers=46,
+                                  n_heads=20, n_kv_heads=5, ffn_dim=3840),
+    "sys1-666m-v100k": Sys1Config(vocab_size=100352, d_model=1152, n_layers=47,
+                                  n_heads=18, n_kv_heads=6, ffn_dim=2368),
     # Pipeline smoke test on a laptop GPU.
     "sys1-tiny": Sys1Config(d_model=384, n_layers=12, n_heads=6, n_kv_heads=2, ffn_dim=1024, max_seq=2048),
 }

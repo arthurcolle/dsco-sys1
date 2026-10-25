@@ -325,7 +325,7 @@ def test_run_preparation_is_private_and_never_overwrites(tmp_path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     (tmp_path / "sys1/model").mkdir(parents=True)
-    for name in ("model.py", "pretrain.py", "validation.py", "mixture.py", "corpus_manifest.py"):
+    for name in ("model.py", "pretrain.py", "validation.py", "mixture.py", "corpus_manifest.py", "corpus.py"):
         (tmp_path / "sys1/model" / name).write_text("# fixture\n")
     (tmp_path / "tokenizer.json").write_text("{}")
     (tmp_path / "corpus/en").mkdir(parents=True)
@@ -343,3 +343,29 @@ def test_run_preparation_is_private_and_never_overwrites(tmp_path):
         module.prepare(path, "new-run", tmp_path)
     with pytest.raises(ValueError):
         module.prepare(path, "../escape", tmp_path)
+
+
+def test_mlx_recipe_preparation_selects_native_backend_and_boolean_flags(tmp_path):
+    from sys1.model.corpus_manifest import file_identity
+    script = Path(__file__).resolve().parents[1] / "scripts/prepare_pretrain_run.py"
+    spec = importlib.util.spec_from_file_location("prepare_mlx_run", script)
+    module = importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    for relative in ["sys1/mlx/model.py","sys1/mlx/train.py","sys1/mlx/data.py","sys1/model/corpus.py", "sys1/model/validation.py","sys1/model/mixture.py","sys1/model/corpus_manifest.py"]:
+        target = tmp_path/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_text("# fixture\n")
+    tokenizer_path = tmp_path/"tokenizer.json";tokenizer_path.write_text("{}")
+    sources = {}
+    for split in ("train","validation"):
+        target = tmp_path/(split+".txt");target.write_text(split+" text\n")
+        sources[split] = [{"path":target.name,**file_identity(target)}]
+    manifest = tmp_path/"MANIFEST.json"
+    manifest.write_text(json.dumps({"schema":"sys1-corpus-mixture-v1","sources":{"agent":sources},"objective_weights":{"agent":1.}}))
+    recipe = {"schema":"sys1-pretrain-recipe-v1","backend":"mlx","objective":"causal-next-token-cross-entropy",
+              "training":{"preset":"sys1-mlx-small","tokenizer":"tokenizer.json","corpus-manifest":"MANIFEST.json",
+                          "seq":128,"micro-batch":2,"accum":1,"steps":8,"gradient-checkpointing":True,"no-compile":False}}
+    path = tmp_path/"recipe.json";path.write_text(json.dumps(recipe))
+    result = module.prepare(path,"native",tmp_path)
+    assert result["backend"]=="mlx" and result["launch_performed"] is False
+    assert result["command_argv"][2]=="sys1.mlx.train"
+    assert "--gradient-checkpointing" in result["command_argv"]
+    assert "True" not in result["command_argv"] and "--no-compile" not in result["command_argv"]
+    assert Path(result["manifest"])==tmp_path/"runs/mlx-pretrain/native/run-manifest.json"

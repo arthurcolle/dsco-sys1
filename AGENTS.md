@@ -70,3 +70,8 @@ success. Private trajectory samples and their generated recipes stay outside Git
 Systems-code expansions must use pinned Git objects, preserve license notices,
 and keep related source/header/test components in a single split. Do not import
 uncommitted source files or replace the protected Matrix run's data in place.
+
+The native Apple Silicon training path is `sys1/mlx`. Keep its runtime imports
+Torch-free, default to the Metal GPU, and require explicit CPU selection for
+debugging. Capture backend/hardware, steps, tokens and memory metrics when
+reporting actual MLX training; a model definition or prepared recipe is not a run.

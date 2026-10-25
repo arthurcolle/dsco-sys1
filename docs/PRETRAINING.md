@@ -1,5 +1,10 @@
 # Causal language-model pretraining
 
+For native Apple Silicon GPU training, see [MLX training](MLX_TRAINING.md).
+The MLX model and trainer use the same verified corpus manifests and source
+validation policy with native MLX gradients, mixed-precision compute and resumable
+checkpoints. The running Matrix process remains a protected deployment.
+
 System One first learns ordinary next-token prediction from text, code, and
 synthetic agent documents. Decision-head training is a later, separate stage.
 The causal-LM trainer optimizes cross-entropy on the next token at every position

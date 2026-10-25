@@ -1,0 +1,32 @@
+{
+  "schema": "sys1-pretrain-recipe-v1",
+  "backend": "mlx",
+  "objective": "causal-next-token-cross-entropy",
+  "expected_parameters": 32117506,
+  "description": "Bounded local MLX GPU pilot with BF16 compute and FP32 master/Adam state; final validation and one checkpoint fit limited local disk.",
+  "training": {
+    "preset": "sys1-mlx-small",
+    "tokenizer": "data/tokenizer-100k/tokenizer.json",
+    "corpus-manifest": "data/mixtures/agent-plus-systems-v1/MANIFEST.json",
+    "device": "gpu",
+    "precision": "bf16",
+    "seq": 128,
+    "micro-batch": 8,
+    "accum": 1,
+    "steps": 128,
+    "lr": 0.0003,
+    "warmup": 16,
+    "eval-every": 0,
+    "eval-seqs": 16,
+    "log-every": 16,
+    "ckpt-every": 0,
+    "keep": 2,
+    "seed": 1234,
+    "early-stop-patience": 0,
+    "early-stop-min-delta": 0.01,
+    "max-domain-regression": 0,
+    "domain-regression-patience": 4,
+    "gradient-checkpointing": true,
+    "memory-limit-gib": 8
+  }
+}

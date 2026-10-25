@@ -1,0 +1,32 @@
+{
+  "schema": "sys1-pretrain-recipe-v1",
+  "backend": "mlx",
+  "objective": "causal-next-token-cross-entropy",
+  "expected_parameters": 998562562,
+  "description": "Native MLX 999M architecture recipe for a separately budgeted successor run; not an update to the protected Matrix process.",
+  "training": {
+    "preset": "sys1-999m-v100k",
+    "tokenizer": "data/tokenizer-100k/tokenizer.json",
+    "corpus-manifest": "data/mixtures/agent-plus-systems-v1/MANIFEST.json",
+    "device": "gpu",
+    "precision": "bf16",
+    "seq": 1024,
+    "micro-batch": 1,
+    "accum": 16,
+    "steps": 30000,
+    "lr": 0.0003,
+    "warmup": 500,
+    "eval-every": 200,
+    "eval-seqs": 256,
+    "log-every": 10,
+    "ckpt-every": 200,
+    "keep": 3,
+    "seed": 1234,
+    "early-stop-patience": 8,
+    "early-stop-min-delta": 0.01,
+    "max-domain-regression": 0.15,
+    "domain-regression-patience": 4,
+    "gradient-checkpointing": true,
+    "memory-limit-gib": 32
+  }
+}

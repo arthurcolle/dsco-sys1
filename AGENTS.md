@@ -75,3 +75,9 @@ The native Apple Silicon training path is `sys1/mlx`. Keep its runtime imports
 Torch-free, default to the Metal GPU, and require explicit CPU selection for
 debugging. Capture backend/hardware, steps, tokens and memory metrics when
 reporting actual MLX training; a model definition or prepared recipe is not a run.
+
+Chrysalis is Arthur's primary interactive CLI development machine. Prefer
+capacity-checked fleet nodes for bulk checkpoint storage and model inference;
+check available memory and disk before placing work. Keep large checkpoint
+transfers off Chrysalis, using direct authenticated fleet-to-fleet reads where
+available. Preserve the protected Matrix training boundary when choosing a host.

@@ -273,6 +273,59 @@ Private plans, per-arm results and the final receipt live in
 `runs/mixture-pilots/`. Matrix is never contacted by either data-preparation or
 pilot scripts, and the active run is not changed.
 
+## Adding real trajectories
+
+`scripts/add_real_trajectories.py` expands a private mixture with completion-
+screened episodes from the local DSCO chronicle and the existing episode
+archive. It adds a separate `agent_real` source; it does not relabel synthetic
+records as real or overwrite existing datasets. Every accepted record retains
+its hashed session, input-file identity and source kind. Documents are redacted
+again using the existing credential, email, home-path and opaque-blob filters.
+Samples, manifests and generated recipes remain local and outside Git.
+
+The screen requires a nontrivial goal and final answer, a normal completion
+reason, resolved tool arguments/results, and at least 80% successful tool calls.
+Incomplete, truncated-answer, oversized, duplicate and residual-credential
+records are excluded. Completion and tool status are recorded signals, not
+verified task correctness. Semantic overlap and correctness still need review.
+
+Existing private, supervised-decision and fallback-LM validation reservations
+are respected at whole-session scope. The prior private validation's actual
+goal hashes also reserve matching sessions. Newly added validation uses a stable
+session hash; it cannot share sessions or normalized documents with new
+training. An additional document check excludes matches against existing agent
+training and every base validation source. Late-discovered reservations remove
+all previously collected records from that session. The private reservation
+file allows an independent membership audit. No separate final test is read.
+
+For a bounded local expansion:
+
+```sh
+TOKENIZERS_PARALLELISM=false python scripts/add_real_trajectories.py \
+  --base-manifest data/mixtures/agent-categories-v2/MANIFEST.json \
+  --output data/mixtures/agent-plus-real-v4 --max-session-files 10000
+```
+
+An optional `--session-index` accepts a private list of candidate event files
+under the chronicle event root, allowing a content-filtered scan across the
+history. The defaults cap added data at 32 MiB and each event file at 4 MiB;
+recently changing files are skipped. The archive is read without modification,
+and any malformed trailing export record is counted and excluded.
+
+The source's probability is limited by actual training-token supply, using the
+100k tokenizer and the planned 30,000-step, 2-by-8, sequence-1024 recipe. Its
+initial weight is the minimum of 2%, 10% of the existing agent allocation, and
+one expected pass of the available source over that plan. English/code weights
+stay fixed; synthetic agent weights fund the addition proportionally. This is
+an expected exposure budget, not a hard epoch cap. Changing the run budget or
+tokenizer requires recalculating the weight. Existing per-source validation and
+early-stop guards still apply.
+
+The new view contains a generated private `recipe.json` with the exact data-
+dependent probabilities and manifest path. It remains a candidate until a
+controlled training comparison establishes its value. Neither data preparation
+nor registering that recipe launches or alters a Matrix training job.
+
 ## Keeping the repository current
 
 Fetch and compare `origin/main` before making conclusions about missing code.

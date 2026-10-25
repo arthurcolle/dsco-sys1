@@ -61,3 +61,8 @@ overlap from derived training only, and retain separate validation for every
 category. Keep view manifests and samples private. Verify referenced file hashes
 and preserve the manifest identity across resume; do not replace category scores
 with a favorable aggregate when reviewing regressions.
+
+Real-trajectory additions must preserve prior validation reservations at session
+scope, retain provenance and redaction counts, and size exposure to available
+training tokens. Completion status is a screening signal, not verified task
+success. Private trajectory samples and their generated recipes stay outside Git.

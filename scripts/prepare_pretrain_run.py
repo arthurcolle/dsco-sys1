@@ -17,6 +17,8 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from sys1.model.corpus_manifest import load_manifest
 
 
 def sha256(path: Path) -> str:
@@ -52,18 +54,24 @@ def prepare(recipe_path: Path, name: str, root: Path = REPO) -> dict:
     if not tokenizer.is_file():
         raise ValueError("tokenizer is missing; prepare the corpus/tokenizer first")
     corpus = root / training["corpus"]
+    explicit = root / training["corpus-manifest"] if training.get("corpus-manifest") else None
+    plan, data_id, _ = load_manifest(explicit) if explicit else (None, None, None)
     sources = {}
     for pair in training["mix"].split(","):
         source, raw_weight = pair.split("=", 1)
         if not re.fullmatch(r"[A-Za-z0-9_-]+", source) or not 0 < float(raw_weight) <= 1:
             raise ValueError("invalid source or mixture weight")
-        manifest = corpus / source / "MANIFEST.json"
+        manifest = explicit if explicit else corpus / source / "MANIFEST.json"
+        if plan is not None and source not in plan:
+            raise ValueError("mixture source missing from corpus manifest")
         if not manifest.is_file():
             raise ValueError(f"missing source manifest: {source}")
         sources[source] = {"weight": float(raw_weight), "manifest_sha256": sha256(manifest)}
+    if plan is not None and set(sources) != set(plan):
+        raise ValueError("mixture must include exactly the corpus manifest sources")
     code = {}
     for name_in_repo in ("sys1/model/pretrain.py", "sys1/model/model.py",
-                         "sys1/model/validation.py", "sys1/model/mixture.py"):
+                         "sys1/model/validation.py", "sys1/model/mixture.py", "sys1/model/corpus_manifest.py"):
         path = root / name_in_repo
         code[name_in_repo] = sha256(path)
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, text=True,
@@ -76,6 +84,7 @@ def prepare(recipe_path: Path, name: str, root: Path = REPO) -> dict:
         "recipe": recipe, "recipe_sha256": sha256(recipe_path),
         "code_sha256": code, "git_head_at_registration": head.stdout.strip() or None,
         "tokenizer_sha256": sha256(tokenizer), "sources": sources,
+        "corpus_manifest_sha256": data_id,
         "tokens_per_step": tokens_per_step, "planned_tokens": tokens_per_step * training["steps"],
         "command_argv": command, "launch_performed": False,
     }

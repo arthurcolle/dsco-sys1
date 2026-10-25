@@ -55,3 +55,9 @@ objective. Preserve controller state and source-loss statistics on resume.
 Feedback uses representative selection validation; final test data must not
 enter mixture adaptation or training. Small pilots establish execution, not a
 production quality gain.
+
+Category-mixture views must preserve the parent corpus, exclude audited split
+overlap from derived training only, and retain separate validation for every
+category. Keep view manifests and samples private. Verify referenced file hashes
+and preserve the manifest identity across resume; do not replace category scores
+with a favorable aggregate when reviewing regressions.

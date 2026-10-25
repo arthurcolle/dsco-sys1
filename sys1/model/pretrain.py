@@ -49,6 +49,7 @@ from tokenizers import Tokenizer
 
 from sys1.model.model import PRESETS, Sys1Model, param_count
 from sys1.model.mixture import AdaptiveMixture
+from sys1.model.corpus_manifest import load_manifest
 from sys1.model.validation import ValidationGuard
 from sys1.paths import DATA, RUNS
 
@@ -277,8 +278,9 @@ class PackedSource:
 
 
 class Mixture:
-    def __init__(self, sources: dict[str, PackedSource], weights: dict[str, float], seed: int):
+    def __init__(self, sources: dict[str, PackedSource], weights: dict[str, float], seed: int, data_id=None):
         self.sources = sources
+        self.data_id = data_id
         self.names = list(sources)
         total = sum(weights[n] for n in self.names)
         self.weights = [weights[n] / total for n in self.names]
@@ -317,7 +319,7 @@ class Mixture:
         return means, counts
 
     def state(self) -> dict:
-        return {"rng": self.rng.getstate(), "drawn": dict(self.drawn),
+        return {"rng": self.rng.getstate(), "drawn": dict(self.drawn), "data_id": self.data_id,
                 "weights": dict(zip(self.names, self.weights)),
                 "adaptive": self.controller.state() if self.controller else None,
                 "loss_sums": {n: float(v) for n, v in self.loss_sums.items()},
@@ -325,6 +327,8 @@ class Mixture:
                 "sources": {n: s.state() for n, s in self.sources.items()}}
 
     def load_state(self, st: dict):
+        if st.get("data_id") != self.data_id:
+            raise ValueError("corpus manifest identity changed on resume")
         adaptive = st.get("adaptive")
         if bool(self.controller) != (adaptive is not None):
             raise ValueError("cannot enable or disable adaptive mixture on resume")
@@ -438,14 +442,23 @@ def build_data(args, tok, eos):
     window = args.seq + 1
     corpus = Path(args.corpus)
     weights = parse_mix(args.mix)
+    manifest_path = getattr(args, "corpus_manifest", None)
+    plan, data_id = None, None
+    if manifest_path:
+        plan, data_id, _ = load_manifest(manifest_path)
+        if set(weights) != set(plan) or any(not math.isfinite(w) or w <= 0 for w in weights.values()):
+            raise ValueError("mixture must include exactly the manifest sources with positive weights")
     sources, heldout, origin = {}, {}, {}
     for name, w in weights.items():
         if w <= 0:
             continue
-        d = corpus / name
-        found = _shards(d) if d.is_dir() else []
-        files = [p for p in found if not _is_heldout(p)]
-        held = [p for p in found if _is_heldout(p)]
+        if plan:
+            files, held = plan[name]["train"], plan[name]["validation"]
+        else:
+            d = corpus / name
+            found = _shards(d) if d.is_dir() else []
+            files = [p for p in found if not _is_heldout(p)]
+            held = [p for p in found if _is_heldout(p)]
         if not files:
             continue
         reader = DocReader(files, args.txt_sep)
@@ -458,6 +471,8 @@ def build_data(args, tok, eos):
         origin[name] = {"shards": len(files), "bytes": sum(p.stat().st_size for p in files),
                         "layouts": sorted(set(reader.kinds)), "heldout": [str(p) for p in held] or None,
                         "validation_sampling": validation_info}
+        if data_id:
+            origin[name]["corpus_manifest_sha256"] = data_id
     if not sources:
         episodes = Path(args.episodes)
         if not episodes.exists():
@@ -473,7 +488,7 @@ def build_data(args, tok, eos):
             seed=args.seed + zlib.crc32(name.encode()), metadata=validation_info)
         origin[name] = {"fallback": str(episodes), "heldout": f"crc32(session) % {EPISODE_HELDOUT_MOD} == 0",
                         "validation_sampling": validation_info}
-    mix = Mixture(sources, weights, args.seed)
+    mix = Mixture(sources, weights, args.seed, data_id=data_id)
     return mix, heldout, origin
 
 
@@ -696,6 +711,7 @@ def main(argv=None):
     ap.add_argument("--preset", default="sys1-tiny", choices=sorted(PRESETS))
     ap.add_argument("--tokenizer", default=str(DATA / "decisions" / "tokenizer.json"))
     ap.add_argument("--corpus", default=str(DATA / "corpus"))
+    ap.add_argument("--corpus-manifest", help="explicit hash-verified training/validation source view")
     ap.add_argument("--episodes", default=str(DATA / "episodes.jsonl"), help="fallback text source")
     ap.add_argument("--mix", default="en=0.45,code=0.25,agent=0.2,private=0.1",
                     help="source=weight,...; missing/empty sources are dropped and weights renormalized")

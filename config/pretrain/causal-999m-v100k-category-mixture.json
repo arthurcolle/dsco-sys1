@@ -1,0 +1,31 @@
+{
+  "schema": "sys1-pretrain-recipe-v1",
+  "objective": "causal-next-token-cross-entropy",
+  "description": "For new runs: interleaved agent categories, category-level validation and early stopping; audited split overlap removed in a derived corpus view.",
+  "expected_parameters": 998562562,
+  "training": {
+    "preset": "sys1-999m-v100k",
+    "tokenizer": "data/tokenizer-100k/tokenizer.json",
+    "corpus": "data/corpus",
+    "mix": "en=0.5,code=0.3,agent_opcodes=0.022,agent_decisions=0.048,agent_transcripts=0.104,agent_schemas=0.026",
+    "seq": 1024,
+    "micro-batch": 2,
+    "accum": 8,
+    "steps": 30000,
+    "lr": 0.0003,
+    "warmup": 500,
+    "precision": "bf16",
+    "ckpt-every": 200,
+    "keep": 3,
+    "eval-every": 200,
+    "eval-seqs": 256,
+    "log-every": 10,
+    "seed": 1234,
+    "early-stop-patience": 8,
+    "early-stop-min-delta": 0.01,
+    "validation-sampling": "reservoir",
+    "max-domain-regression": 0.15,
+    "domain-regression-patience": 4,
+    "corpus-manifest": "data/mixtures/agent-categories-v2/MANIFEST.json"
+  }
+}

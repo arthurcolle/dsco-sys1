@@ -193,6 +193,86 @@ contacts Matrix or loads an existing checkpoint. Results and hashes remain
 private under `runs/mixture-pilots/`; run names cannot be reused. The receipt
 records both outcomes rather than asserting that adaptation improved quality.
 
+## Interleaving agent categories
+
+The original agent training source walks `decisions.txt`, `opcodes.txt`,
+`schemas.txt` and `transcripts.txt` sequentially. Source-level mixing alone
+cannot expose all four categories throughout training. For a new candidate run,
+prepare an explicit six-source view:
+
+```sh
+python scripts/prepare_agent_mixture.py --output data/mixtures/agent-categories-v2
+```
+
+This preserves the parent corpus. It verifies the agent files against their
+parent manifest, separates the existing validation file using its declared
+category order and byte/line counts, and audits exact duplicates plus
+whitespace-normalized duplicates and training/validation overlap. Duplicate and overlapping
+training records are excluded from derived training files; validation is never
+moved into training or changed to improve a score. Unaffected training files and
+English/code sources are referenced by path and SHA-256. The actual corpus had
+30 normalized overlaps in op-code training despite zero exact-line overlaps,
+plus 393 further whitespace-equivalent repeats within training. The second
+derived view excludes all 423 records. Two normalized repeats within validation
+remain unchanged and are reported, so the comparison does not improve a score
+by editing validation after seeing results.
+
+The private manifest records counts, exclusions, provenance, transform identity
+and file hashes, and reports unmeasured semantic contamination checks. Only
+small validation files and affected training files are copied. It refuses an
+existing output directory, checks referenced files before publication, and
+publishes `MANIFEST.json` only after verification. It uses selection validation;
+no separate final test set is consulted.
+
+`config/pretrain/causal-999m-v100k-category-mixture.json` uses this view through
+`--corpus-manifest`. The initial token-window weights are:
+
+| Source | Probability |
+| --- | ---: |
+| English | 0.500 |
+| Code | 0.300 |
+| Agent op-codes | 0.022 |
+| Agent decisions | 0.048 |
+| Agent transcripts | 0.104 |
+| Agent schemas | 0.026 |
+
+The conditional agent proportions (11/24/52/13) inherit the generator's declared
+starting shares; they are not claimed to be optimal. Every fixed-length training
+window is drawn from one category, preventing file-order category blocks.
+Each category gets its own full-pass reservoir validation, fixed objective
+weight, checkpoint-selection eligibility check and regression patience. An
+op-code regression cannot disappear inside the aggregate agent score.
+
+Manifest mode requires exactly the declared source set. It verifies file size
+and SHA-256 at startup, rejects training/validation file overlap, and binds the
+manifest digest into sampler checkpoint state. Changing the manifest or a
+referenced file prevents a matching resume. References must remain unchanged
+during a run; this is a verified view, not an immutable copy of its parent.
+Static sampling remains the candidate recipe's default. Adaptive sampling can
+also operate over these six sources with its existing bounds; use a declared
+minimum observation count appropriate to the smallest category.
+
+For a controlled CPU pilot:
+
+```sh
+TOKENIZERS_PARALLELISM=false python scripts/compare_agent_mixtures.py \
+  --name category-mixture-comparison \
+  --manifest data/mixtures/agent-categories-v2/MANIFEST.json
+```
+
+The default is three paired seeds, 512 steps and 65,536 tokens per arm, two
+Torch CPU threads, and a small two-layer model. The sequential control uses the
+original corpus; the candidate combines category interleaving with overlap
+removal. Both final checkpoints are evaluated on the same fixed, category-level
+validation windows and objective. Thus this measures the combined data change,
+not a causal attribution to either component. The plan is written before
+training: at least 1% mean weighted improvement, a weighted win for every paired
+seed, and no source's mean loss more than 2% worse. Those are pilot advancement
+criteria, not a production promotion or evidence about the active 1B model.
+Private plans, per-arm results and the final receipt live in
+`runs/mixture-pilots/`. Matrix is never contacted by either data-preparation or
+pilot scripts, and the active run is not changed.
+
 ## Keeping the repository current
 
 Fetch and compare `origin/main` before making conclusions about missing code.

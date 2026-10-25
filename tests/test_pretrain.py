@@ -325,7 +325,7 @@ def test_run_preparation_is_private_and_never_overwrites(tmp_path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     (tmp_path / "sys1/model").mkdir(parents=True)
-    for name in ("model.py", "pretrain.py", "validation.py", "mixture.py"):
+    for name in ("model.py", "pretrain.py", "validation.py", "mixture.py", "corpus_manifest.py"):
         (tmp_path / "sys1/model" / name).write_text("# fixture\n")
     (tmp_path / "tokenizer.json").write_text("{}")
     (tmp_path / "corpus/en").mkdir(parents=True)

@@ -326,6 +326,47 @@ dependent probabilities and manifest path. It remains a candidate until a
 controlled training comparison establishes its value. Neither data preparation
 nor registering that recipe launches or alters a Matrix training job.
 
+## Expanding with systems code
+
+`scripts/add_systems_corpus.py` adds two separately evaluated sources from pinned
+DSCO Git commits: `systems_native` (C runtime, headers, tests and selected Rust/
+Python support code) and `systems_otp` (Erlang/OTP applications and tests).
+It reads Git blob objects; uncommitted working files are never imported. The
+root MIT notices and exact commits are retained in the private manifest.
+Vendor, build, generated and fixture directories, unsupported file licenses,
+binary content and oversized files are excluded. Existing redaction runs again.
+
+```sh
+TOKENIZERS_PARALLELISM=false python scripts/add_systems_corpus.py \
+  --base-manifest data/mixtures/agent-plus-real-v4/MANIFEST.json \
+  --output data/mixtures/agent-plus-systems-v1
+```
+
+Files become line-bounded fragments with repository, commit, blob, path,
+language and line provenance. Line numbers refer to the redacted blob. Fragments
+are ordered by content hash to interleave components. The default output cap is
+64 MiB; the parent corpus and source checkouts stay unchanged.
+
+The split unit is a component: native implementation/header/test families share
+their name prefix, and Erlang modules share their normalized module name with
+matching tests. A stable component hash assigns validation. Normalized exact
+duplicates are removed with validation priority. Existing code-training and
+all base-validation document hashes are checked. A training component is
+excluded in full if one of its fragments overlaps code validation or new
+validation by at least 80% of informative three-line fingerprints (minimum four
+matches). Fingerprints found in more than 16 validation documents are ignored
+as boilerplate. These are stated similarity checks, not proof of semantic
+independence or unknown benchmark decontamination. No final test is loaded.
+
+Both new sources have separate reservoir validation and existing per-source
+regression guards. Their initial probabilities are funded from the original
+code allocation, leaving English and agent probabilities unchanged. Combined
+allocation is bounded by 5%, one quarter of the prior code allocation, and the
+available training-token supply for one expected pass under the parent recipe.
+The tokenizer must match the parent budget identity. The generated private
+`recipe.json` records the exact weights and manifest; dataset admission does
+not establish a quality improvement for the 1B model.
+
 ## Keeping the repository current
 
 Fetch and compare `origin/main` before making conclusions about missing code.

@@ -66,3 +66,7 @@ Real-trajectory additions must preserve prior validation reservations at session
 scope, retain provenance and redaction counts, and size exposure to available
 training tokens. Completion status is a screening signal, not verified task
 success. Private trajectory samples and their generated recipes stay outside Git.
+
+Systems-code expansions must use pinned Git objects, preserve license notices,
+and keep related source/header/test components in a single split. Do not import
+uncommitted source files or replace the protected Matrix run's data in place.

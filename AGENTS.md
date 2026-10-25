@@ -49,3 +49,9 @@ metric minimum or a single worsening source is a review signal, not proof of
 broad model overfitting. Check validation coverage and identity first. New runs
 should use the full-pass reservoir recipe and declared per-source guardrails;
 the protected live run must not be hot-patched to adopt these changes.
+
+Adaptive training probabilities are separate from the frozen validation
+objective. Preserve controller state and source-loss statistics on resume.
+Feedback uses representative selection validation; final test data must not
+enter mixture adaptation or training. Small pilots establish execution, not a
+production quality gain.

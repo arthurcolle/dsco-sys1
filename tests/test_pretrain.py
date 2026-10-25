@@ -15,6 +15,7 @@ from tokenizers import Tokenizer, models, pre_tokenizers
 from sys1.model import pretrain as pt
 from sys1.model.model import PRESETS, Sys1Config, Sys1Model, param_count
 from sys1.model.validation import ValidationGuard
+from sys1.model.mixture import AdaptiveMixture
 
 
 @pytest.fixture(autouse=True)
@@ -124,7 +125,8 @@ def test_mixture_restores_the_exact_next_batches(tmp_path):
     assert original.drawn == restored.drawn
 
 
-def test_full_training_resume_matches_uninterrupted_run(tmp_path, monkeypatch):
+@pytest.mark.parametrize("adaptive", [False, True])
+def test_full_training_resume_matches_uninterrupted_run(tmp_path, monkeypatch, adaptive):
     data = tmp_path / "corpus"
     corpus(data)
     tok = tmp_path / "tokenizer.json"
@@ -136,6 +138,9 @@ def test_full_training_resume_matches_uninterrupted_run(tmp_path, monkeypatch):
               "--accum", "2", "--steps", "6", "--warmup", "2", "--lr", "0.01",
               "--device", "cpu", "--precision", "fp32", "--eval-seqs", "4",
               "--eval-every", "2", "--ckpt-every", "2", "--keep", "2", "--log-every", "1"]
+    if adaptive:
+        common += ["--mixture-policy", "adaptive", "--mixture-warmup", "1",
+                   "--mixture-min-observations", "1", "--mixture-smoothing", "1"]
     previous_handler = signal.getsignal(signal.SIGTERM)
     try:
         pt.main(["--name", "full", *common])
@@ -157,6 +162,12 @@ def test_full_training_resume_matches_uninterrupted_run(tmp_path, monkeypatch):
     a, b = final_states
     assert a["step"] == b["step"] == 6
     assert a["data"]["drawn"] == b["data"]["drawn"]
+    assert a["data"]["weights"] == b["data"]["weights"]
+    assert a["data"]["adaptive"] == b["data"]["adaptive"]
+    assert a["data"]["loss_sums"] == b["data"]["loss_sums"]
+    assert a["data"]["loss_counts"] == b["data"]["loss_counts"]
+    if adaptive:
+        assert a["data"]["adaptive"]["observations"] == 3
     assert a["validation"] == b["validation"]
     for key in a["model"]:
         torch.testing.assert_close(a["model"][key], b["model"][key], rtol=0, atol=0)
@@ -182,7 +193,8 @@ def test_checkpoint_budget_retains_old_best_and_latest(tmp_path):
     assert state["validation"]["bad_evaluations"] == 2
 
 
-def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkeypatch):
+@pytest.mark.parametrize("adaptive", [False, True])
+def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkeypatch, adaptive):
     data = tmp_path / "corpus"
     corpus(data)
     tok = tmp_path / "tokenizer.json"
@@ -199,6 +211,8 @@ def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkey
             "--micro-batch", "2", "--steps", "20", "--device", "cpu", "--precision", "fp32",
             "--eval-every", "2", "--eval-seqs", "4", "--ckpt-every", "2", "--keep", "2",
             "--early-stop-patience", "2", "--log-every", "1"]
+    if adaptive:
+        argv += ["--mixture-policy", "adaptive", "--mixture-warmup", "1", "--mixture-min-observations", "1"]
     out = tmp_path / "runs/pretrain/guarded"
     previous_handler = signal.getsignal(signal.SIGTERM)
     try:
@@ -217,6 +231,60 @@ def test_training_stops_on_validation_regression_and_keeps_best(tmp_path, monkey
     assert not any(r["event"] == "done" for r in rows)
     assert (out / "checkpoints/best").read_text() == "step_00000002.pt"
     assert (out / "checkpoints/step_00000002.pt").is_file()
+
+
+def test_training_source_statistics_survive_mid_interval_checkpoint(tmp_path):
+    corpus(tmp_path)
+    args, tok = data_args(tmp_path), tokenizer()
+    mix, _, _ = pt.build_data(args, tok, 1)
+    mix.batch(8)
+    names = list(mix.batch_sources)
+    values = torch.arange(1, 9, dtype=torch.float32)
+    mix.record_losses(values)
+    expected, counts = mix.training_statistics()
+    for name in mix.names:
+        indices = [i for i, source in enumerate(names) if source == name]
+        assert counts[name] == len(indices)
+        assert expected[name] == pytest.approx(values[indices].mean().item())
+    restored, _, _ = pt.build_data(args, tok, 1)
+    restored.load_state(copy.deepcopy(mix.state()))
+    assert restored.training_statistics() == (expected, counts)
+    assert torch.equal(mix.batch(8), restored.batch(8))
+    restored.training_statistics(reset=True)
+    assert restored.training_statistics()[1] == {name: 0 for name in restored.names}
+
+
+def test_changed_adaptive_probabilities_restore_exact_draws_and_partial_statistics(tmp_path):
+    corpus(tmp_path)
+    args, tok = data_args(tmp_path), tokenizer()
+    original, _, _ = pt.build_data(args, tok, 1)
+    original.controller = AdaptiveMixture(original.reference_weights, "fixed", warmup=1,
+                                          min_observations=1, smoothing=1)
+    original.controller.observe(1, {"en": 4, "code": 4}, {"en": 3, "code": 3}, {"en": 1, "code": 1})
+    original.controller.observe(2, {"en": 4, "code": 2}, {"en": 3, "code": 1.5}, {"en": 1, "code": 1})
+    original.weights = [original.controller.weights[n] for n in original.names]
+    assert original.weights != [0.5, 0.5]
+    original.batch(8)
+    original.record_losses(torch.arange(1, 9, dtype=torch.float32))
+    saved = copy.deepcopy(original.state())
+    expected = [original.batch(16) for _ in range(3)]
+    restored, _, _ = pt.build_data(args, tok, 1)
+    restored.controller = AdaptiveMixture(restored.reference_weights, "fixed", warmup=1,
+                                          min_observations=1, smoothing=1)
+    restored.load_state(saved)
+    assert restored.training_statistics() == original.training_statistics()
+    for batch in expected:
+        assert torch.equal(batch, restored.batch(16))
+    assert restored.drawn == original.drawn
+    with pytest.raises(ValueError, match="enable or disable"):
+        restored.controller = None
+        restored.load_state(saved)
+
+
+def test_adaptive_mixture_rejects_biased_prefix_before_loading_model():
+    with pytest.raises(SystemExit) as stopped:
+        pt.main(["--name", "invalid", "--mixture-policy", "adaptive", "--validation-sampling", "prefix"])
+    assert stopped.value.code == 2
 
 
 def test_final_step_validation_selects_a_new_best(tmp_path, monkeypatch):
@@ -257,7 +325,7 @@ def test_run_preparation_is_private_and_never_overwrites(tmp_path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     (tmp_path / "sys1/model").mkdir(parents=True)
-    for name in ("model.py", "pretrain.py"):
+    for name in ("model.py", "pretrain.py", "validation.py", "mixture.py"):
         (tmp_path / "sys1/model" / name).write_text("# fixture\n")
     (tmp_path / "tokenizer.json").write_text("{}")
     (tmp_path / "corpus/en").mkdir(parents=True)

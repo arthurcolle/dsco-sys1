@@ -19,7 +19,14 @@ def diagnose_training(rows, retained_steps, now, window=5, stale_seconds=1800):
     if not starts:
         report["alerts"] = ["training_weights_unknown"]
         return report
-    weights = starts[0]["weights"]
+    policies = [r.get("validation_policy", {}) for r in starts]
+    if any(not isinstance(policy, dict) for policy in policies):
+        report.update(status="invalid_metrics", alerts=["invalid_validation_identity"])
+        return report
+    # Adaptive sampling may change across a resume. Evaluation uses the frozen
+    # objective weights, never the current sampling probabilities.
+    references = [policy.get("weights", row["weights"]) for policy, row in zip(policies, starts)]
+    weights = references[0]
     if not isinstance(weights, dict) or not weights or any(not finite(v) or v <= 0 for v in weights.values()):
         report.update(status="invalid_metrics", alerts=["invalid_training_weights"])
         return report
@@ -29,13 +36,12 @@ def diagnose_training(rows, retained_steps, now, window=5, stale_seconds=1800):
         return report
     weights = {key: value / total for key, value in weights.items()}
     identities = set()
-    for row in starts:
-        policy = row.get("validation_policy", {})
+    for policy in policies:
         if not isinstance(policy, dict) or not isinstance(policy.get("validation_id"), (str, type(None))):
             report.update(status="invalid_metrics", alerts=["invalid_validation_identity"])
             return report
         identities.add(policy.get("validation_id"))
-    if any(r["weights"] != starts[0]["weights"] for r in starts) or len(identities) > 1:
+    if any(reference != references[0] for reference in references) or len(identities) > 1:
         report.update(status="incomparable_history", alerts=["validation_policy_changed"])
         return report
     report["validation_identity_verified"] = None not in identities

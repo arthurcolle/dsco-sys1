@@ -62,7 +62,8 @@ def prepare(recipe_path: Path, name: str, root: Path = REPO) -> dict:
             raise ValueError(f"missing source manifest: {source}")
         sources[source] = {"weight": float(raw_weight), "manifest_sha256": sha256(manifest)}
     code = {}
-    for name_in_repo in ("sys1/model/pretrain.py", "sys1/model/model.py"):
+    for name_in_repo in ("sys1/model/pretrain.py", "sys1/model/model.py",
+                         "sys1/model/validation.py", "sys1/model/mixture.py"):
         path = root / name_in_repo
         code[name_in_repo] = sha256(path)
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, text=True,

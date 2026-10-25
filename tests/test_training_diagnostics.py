@@ -78,3 +78,15 @@ def test_domain_regression_is_visible_even_if_weighted_score_improves():
     report = diagnose_training(rows, [8, 9, 10], 111)
     assert report["status"] == "improving"
     assert "historical_domain_regression:agent" in report["alerts"]
+
+
+def test_adaptive_sampler_resume_uses_fixed_objective_for_comparison():
+    rows = history()
+    for row in rows:
+        if row.get("event") == "start":
+            row["validation_policy"]["weights"] = {"en": 0.8, "agent": 0.2}
+    rows.append({"event": "resume", "step": 10, "weights": {"en": 0.7, "agent": 0.3},
+                 "validation_policy": {"validation_id": "fixed-inputs", "weights": {"en": 0.8, "agent": 0.2}}})
+    report = diagnose_training(rows, [10], 111)
+    assert report["status"] == "improving"
+    assert report["weights"] == {"en": 0.8, "agent": 0.2}

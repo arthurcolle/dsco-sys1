@@ -48,6 +48,7 @@ import torch.nn.functional as F
 from tokenizers import Tokenizer
 
 from sys1.model.model import PRESETS, Sys1Model, param_count
+from sys1.model.mixture import AdaptiveMixture
 from sys1.model.validation import ValidationGuard
 from sys1.paths import DATA, RUNS
 
@@ -281,22 +282,68 @@ class Mixture:
         self.names = list(sources)
         total = sum(weights[n] for n in self.names)
         self.weights = [weights[n] / total for n in self.names]
+        self.reference_weights = dict(zip(self.names, self.weights))
+        self.controller = None
         self.rng = random.Random(seed)
         self.drawn = {n: 0 for n in self.names}
+        self.loss_sums, self.loss_counts = {n: 0.0 for n in self.names}, {n: 0 for n in self.names}
+        self.batch_sources = []
 
     def batch(self, bsz: int) -> torch.Tensor:
         rows = []
+        self.batch_sources = []
         for _ in range(bsz):
             name = self.rng.choices(self.names, self.weights)[0]
             self.drawn[name] += 1
+            self.batch_sources.append(name)
             rows.append(self.sources[name].next_window())
         return torch.tensor(rows, dtype=torch.long)
 
+    def record_losses(self, losses):
+        """Accumulate detached per-sequence losses without a per-batch CPU sync."""
+        if losses.ndim != 1 or len(losses) != len(self.batch_sources):
+            raise ValueError("source-loss vector must match the last sampled batch")
+        for name in set(self.batch_sources):
+            indices = [i for i, source in enumerate(self.batch_sources) if source == name]
+            self.loss_sums[name] = self.loss_sums[name] + losses.detach()[indices].sum()
+            self.loss_counts[name] += len(indices)
+        self.batch_sources = []
+
+    def training_statistics(self, reset=False):
+        counts = dict(self.loss_counts)
+        means = {n: float(self.loss_sums[n]) / counts[n] if counts[n] else None for n in self.names}
+        if reset:
+            self.loss_sums, self.loss_counts = {n: 0.0 for n in self.names}, {n: 0 for n in self.names}
+        return means, counts
+
     def state(self) -> dict:
         return {"rng": self.rng.getstate(), "drawn": dict(self.drawn),
+                "weights": dict(zip(self.names, self.weights)),
+                "adaptive": self.controller.state() if self.controller else None,
+                "loss_sums": {n: float(v) for n, v in self.loss_sums.items()},
+                "loss_counts": dict(self.loss_counts),
                 "sources": {n: s.state() for n, s in self.sources.items()}}
 
     def load_state(self, st: dict):
+        adaptive = st.get("adaptive")
+        if bool(self.controller) != (adaptive is not None):
+            raise ValueError("cannot enable or disable adaptive mixture on resume")
+        if self.controller:
+            if set(st["sources"]) != set(self.names):
+                raise ValueError("adaptive mixture sources changed")
+            self.controller.load_state(adaptive)
+            weights = self.controller.weights
+            if st.get("weights") != weights:
+                raise ValueError("checkpoint sampler and adaptive weights disagree")
+            self.weights = [weights[n] for n in self.names]
+        elif "weights" in st and st["weights"] != self.reference_weights:
+            raise ValueError("static mixture weights changed on resume")
+        sums, counts = st.get("loss_sums", self.loss_sums), st.get("loss_counts", self.loss_counts)
+        if set(sums) != set(self.names) or set(counts) != set(self.names) or any(
+            type(counts[n]) is not int or counts[n] < 0 or not math.isfinite(sums[n]) or sums[n] < 0 or
+            (not counts[n] and sums[n] != 0) for n in self.names):
+            raise ValueError("invalid checkpoint training-loss statistics")
+        self.loss_sums, self.loss_counts = dict(sums), dict(counts)
         self.rng.setstate(st["rng"])
         if set(st["sources"]) != set(self.names):
             print(f"warning: mixture sources changed {sorted(st['sources'])} -> {self.names}; "
@@ -505,9 +552,12 @@ def flops_per_token(cfg, seq: int) -> float:
 
 # --------------------------------------------------------------------------- training
 
-def lm_loss(model, x):
+def lm_loss(model, x, per_sequence=False):
     inp, tgt = x[:, :-1], x[:, 1:]
     logits = model.lm_logits(model.hidden(inp))
+    if per_sequence:
+        return F.cross_entropy(logits.float().reshape(-1, logits.shape[-1]), tgt.reshape(-1),
+                               reduction="none").reshape(len(x), -1).mean(dim=1)
     return F.cross_entropy(logits.float().reshape(-1, logits.shape[-1]), tgt.reshape(-1))
 
 
@@ -679,6 +729,13 @@ def main(argv=None):
     ap.add_argument("--max-domain-regression", type=float, default=0.0,
                     help="relative loss increase over any source's best; 0 disables this guard")
     ap.add_argument("--domain-regression-patience", type=int, default=4)
+    ap.add_argument("--mixture-policy", choices=["static", "adaptive"], default="static")
+    ap.add_argument("--mixture-warmup", type=int, default=3, help="representative evaluations for calibration")
+    ap.add_argument("--mixture-smoothing", type=float, default=0.3)
+    ap.add_argument("--mixture-rate", type=float, default=1.0)
+    ap.add_argument("--mixture-max-factor", type=float, default=2.0, help="absolute probability bounds relative to initial weights")
+    ap.add_argument("--mixture-max-change", type=float, default=0.02, help="maximum probability change per evaluation")
+    ap.add_argument("--mixture-min-observations", type=int, default=32, help="training sequences required per source per evaluation interval")
     ap.add_argument("--log-every", type=int, default=10)
     ap.add_argument("--peak-tflops", type=float, default=0.0, help="device peak for MFU; auto on known CUDA GPUs")
     ap.add_argument("--seed", type=int, default=1234)
@@ -688,6 +745,8 @@ def main(argv=None):
         ap.error("--keep must be at least 2 (or 0 for unlimited) to retain best and latest")
     if (args.early_stop_patience or args.max_domain_regression) and not args.eval_every:
         ap.error("early stopping requires --eval-every; use --early-stop-patience 0 to disable it")
+    if args.mixture_policy == "adaptive" and (not args.eval_every or args.validation_sampling != "reservoir"):
+        ap.error("adaptive mixture requires --validation-sampling reservoir and --eval-every")
 
     device = pick_device(args.device)
     out = RUNS / "pretrain" / args.name
@@ -712,8 +771,13 @@ def main(argv=None):
                                  validation_id=validation_fingerprint(heldout, args.tokenizer),
                                  max_domain_regression=args.max_domain_regression or None,
                                  domain_patience=args.domain_regression_patience)
-    if validation.enabled and any(heldout.get(name) is None for name in mix.names):
+    if (validation.enabled or args.mixture_policy == "adaptive") and any(heldout.get(name) is None for name in mix.names):
         raise ValueError("early stopping requires validation data for every mixture source")
+    if args.mixture_policy == "adaptive":
+        mix.controller = AdaptiveMixture(mix.reference_weights, validation.validation_id,
+            warmup=args.mixture_warmup, smoothing=args.mixture_smoothing, rate=args.mixture_rate,
+            max_factor=args.mixture_max_factor, max_change=args.mixture_max_change,
+            min_observations=args.mixture_min_observations)
 
     resume_path = find_resume(out, args.resume)
     blob = torch.load(resume_path, map_location="cpu", weights_only=False) if resume_path else None
@@ -745,6 +809,8 @@ def main(argv=None):
         mix.load_state(blob["data"])
         set_rng_state(blob["rng"], device)
         step = blob["step"]
+        if mix.controller and mix.controller.last_step is not None and mix.controller.last_step > step:
+            raise ValueError("adaptive mixture history extends beyond checkpoint step")
         if "validation" in blob:
             validation.load_state(blob["validation"], step_hint=step)
         del blob
@@ -767,6 +833,7 @@ def main(argv=None):
          "config": asdict(cfg), "params": pc["total"], "non_embedding": pc["non_embedding"],
          "sources": origin, "weights": dict(zip(mix.names, mix.weights)), "tokens_per_step": tokens_per_step,
          "validation_policy": validation.policy(),
+         "mixture_policy": mix.controller.policy() if mix.controller else "static",
          "flops_per_token": fpt, "peak_flops": peak or None, "torch": torch.__version__})
 
     if validation.should_stop:
@@ -796,8 +863,14 @@ def main(argv=None):
         for _ in range(args.accum):
             x = mix.batch(args.micro_batch).to(device, non_blocking=True)
             with autocast_ctx(device, amp):
-                loss = lm_loss(train_model, x)
+                if mix.controller:
+                    source_losses = lm_loss(train_model, x, per_sequence=True)
+                    loss = source_losses.mean()
+                else:
+                    loss = lm_loss(train_model, x)
             (loss / args.accum).backward()
+            if mix.controller:
+                mix.record_losses(source_losses)
             loss_sum += loss.detach()
         gnorm = torch.nn.utils.clip_grad_norm_(model.parameters(), args.clip) if args.clip > 0 else torch.tensor(0.0)
         opt.step()
@@ -826,7 +899,13 @@ def main(argv=None):
             if validation.weights.keys() <= losses.keys():
                 decision = validation.observe(step, losses)
                 is_best, early_stopped = decision["improved"], decision["should_stop"]
-            log({"event": "eval", "step": step, "heldout_loss": losses, "validation": decision})
+            train_means, train_counts = mix.training_statistics(reset=True) if mix.controller else (None, None)
+            log({"event": "eval", "step": step, "heldout_loss": losses, "validation": decision,
+                 "training_source_loss": train_means, "training_source_counts": train_counts})
+            if mix.controller and not early_stopped:
+                feedback = mix.controller.observe(step, losses, train_means, train_counts)
+                mix.weights = [mix.controller.weights[n] for n in mix.names]
+                log({"event": "mixture_update", "step": step, **feedback})
             t_last, tok_last = time.time(), 0
         if is_best or early_stopped or step == args.steps or (args.ckpt_every and step % args.ckpt_every == 0):
             p = save_checkpoint(out, step, model, opt, mix, args, precision, args.keep,

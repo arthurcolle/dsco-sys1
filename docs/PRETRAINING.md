@@ -141,6 +141,58 @@ These checks cover causal masking, learning from next-token targets, held-out
 separation, deterministic evaluation, and matching an uninterrupted run after
 checkpoint/resume. They do not run on Matrix or alter its active training job.
 
+## Adaptive training mixture
+
+`config/pretrain/causal-999m-v100k-adaptive.json` enables an opt-in feedback
+controller for a **new** run. Static sampling remains the default. The initial
+English/code/agent training probabilities are 0.5/0.3/0.2. Checkpoint selection,
+early stopping and monitoring always use those frozen objective weights, even
+when training probabilities change. Lowering a difficult source's probability
+cannot make the reported validation objective improve by itself.
+
+Every evaluation interval records per-source mean training cross-entropy and
+sample counts from the existing forward passes, without an additional model
+evaluation or per-batch CPU synchronization. Validation examples never enter
+the training stream. The controller requires full-pass reservoir validation,
+every source's validation loss, and at least 32 training sequences per source
+in an interval; otherwise it leaves probabilities unchanged. The first three
+eligible intervals calibrate each source's own training and validation baseline.
+
+After calibration it smooths the log of each loss relative to its baseline
+with coefficient 0.3. Its score is the relative validation trend minus twice
+the positive difference between validation and training trends. Sources whose
+validation learns more slowly can receive additional probability. A normalized
+validation/training gap above 5% blocks an increase for that source; this is a
+heuristic warning about generalization, not proof of overfitting. Comparing
+relative progress avoids favoring a source solely because its raw loss is high.
+
+Targets are anchored to the initial mixture and projected onto probability
+bounds: each source stays between half and twice its initial probability, with
+at most 0.02 absolute change per evaluation. The controller cannot add sources,
+write training examples, or bypass the existing validation stopping guards.
+Each `mixture_update` event records old/new probabilities, counts, trends and
+held-back sources. Checkpoints preserve the policy, calibration, smoothed
+signals, weights, partial-interval training statistics, sampler RNG and data
+cursors. A resume rejects changed policy/validation identity or enabling or
+disabling adaptation; exact CPU resume is covered by an integration test.
+
+This is a bounded source-level heuristic. It does not deduplicate examples,
+rebalance categories within a source, or establish a causal quality advantage.
+Validate it against a matched static run before choosing it for a large job.
+Keep a separate final test set outside this feedback and checkpoint selection.
+
+For a bounded pilot on the existing local corpus:
+
+```sh
+python scripts/pilot_adaptive_mixture.py --name mixture-feedback-pilot
+```
+
+This trains two fresh, small models for 96 steps each on CPU with two threads,
+the same corpus, tokenizer, seed, validation set and token budget. It never
+contacts Matrix or loads an existing checkpoint. Results and hashes remain
+private under `runs/mixture-pilots/`; run names cannot be reused. The receipt
+records both outcomes rather than asserting that adaptation improved quality.
+
 ## Keeping the repository current
 
 Fetch and compare `origin/main` before making conclusions about missing code.

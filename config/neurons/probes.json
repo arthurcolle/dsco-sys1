@@ -1,0 +1,10 @@
+{
+  "schema": "sys1-neuron-probes-v1",
+  "role": "diagnostic",
+  "probes": [
+    {"id": "reserved-addition", "stratum": "code", "source": "Handwritten diagnostic; reserved addition family, never training or mixture feedback", "prompt": "def add(a, b):\n    ", "continuation": "return a + b\n"},
+    {"id": "python-empty-guard", "stratum": "code", "source": "Handwritten synthetic diagnostic", "prompt": "def first_or_none(items):\n    if not items:\n        ", "continuation": "return None\n"},
+    {"id": "agent-read-result", "stratum": "agent_format", "source": "Handwritten synthetic agent-format diagnostic; not a real trajectory", "prompt": "[GOAL] Read the project version.\n[CALL] read_file config.json\n[RESULT] {\"version\": \"1.2.3\"}\n[ANSWER] The project version is ", "continuation": "1.2.3."},
+    {"id": "agent-error-report", "stratum": "agent_format", "source": "Handwritten synthetic agent-format diagnostic; not a real trajectory", "prompt": "[GOAL] Run the test suite.\n[CALL] run_tests\n[RESULT] {\"status\": \"failed\", \"passed\": 9, \"failed\": 1}\n[ANSWER] ", "continuation": "One test failed."}
+  ]
+}

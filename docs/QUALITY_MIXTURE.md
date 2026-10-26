@@ -26,7 +26,7 @@ headroom; it never downloads data or loads model weights.
 
 ```sh
 TOKENIZERS_PARALLELISM=false .venv/bin/python scripts/prepare_quality_mixture.py \
-  --output data/mixtures/foundation-quality-v1 \
+  --output data/mixtures/foundation-quality-v1 --steps 24000 \
   --source-register data/corpus/en/MANIFEST.json \
   --source-register data/corpus/code/MANIFEST.json \
   --source-register data/mixtures/agent-plus-real-v4/MANIFEST.json
@@ -58,9 +58,10 @@ Preferred weights before replay caps are English 50%, native code 22%, Python 15
 web code 8%, shell 2%, documentation 1%, configuration 1%, real trajectories 0.3%,
 native systems 0.5% and OTP systems 0.2%. These are a starting policy, not optimized
 weights. The manifest contains the actual probabilities after projecting onto
-source token budgets.
+source token budgets. The initial 30,000-step budget was rejected after filtering;
+the measured corpus supports the published 24,000-step recipe.
 
-For the 30,000-step recipe, each step predicts 16,384 tokens and consumes 16,400
+For the 24,000-step recipe, each step predicts 16,384 tokens and consumes 16,400
 stream tokens, including the input/target shift. Source probabilities cap expected
 exposure at two passes through base data and one pass through private/system data.
 Random sampling can exceed an expected cap. Longer runs or changed batching need

@@ -30,6 +30,15 @@ def identity(path):
     return {'bytes':size,'sha256':digest.hexdigest()}
 
 
+def validation_indices(packs, windows):
+    if not 1<=windows<=512:raise ValueError('validation window count must be 1..512')
+    selected={}
+    for name,data in packs.items():
+        rng=random.Random('fixed-validation:'+name)
+        selected[name]=rng.sample(range(len(data)),min(windows,len(data)))
+    return selected
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest',type=Path,required=True)
@@ -39,10 +48,13 @@ def main():
     parser.add_argument('--seeds',default='1234,2345,3456')
     parser.add_argument('--vocab-size',type=int,default=100352)
     parser.add_argument('--ttl-seconds',type=int,default=1800)
+    parser.add_argument('--validation-windows',type=int,default=16,
+                        help='frozen validation windows per source (1..512); register before running')
     args=parser.parse_args()
     seeds=[int(value) for value in args.seeds.split(',')]
     if not 64<=args.steps<=512 or not 1<=len(seeds)<=3 or len(set(seeds))!=len(seeds):parser.error('use 64..512 steps and 1..3 distinct seeds')
     if any(not 0<=seed<2**32 for seed in seeds) or not 2<=args.vocab_size<=131072 or not 30<=args.ttl_seconds<=3600:parser.error('invalid bounded pilot configuration')
+    if not 1<=args.validation_windows<=512:parser.error('use 1..512 validation windows per source')
     if 'matrix' in platform.node().lower():parser.error('protected Matrix host is excluded')
     import numpy as np
     import torch
@@ -72,16 +84,14 @@ def main():
     seq=policy['window']-1
     if not 8<=seq<=128:raise ValueError('pilot sequence exceeds bound')
     cfg=module.Sys1Config(vocab_size=args.vocab_size,d_model=32,n_layers=2,n_heads=4,n_kv_heads=2,ffn_dim=64,max_seq=seq)
-    selected={}
-    for name,data in packs['validation'].items():
-        rng=random.Random('fixed-validation:'+name)
-        selected[name]=rng.sample(range(len(data)),min(16,len(data)))
+    selected=validation_indices(packs['validation'],args.validation_windows)
     criteria={'minimum_relative_weighted_gain':.01,'maximum_mean_source_regression':.02,'required_paired_wins':len(seeds)}
     args.output.mkdir(parents=True,exist_ok=False,mode=0o700)
     plan={'created_unix':time.time(),'host':platform.node(),'device':'cpu','threads':2,'runtime':{'python':platform.python_version(),'torch':torch.__version__},
           'seeds':seeds,'steps_per_arm':args.steps,'predicted_tokens_per_arm':args.steps*seq,'batch':1,'model_config':asdict(cfg),
           'manifest':identity(args.manifest),'model_source':identity(source),'script':identity(Path(__file__)),'training_weights':weights,
-          'validation_weights':validation_weights,'fixed_validation_rows':selected,'criteria':criteria,'ttl_seconds':args.ttl_seconds,'max_peak_rss_bytes':1536*1024**2,
+          'validation_weights':validation_weights,'validation_windows_per_source':args.validation_windows,
+          'fixed_validation_rows':selected,'criteria':criteria,'ttl_seconds':args.ttl_seconds,'max_peak_rss_bytes':1536*1024**2,
           'limitations':['tiny CPU model and short token budget; not a production-quality gate','combined policy change; no attribution to individual filters','selection validation only; no final test feedback']}
     plan_path=args.output/'plan.json';plan_path.write_text(json.dumps(plan,indent=2)+'\n');plan_path.chmod(0o600)
     def timeout(signum,frame):raise TimeoutError('bounded pilot TTL exhausted')

@@ -47,8 +47,8 @@ def make_optimizer(model, args):
     return optimizer
 
 
-def make_step(model, optimizer, accumulation, source_count, clip, compiled=True):
-    value_grad = nn.value_and_grad(model,lm_loss)
+def make_step(model, optimizer, accumulation, source_count, clip, compiled=True, chunk_tokens=0):
+    value_grad = nn.value_and_grad(model,partial(lm_loss,chunk_tokens=chunk_tokens))
     def step(windows, labels, lr):
         grads = tree_map(mx.zeros_like,model.trainable_parameters())
         loss = mx.array(0.,dtype=mx.float32)
@@ -70,14 +70,14 @@ def make_step(model, optimizer, accumulation, source_count, clip, compiled=True)
     return mx.compile(step,inputs=state,outputs=state) if compiled else step
 
 
-def evaluate(model, heldout, batch_size):
+def evaluate(model, heldout, batch_size, chunk_tokens=0):
     model.eval()
     losses = {}
     try:
         for name,windows in heldout.items():
             total = mx.array(0.,dtype=mx.float32)
             for offset in range(0,len(windows),batch_size):
-                loss,_ = lm_loss(model,windows[offset:offset+batch_size])
+                loss,_ = lm_loss(model,windows[offset:offset+batch_size],chunk_tokens)
                 total = total + loss*len(windows[offset:offset+batch_size])
             mx.eval(total)
             losses[name] = float(total)/len(windows)
@@ -136,7 +136,7 @@ def restore(path, model, optimizer, mixture, policy, validation, adaptive):
     if adaptive:
         adaptive.load_state(record["adaptive"])
     mixture.load_state(record["sampler"])
-    if mixture.weights != (adaptive.weights if adaptive else validation.weights):
+    if not policy.get('stream_policy') and mixture.weights != (adaptive.weights if adaptive else validation.weights):
         raise ValueError("sampler probabilities disagree with the saved policy")
     sums,counts = record["training_source_sums"],record["training_source_counts"]
     if len(sums) != len(mixture.names) or len(counts) != len(mixture.names) or any(not math.isfinite(v) or v < 0 for v in sums) or any(type(v) is not int or v < 0 for v in counts):
@@ -152,7 +152,13 @@ def main(argv=None):
     parser.add_argument("--name",required=True)
     parser.add_argument("--preset",choices=sorted(PRESETS),default="sys1-mlx-small")
     parser.add_argument("--tokenizer",required=True)
-    parser.add_argument("--corpus-manifest",required=True)
+    parser.add_argument("--corpus-manifest")
+    parser.add_argument("--stream-manifest",help="Pinned HTTP JSONL stream; HTTPS or authenticated loopback tunnel")
+    parser.add_argument("--stream-manifest-sha256")
+    parser.add_argument("--stream-policy",help="Atomic versioned training weights; frozen validation is unchanged")
+    parser.add_argument("--init-model",help="Converted MLX safetensors initialization, not an optimizer resume")
+    parser.add_argument("--init-receipt",help="Identity/config/tokenizer receipt for --init-model")
+    parser.add_argument("--loss-chunk-tokens",type=int,default=0)
     parser.add_argument("--device",choices=["gpu","cpu"],default="gpu")
     parser.add_argument("--precision",choices=["bf16","fp32"],default="bf16")
     parser.add_argument("--seq",type=int,default=256)
@@ -187,6 +193,13 @@ def main(argv=None):
     parser.add_argument("--stop-after",type=int,default=0,help="bounded interruption test; saves recovery state")
     parser.add_argument("--memory-limit-gib",type=float,default=8.)
     args = parser.parse_args(argv)
+    if bool(args.corpus_manifest)==bool(args.stream_manifest):parser.error('choose one of --corpus-manifest or --stream-manifest')
+    if args.stream_manifest and not re.fullmatch(r'[0-9a-f]{64}',args.stream_manifest_sha256 or ''):parser.error('stream manifest SHA-256 required')
+    if not args.stream_manifest and (args.stream_manifest_sha256 or args.stream_policy):parser.error('stream options require streaming mode')
+    if args.stream_policy and args.mixture_policy!='static':parser.error('choose external dynamic policy or adaptive controller, not both')
+    if bool(args.init_model)!=bool(args.init_receipt):parser.error('initial model and receipt must be provided together')
+    if args.loss_chunk_tokens<0:parser.error('loss chunk cannot be negative')
+    if args.seq>4096 and (not args.gradient_checkpointing or not args.loss_chunk_tokens):parser.error('long context requires gradient checkpointing and chunked loss')
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,100}",args.name):parser.error("unsafe run name")
     if min(args.seq,args.micro_batch,args.accum,args.steps,args.eval_seqs,args.log_every) < 1 or args.keep < 2:
         parser.error("positive dimensions/log interval and at least two retained checkpoints are required")
@@ -209,7 +222,12 @@ def main(argv=None):
     cfg = replace(PRESETS[args.preset],vocab_size=tokenizer.get_vocab_size(),max_seq=max(PRESETS[args.preset].max_seq,args.seq))
     if param_count(cfg)["total"]*16 > memory_limit:
         raise ValueError("FP32 master/gradient/Adam minimum exceeds memory limit; declare a larger budget")
-    mixture,heldout,origin,validation_id = build_data(args.corpus_manifest,args.tokenizer,tokenizer,args.seq,args.eval_seqs,args.seed)
+    if args.stream_manifest:
+        from sys1.mlx.streaming import build_stream
+        mixture,heldout,origin,validation_id=build_stream(args.stream_manifest,args.stream_manifest_sha256,
+            args.tokenizer,tokenizer,args.seq,args.eval_seqs,args.seed,args.stream_policy)
+    else:
+        mixture,heldout,origin,validation_id = build_data(args.corpus_manifest,args.tokenizer,tokenizer,args.seq,args.eval_seqs,args.seed)
     validation = ValidationGuard(mixture.weights,args.early_stop_patience,args.early_stop_min_delta,validation_id,
                                  args.max_domain_regression or None,args.domain_regression_patience)
     mixture.weights = dict(validation.weights)
@@ -219,6 +237,16 @@ def main(argv=None):
     policy = {key:value for key,value in vars(args).items() if key not in {"name","resume","stop_after","ckpt_every","keep","log_every"}}
     policy.update(corpus_manifest_sha256=mixture.data_id,validation_id=validation_id,config=asdict(cfg),
                   framework_version=mx.__version__,compiled=not args.no_compile,weights=dict(mixture.weights))
+    if args.init_model:
+        initialization=json.loads(Path(args.init_receipt).read_text())
+        original=dict(initialization.get('config',{}));target=asdict(cfg)
+        old_context=original.pop('max_seq',0);new_context=target.pop('max_seq')
+        if initialization.get('schema')!='sys1-mlx-initialization-v1' or initialization.get('parent_completed') is not True:
+            raise ValueError('completed-parent initialization receipt required')
+        if original!=target or old_context>new_context:raise ValueError('initial model architecture differs')
+        if initialization.get('model_identity')!=file_identity(args.init_model) or initialization.get('tokenizer_identity')!=file_identity(args.tokenizer):
+            raise ValueError('initialization weights or tokenizer differs')
+        policy['initialization_receipt_sha256']=file_identity(args.init_receipt)['sha256']
     root = RUNS/"mlx-pretrain"/args.name
     latest = root/"checkpoints/latest"
     resume = None
@@ -248,6 +276,7 @@ def main(argv=None):
         raise RuntimeError("insufficient disk for the first resumable MLX checkpoint")
     model = Sys1Model(cfg,args.gradient_checkpointing,mx.bfloat16 if args.precision=="bf16" else mx.float32)
     model.freeze_decision_heads()
+    if args.init_model and resume is None:model.load_weights(args.init_model,strict=True)
     optimizer = make_optimizer(model,args)
     step,sums,counts = 0,mx.zeros((len(mixture.names),)),mx.zeros((len(mixture.names),),dtype=mx.int32)
     if resume:step,sums,counts = restore(resume,model,optimizer,mixture,policy,validation,adaptive)
@@ -265,12 +294,16 @@ def main(argv=None):
     if validation.should_stop:
         log({"event":"early_stopped","step":step,"stop_reason":validation.stop_reason,"resumed_terminal_guard":True})
         return
-    step_fn = make_step(model,optimizer,args.accum,len(mixture.names),args.clip,not args.no_compile)
+    step_fn = make_step(model,optimizer,args.accum,len(mixture.names),args.clip,not args.no_compile,args.loss_chunk_tokens)
     last_saved,ran,tokens_since = step,0,0
+    last_stream_policy=None
     started = time.perf_counter()
     mx.reset_peak_memory()
     while step < args.steps:
         batch,labels = mixture.batch(args.micro_batch*args.accum)
+        if args.stream_policy and mixture.policy_sha256!=last_stream_policy:
+            log({'event':'stream_policy','step':step,'version':mixture.policy_version,'sha256':mixture.policy_sha256,'weights':dict(mixture.weights)})
+            last_stream_policy=mixture.policy_sha256
         batch = batch.reshape(args.accum,args.micro_batch,args.seq+1)
         labels = labels.reshape(args.accum,args.micro_batch)
         loss,norm,step_sums,step_counts = step_fn(batch,labels,mx.array(learning_rate(step,args),dtype=mx.float32))
@@ -288,7 +321,7 @@ def main(argv=None):
             started,tokens_since = time.perf_counter(),0
         best,stopped = False,False
         if (args.eval_every and step % args.eval_every==0) or step==args.steps:
-            losses = evaluate(model,heldout,args.micro_batch)
+            losses = evaluate(model,heldout,args.micro_batch,args.loss_chunk_tokens)
             decision = validation.observe(step,losses)
             best,stopped = decision["improved"],decision["should_stop"]
             source_counts = {name:int(value) for name,value in zip(mixture.names,counts.tolist())}

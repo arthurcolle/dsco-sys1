@@ -174,8 +174,21 @@ class Sys1Model(nn.Module):
         return sum(value.size for _,value in tree_flatten(self.parameters()))
 
 
-def lm_loss(model, windows):
-    logits = model(windows[:,:-1]).astype(mx.float32)
-    per_token = nn.losses.cross_entropy(logits,windows[:,1:],reduction="none")
-    per_sequence = mx.mean(per_token,axis=-1)
-    return mx.mean(per_sequence), per_sequence
+def lm_loss(model, windows, chunk_tokens=0):
+    if not chunk_tokens:
+        logits = model(windows[:,:-1]).astype(mx.float32)
+        per_token = nn.losses.cross_entropy(logits,windows[:,1:],reduction="none")
+        per_sequence = mx.mean(per_token,axis=-1)
+        return mx.mean(per_sequence), per_sequence
+    if type(chunk_tokens) is not int or chunk_tokens<1:raise ValueError('positive integer loss chunk required')
+    hidden=model.hidden(windows[:,:-1]);length=hidden.shape[1]
+    def head_loss(h,weight,targets):
+        logits=(h@weight.astype(h.dtype).T).astype(mx.float32)
+        return mx.sum(nn.losses.cross_entropy(logits,mx.stop_gradient(targets),reduction='none'),axis=-1)
+    # Rematerialize logits in backward rather than retain [B,T,V] activations.
+    rematerialized=mx.checkpoint(head_loss);totals=mx.zeros((hidden.shape[0],),dtype=mx.float32)
+    for offset in range(0,length,chunk_tokens):
+        stop=min(length,offset+chunk_tokens)
+        totals=totals+rematerialized(hidden[:,offset:stop],model.embed.weight,windows[:,offset+1:stop+1])
+    per_sequence=totals/length
+    return mx.mean(per_sequence),per_sequence
